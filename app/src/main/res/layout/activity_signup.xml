@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:textSize="40dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="SEESAW"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#545F71"
+            android:text="회원가입"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:padding="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_id_join"
+                    android:layout_width="80dp"
+                    android:layout_height="52dp"
+                    android:gravity="center"
+                    android:text="ID"
+                    android:textStyle="bold"
+                    android:textColor="#545F71"
+                    android:textSize="20sp"/>
+
+                <EditText
+                    android:id="@+id/id_join"
+                    android:layout_width="130dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/custom_input"
+                    android:ems="10"
+                    android:inputType="textEmailAddress" />
+
+                <Spinner
+                    android:id="@+id/spinner_email_domains"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:entries="@array/email_domains" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_id_check"
+                android:layout_width="290dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center|end"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_btn"
+                android:gravity="center"
+                android:text="아이디 체크"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <LinearLayout
+                android:padding="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_pw_join"
+                    android:layout_width="80dp"
+                    android:layout_height="52dp"
+                    android:gravity="center"
+                    android:text="P/W"
+                    android:textStyle="bold"
+                    android:textColor="#545F71"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/pw_join"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_input"
+                    android:ems="10"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_name_join"
+                    android:layout_width="80dp"
+                    android:layout_height="52dp"
+                    android:gravity="center"
+
+                    android:text="NAME"
+                    android:textStyle="bold"
+                    android:textColor="#545F71"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/name_join"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_input"
+                    android:ems="10"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="52dp"
+                    android:gravity="center"
+                    android:text="TEL"
+                    android:textStyle="bold"
+                    android:textColor="#545F71"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:text="010 -"
+
+                    android:textColor="#545F71"
+                    android:textSize="28sp" />
+
+                <EditText
+                    android:id="@+id/tel_join01"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_input"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:maxLength="4" />
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="50dp"
+                    android:text=" -"
+                    android:textColor="#545F71"
+                    android:textSize="28sp" />
+
+                <EditText
+                    android:id="@+id/tel_join02"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/custom_input"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:maxLength="4" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_join"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/custom_btn"
+                android:text="등록"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
