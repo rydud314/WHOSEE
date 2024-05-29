@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "198771971439",
+    "project_id": "obcp-e404d",
+    "storage_bucket": "obcp-e404d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198771971439:android:b4e068f56c60cf194b849a",
+        "android_client_info": {
+          "package_name": "com.example.obc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzbNceYo1pEAb1J3oj-XmKtHYbjndu49A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

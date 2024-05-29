@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeMenu"
+        android:title="홈"
+        android:icon="@drawable/icon_home"
+        />
+    <item
+        android:id="@+id/cardMenu"
+        android:title="명함첩"
+        android:icon="@drawable/icon_business_card_book"
+        />
+    <item
+        android:id="@+id/shareMenu"
+        android:title="공유"
+        android:icon="@drawable/icon_share"
+        />
+    <item
+        android:id="@+id/chatMenu"
+        android:title="채팅"
+        android:icon="@drawable/icon_chat"
+        />
+    <item
+        android:id="@+id/auctionMenu"
+        android:title="경매"
+        android:icon="@drawable/icon_auction"
+        />
+</menu>
