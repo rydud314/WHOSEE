@@ -1,0 +1,154 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:titleTextColor="#000000"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:padding="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+<!--        <include-->
+<!--            layout="@layout/toolbar_home"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp" />-->
+
+        <!-- ViewPager2 추가 -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_gravity="center" />
+
+        <!-- TabLayout 추가 -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center">
+
+            <TableRow>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_edit_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_edit_card" />
+
+                    <Button
+                        android:id="@+id/btn_make_card"
+                        android:layout_marginStart="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_make_card" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_open_report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/btn_open_report" />
+
+                    <Button
+                        android:id="@+id/btn_camera_scan"
+                        android:layout_marginStart="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/btn_camera_scan" />
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="캘린더"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp">
+        </TextView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/btn_calendar"
+            android:text="다음 회의 일정은 12월 13일입니다!\n----------------------------------------\nD-2 [팀장] 디자이너 사장"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:padding="10dp">
+        </Button>
+
+        <!-- Add more views to make content larger than the screen height -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Additional Content"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:layout_marginTop="20dp">
+        </TextView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/btn_calendar"
+            android:text="더 많은 컨텐츠"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:padding="10dp">
+        </Button>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/btn_calendar"
+            android:text="추가된 컨텐츠"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:padding="10dp">
+        </Button>
+
+    </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

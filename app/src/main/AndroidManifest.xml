@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:targetApi="31">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Login"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".SignUp"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Frag1_Home"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Frag2_Wallet"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Frag3_Share"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Frag4_Chat"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Frag5_Auction"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".CameraActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".CameraScan_2"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".CameraScan_3"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".NameCardAdapter"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".MakeCard"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".EditCard"
+            android:exported="false">
+        </activity>
+        <activity android:name=".AccountActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".ChooseReport"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Report_Annual"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Report_Monthly"
+            android:exported="false">
+        </activity>
+    </application>
+
+</manifest>

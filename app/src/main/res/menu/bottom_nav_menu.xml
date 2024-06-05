@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item android:id="@+id/bottom_nav_home"
+            android:title="홈"
+            android:icon="@drawable/ic_home"/>
+
+        <item android:id="@+id/bottom_nav_wallet"
+            android:title="명함첩"
+            android:icon="@drawable/ic_wallet"/>
+
+        <item
+            android:id="@+id/bottom_nav_share"
+            android:title=""
+            android:enabled="false"/>
+
+        <item
+            android:id="@+id/bottom_nav_chat"
+            android:title="채팅"
+            android:icon="@drawable/ic_chat"/>
+
+        <item android:id="@+id/bottom_nav_auction"
+            android:title="경매"
+            android:icon="@drawable/ic_chart"/>
+    </group>
+
+</menu>

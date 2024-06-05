@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="email_domains">
+        <item>@kakao.com</item>
+        <item>@gmail.com</item>
+        <item>@naver.com</item>
+    </string-array>
+
+</resources>

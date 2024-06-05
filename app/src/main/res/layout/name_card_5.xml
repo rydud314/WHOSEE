@@ -1,0 +1,204 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!--            <Button-->
+        <!--                android:id="@+id/btn_left"-->
+        <!--                android:layout_width="30dp"-->
+        <!--                android:layout_height="30dp"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:background="@drawable/ic_left_arrow" />-->
+
+        <ImageView
+            android:id="@+id/iv_name_cards"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:alpha="1"
+            android:background="@drawable/rotated_background_card_5"
+            android:rotation="5.5"/>
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:alpha="1"
+            android:background="@drawable/glass_background_card5" />
+
+
+        <!--            <Button-->
+        <!--                android:id="@+id/btn_right"-->
+        <!--                android:layout_width="30dp"-->
+        <!--                android:layout_height="30dp"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:background="@drawable/ic_right_arrow" />-->
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UXUI Designer"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="60dp"
+            android:layout_gravity="center|left|top"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오지윤"
+            android:textSize="23sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginStart="18dp"
+            android:layout_gravity="center|left|top"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:text="MAIN"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"/>
+
+        <TableLayout
+            android:layout_marginTop="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <!-- 첫 번째 행 -->
+            <TableRow>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_location"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginStart="2dp"
+                        android:text="서울 특별시 성북구"
+                        android:textSize="13dp"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_person"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/tv_age_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:textSize="13dp"
+                        android:text="28세/여"
+                        android:layout_marginStart="2dp"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </TableRow>
+
+            <!-- 두 번째 행 -->
+            <TableRow>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_job"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/tv_cur_job"
+                        android:text="프리랜서"
+                        android:textSize="13dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_mail"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:text="knk0208@naver.com"
+                        android:textSize="13dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/card_face"/>
+</FrameLayout>
