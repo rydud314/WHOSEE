@@ -22,7 +22,7 @@ class CameraScan_2 : AppCompatActivity(){
 
         val btn_retake: Button = findViewById(R.id.btn_retake)
         btn_retake.setOnClickListener{
-            val intent = Intent(this, CameraScan_1::class.java)
+            val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
             finish()
         }

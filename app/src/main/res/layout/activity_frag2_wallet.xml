@@ -5,16 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <include
         layout="@layout/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="10dp" />
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_profile"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="명함첩"
-        android:textSize="40dp"/>
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>

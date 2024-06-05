@@ -13,7 +13,7 @@ class CameraScan_3 : AppCompatActivity() {
 
         val btn_add_more: Button = findViewById(R.id.btn_add_more)
         btn_add_more.setOnClickListener{
-            val intent = Intent(this, CameraScan_1::class.java)
+            val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
             finish()
         }
