@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "692644818874",
+    "project_id": "card-93c5d",
+    "storage_bucket": "card-93c5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692644818874:android:ca28b6b4fe1056a005b783",
+        "android_client_info": {
+          "package_name": "com.example.ncwp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi3avL7Xnc7AbsOAgIZr0gTqFCq6I9DIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692644818874:android:6b88fe84c8c184ac05b783",
+        "android_client_info": {
+          "package_name": "com.example.seesaw"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi3avL7Xnc7AbsOAgIZr0gTqFCq6I9DIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
