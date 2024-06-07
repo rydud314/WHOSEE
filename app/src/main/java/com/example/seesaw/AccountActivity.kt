@@ -48,7 +48,7 @@ class AccountActivity : AppCompatActivity() {
         }
     }
 
-    //다이얼로그 창-> 사용자 재인증
+    //다이얼로그 창-> 사용자 재인증함
     private fun showReauthenticateDialog(user: FirebaseUser) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_reauthenticate, null)
         val passwordEditText = dialogView.findViewById<EditText>(R.id.editTextPassword)
