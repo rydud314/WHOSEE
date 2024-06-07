@@ -66,7 +66,7 @@ class MakeCard : AppCompatActivity() {
 
                 uid?.let { userId ->
                     val cardRef = firestore.collection("all_card_list").document("card_list")
-                    Toast.makeText(this, "UID = $userId", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "UID = $userId", Toast.LENGTH_SHORT).show()
 
                     cardRef.get()
                         .addOnSuccessListener { document ->

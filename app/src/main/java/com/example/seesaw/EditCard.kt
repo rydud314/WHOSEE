@@ -5,54 +5,54 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.example.seesaw.databinding.ActivityEditCardBinding
+import com.example.seesaw.databinding.ActivityMakeCardBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-class EditCard : AppCompatActivity(){
-    private lateinit var etName: EditText
-    private lateinit var etJob: EditText
-    private lateinit var etIntroduction: EditText
-    private lateinit var etWorkplace: EditText
-    private lateinit var etAge: EditText
-    private lateinit var etAnnual: EditText
-    private lateinit var etTel: EditText
-    private lateinit var etSns: EditText
-    private lateinit var etPortfolio: EditText
-    private lateinit var btnMale: Button
-    private lateinit var btnFemale: Button
-    private lateinit var btnCreateCard: Button
+class EditCard : AppCompatActivity() {
+
+    private lateinit var binding: ActivityEditCardBinding
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
 
     private var gender: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_card)
+        binding = ActivityEditCardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+//        setContentView(R.layout.activity_edit_card)
 
-        etName = findViewById(R.id.et_name)
-        etJob = findViewById(R.id.et_job)
-        etIntroduction = findViewById(R.id.et_introduction)
-        etWorkplace = findViewById(R.id.et_workplace)
-        etAge = findViewById(R.id.et_age)
-        etAnnual = findViewById(R.id.et_annual)
-        etTel = findViewById(R.id.et_tel)
-        etSns = findViewById(R.id.et_sns)
-        etPortfolio = findViewById(R.id.et_portfolio)
-        btnMale = findViewById(R.id.btn_male)
-        btnFemale = findViewById(R.id.btn_female)
+        // Firebase 인스턴스 초기화
+        firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
 
-        btnMale.setOnClickListener {
+        // 명함 정보를 firebase에서 가져와 edittext에 띄움
+        // 가져오는 코드
+
+        // 성별 선택에 따른 이벤트 코드
+        binding.btnMale.setOnClickListener {
+            // 성별 설정
             gender = "남"
-            btnMale.setBackgroundResource(R.drawable.selected_box_shape)
-            btnFemale.setBackgroundResource(R.drawable.box_shape)
+            binding.tvGender.setText(gender)
+            binding.btnMale.setBackgroundResource(R.drawable.selected_box_shape)
+            binding.btnFemale.setBackgroundResource(R.drawable.box_shape)
         }
 
-        btnFemale.setOnClickListener {
+        binding.btnFemale.setOnClickListener {
+            // 성별 설정
             gender = "여"
-            btnFemale.setBackgroundResource(R.drawable.selected_box_shape)
-            btnMale.setBackgroundResource(R.drawable.box_shape)
+            binding.tvGender.setText(gender)
+            binding.btnFemale.setBackgroundResource(R.drawable.selected_box_shape)
+            binding.btnMale.setBackgroundResource(R.drawable.box_shape)
         }
+
+        //수정하기 버튼 누를 때 이벤트 > 명함 편집 완료
 
         // 명함 수정 버튼 설정
-        val btn_edit_card: Button = findViewById(R.id.btn_edit_card)
-        btn_edit_card.setOnClickListener {
+//        val btn_edit_card: Button = findViewById(R.id.btn_edit_card)
+        binding.btnEditCard.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

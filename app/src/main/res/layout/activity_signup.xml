@@ -18,7 +18,7 @@
             android:textSize="40dp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="SEESAW"/>
+            android:text="WHOSEE"/>
 
         <TextView
             android:layout_width="wrap_content"

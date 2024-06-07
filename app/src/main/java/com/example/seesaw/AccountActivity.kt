@@ -1,21 +1,126 @@
 package com.example.seesaw
 
+import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.seesaw.databinding.ActivityAccountBinding
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import java.io.File
 
 class AccountActivity : AppCompatActivity() {
 
-    private lateinit var btnLogout: Button
-    private lateinit var btnChange_detail: Button
-    private lateinit var btnExit: Button
+    private lateinit var binding: ActivityAccountBinding
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account)
+        binding = ActivityAccountBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        btnExit=findViewById(R.id.btn_exit)
-        btnLogout=findViewById(R.id.btn_logout)
-        btnChange_detail=findViewById(R.id.btn_change_detail)
+        // Firebase 인스턴스 초기화
+        firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+
+        //탈퇴하기
+        binding.btnExit.setOnClickListener {
+            val currentUser = auth.currentUser
+            if (currentUser != null) {
+                showReauthenticateDialog(currentUser)
+            }
+        }
+        //로그아웃
+        binding.btnLogout.setOnClickListener {
+            logoutAndRedirectToLogin()
+        }
+        //정보 수정
+        binding.btnChangeDetail.setOnClickListener {
+
+        }
+    }
+
+    //다이얼로그 창-> 사용자 재인증
+    private fun showReauthenticateDialog(user: FirebaseUser) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_reauthenticate, null)
+        val passwordEditText = dialogView.findViewById<EditText>(R.id.editTextPassword)
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("비밀번호를 입력하세요")
+            .setView(dialogView)
+            .setPositiveButton("확인") { _, _ ->
+                val password = passwordEditText.text.toString()
+                reauthenticateAndDelete(user, password)
+            }
+            .setNegativeButton("취소", null)
+            .create()
+
+        dialog.show()
+    }
+
+    private fun reauthenticateAndDelete(user: FirebaseUser, password: String) {
+        val email = user.email
+        if (email != null) {
+            val credential = EmailAuthProvider.getCredential(email, password)
+            user.reauthenticate(credential)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        deleteUserAccount(user)
+                    } else {
+                        Toast.makeText(this, "재인증에 실패했습니다: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+    }
+
+    //계정 삭제
+    private fun deleteUserAccount(user: FirebaseUser) {
+        val uid = user.uid
+        firestore.collection("id_list").document(uid)
+            .delete()
+            .addOnSuccessListener {
+                user.delete()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "계정이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            logoutAndRedirectToLogin()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "계정 탈퇴 실패: ${task.exception?.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "계정 삭제에 실패했습니다.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    //로그아웃 + 자동로그인 삭제
+    private fun logoutAndRedirectToLogin() {
+        // 로그아웃
+        auth.signOut()
+
+        // 공유 프리퍼런스 파일 삭제
+        val sharedPrefsFile = File("/data/data/com.example.seesaw/shared_prefs/userID.xml")
+        if (sharedPrefsFile.exists()) {
+            sharedPrefsFile.delete()
+            Log.d(ContentValues.TAG, "자동로그인 파일이 삭제되었습니다.")
+        }
+
+        // 로그인 화면으로 전환
+        val intent = Intent(this, Login::class.java)
+        startActivity(intent)
+        Toast.makeText(this, "로그아웃", Toast.LENGTH_SHORT).show()
     }
 }

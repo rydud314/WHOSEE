@@ -200,8 +200,8 @@
                         android:text="성별 : "
                         android:textSize="15dp"
                         android:textStyle="bold"/>
-                    <EditText
-                        android:id="@+id/et_gender"
+                    <TextView
+                        android:id="@+id/tv_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

@@ -16,6 +16,6 @@
             android:textSize="35dp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="whosee"/>
+            android:text="WHOSEE"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
