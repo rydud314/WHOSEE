@@ -52,6 +52,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(libs.androidx.appcompat)
+    implementation(libs.firebase.storage.ktx)
     //implementation(project(mapOf("path" to ":camera_text_recognition")))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
