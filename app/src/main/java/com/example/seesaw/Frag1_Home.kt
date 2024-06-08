@@ -84,6 +84,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.getField
 
 class Frag1_Home : Fragment() {
@@ -122,6 +123,7 @@ class Frag1_Home : Fragment() {
         Log.d(TAG, "UID =  $uid")
 
         var cardId = ""
+        var card_list = mutableListOf<String>()
 
         if (uid != null) {
             firestore.collection("my_card_list").document(uid).get().addOnCompleteListener { task ->
@@ -133,7 +135,29 @@ class Frag1_Home : Fragment() {
                             for (card in cards) {
                                 cardId = card["cardId"].toString()
                                 Log.d(TAG, "cardId = $cardId")
+                                card_list.add(cardId)
+
                             }
+
+                            //자신의 카드 정보 가져오기 !!!!!!!!!!!여기부터해라 교영아~~~~~
+                            firestore.collection("all_card_list").get().addOnSuccessListener { querySnapshot ->
+                                    val documents = querySnapshot.documents.toMutableList()
+                                    Log.d(TAG, "querysnapshot complete")
+
+                                    if (documents != null && documents.isNotEmpty()){
+                                        Log.d(TAG, "result.document is not null")
+
+                                        for (document in documents){
+                                            val name = document["name"].toString()
+                                            val intro = document["introduction"].toString()
+                                            Log.d(TAG, "cardData => $name : $intro")
+
+                                        }
+
+                                    }
+                                }.addOnFailureListener{Log.d(TAG, "querysnapshot 실패")}
+
+
                         } else {
                             Log.d(TAG, "보유한 명함이 없습니다.")
                         }
@@ -144,6 +168,9 @@ class Frag1_Home : Fragment() {
                     Log.d(TAG, "get failed with ", task.exception)
                 }
             }
+        }
+        else{
+            Log.d(TAG, "when check the my card, uid is null")
         }
 
 
