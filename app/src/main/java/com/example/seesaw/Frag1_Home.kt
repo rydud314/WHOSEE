@@ -125,6 +125,9 @@ class Frag1_Home : Fragment() {
         var cardId = ""
         var card_list = mutableListOf<String>()
 
+        val myCardList : MutableList<Card> = mutableListOf()
+        myCardList.clear()
+
         if (uid != null) {
             firestore.collection("my_card_list").document(uid).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -139,8 +142,8 @@ class Frag1_Home : Fragment() {
 
                             }
 
-                            //자신의 카드 정보 가져오기 !!!!!!!!!!!여기부터해라 교영아~~~~~
-                            firestore.collection("all_card_list").get().addOnSuccessListener { querySnapshot ->
+                            //자신의 카드 정보 가져오기
+                            firestore.collection("all_card_list").whereIn("cardId", card_list).get().addOnSuccessListener { querySnapshot ->
                                     val documents = querySnapshot.documents.toMutableList()
                                     Log.d(TAG, "querysnapshot complete")
 
@@ -148,15 +151,33 @@ class Frag1_Home : Fragment() {
                                         Log.d(TAG, "result.document is not null")
 
                                         for (document in documents){
+                                            val cardId = document["cardId"].toString()
                                             val name = document["name"].toString()
-                                            val intro = document["introduction"].toString()
-                                            Log.d(TAG, "cardData => $name : $intro")
+                                            val workplace = document["workplace"].toString()
+                                            val introduction = document["introduction"].toString()
+                                            val email = document["email"].toString()
+                                            val position = document["position"].toString()
+                                            val gender  = document["gender"].toString()
+                                            val imageName= document["imageName"].toString()
+                                            val job = document["job"].toString()
+                                            val pofol = document["pofol"].toString()
+                                            val sns = document["sns"].toString()
+                                            val tel = document["tel"].toString()
 
+                                            Log.d(TAG, "cardData => $name($cardId)")
+                                            myCardList.add(Card(name, position, workplace, email, cardId, gender, imageName, introduction, job, pofol, sns, tel))
                                         }
-
                                     }
-                                }.addOnFailureListener{Log.d(TAG, "querysnapshot 실패")}
+                                Log.d(TAG, "${myCardList.size}")
+                                // ViewPager2에 어댑터 설정
+                                viewPager.adapter = NameCardAdapter(myCardList)
 
+                                // TabLayout과 ViewPager2를 연결
+                                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                                    // 탭을 초기화하지 않음
+                                }.attach()
+
+                                }.addOnFailureListener{Log.d(TAG, "querysnapshot 실패")}
 
                         } else {
                             Log.d(TAG, "보유한 명함이 없습니다.")
@@ -173,31 +194,18 @@ class Frag1_Home : Fragment() {
             Log.d(TAG, "when check the my card, uid is null")
         }
 
+        Log.d(TAG, "second : ${myCardList.size}")
 
-
-
-
-
-
-
-
-
-
+        /*
         // 카드 데이터 목록
         val cards = listOf(
             NameCardData("UXUI Designer", "오지윤", "서울 특별시 성북구", "28세/여", "프리랜서", "knk0208@naver.com"),
             NameCardData("UXUI Designer", "김철수", "서울 특별시 강남구", "30세/남", "회사원", "chulsu@example.com"),
             NameCardData("Product Manager", "이영희", "부산광역시 해운대구", "27세/여", "회사원", "younghee@example.com")
             // 추가 카드 데이터...
-        )
+        )*/
 
-        // ViewPager2에 어댑터 설정
-        viewPager.adapter = NameCardAdapter(cards)
 
-        // TabLayout과 ViewPager2를 연결
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            // 탭을 초기화하지 않음
-        }.attach()
 
         // 명함 만들기 버튼 설정
         val btn_make_card: Button = view.findViewById(R.id.btn_make_card)

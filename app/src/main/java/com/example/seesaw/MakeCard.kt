@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.seesaw.databinding.ActivityMakeCardBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -24,7 +25,7 @@ class MakeCard : AppCompatActivity() {
 
     private var gender: String? = null
     private var imageUri: Uri? = null
-    private var cardId: String? = null
+    private var cardId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,14 +102,14 @@ class MakeCard : AppCompatActivity() {
         val job = binding.etJob.text.toString()
         val introduction = binding.etIntroduction.text.toString()
         val workplace = binding.etWorkplace.text.toString()
-        val age = binding.etAge.text.toString()
+        val email = binding.etEmail.text.toString()
         val gender = binding.tvGender.text.toString()
-        val annual = binding.etAnnual.text.toString()
+        val position = binding.etPosition.text.toString()
         val tel = binding.etTel.text.toString()
         val sns = binding.etSns.text.toString()
         val pofol = binding.etPortfolio.text.toString()
 
-        if (cardId == null) {
+        if (cardId == "") {
             cardId = getRandomString(10)
         }
 
@@ -121,8 +122,11 @@ class MakeCard : AppCompatActivity() {
             val currentUser = auth.currentUser
             val uid = currentUser?.uid
 
+
+            //val cardRef = firestore.collection("all_card_list").document(cardId)
+
             uid?.let { userId ->
-                val cardRef = firestore.collection("all_card_list").document("card_list")
+                val cardRef = firestore.collection("all_card_list").document(cardId)
 
                 cardRef.get()
                     .addOnSuccessListener { document ->
@@ -132,9 +136,9 @@ class MakeCard : AppCompatActivity() {
                             "job" to job,
                             "introduction" to introduction,
                             "workplace" to workplace,
-                            "age" to age,
+                            "email" to email,
                             "gender" to gender,
-                            "annual" to annual,
+                            "position" to position,
                             "tel" to tel,
                             "sns" to sns,
                             "pofol" to pofol,
@@ -142,21 +146,11 @@ class MakeCard : AppCompatActivity() {
                         )
 
                         if (document.exists()) {
-                            // 문서가 존재하면
-                            val existingArray = document.get("cards") as? ArrayList<HashMap<String, Any>>?
-                            if (existingArray != null) {
-                                // 배열이 이미 존재하면 새 데이터 추가
-                                existingArray.add(cardData)
-                                cardRef.update("cards", existingArray)
-                            } else {
-                                // 배열이 존재하지 않으면 새로운 배열 생성 후 데이터 추가
-                                cardRef.set(mapOf("cards" to arrayListOf(cardData)))
-                            }
+                            Log.d(TAG,"명함 아이디 중복 체크 실패")
                         } else {
                             // 문서가 없으면 새 문서 생성 후 데이터 추가
-                            cardRef.set(mapOf("cards" to arrayListOf(cardData)))
+                            cardRef.set(cardData)
                         }
-
                         // 성공 메시지 표시 및 액티비티 종료
                         Log.d(TAG, "명함이 생성되었습니다.")
 
@@ -169,7 +163,6 @@ class MakeCard : AppCompatActivity() {
                                 val cardData1 = hashMapOf<String, Any>(
                                     "cardId" to cardId!!
                                 )
-
                                 if (document.exists()) {
                                     // 문서가 존재하면
                                     val existingArray = document.get("cards") as? ArrayList<HashMap<String, Any>>?
@@ -202,6 +195,7 @@ class MakeCard : AppCompatActivity() {
             }
         }
     }
+
 
     fun getRandomString(length: Int): String {
         val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9')

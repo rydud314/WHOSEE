@@ -13,7 +13,7 @@ class CardAdapter(private val cardList: List<Card>) : RecyclerView.Adapter<CardA
         val profileImage: ImageView = view.findViewById(R.id.profile_image)
         val name: TextView = view.findViewById(R.id.name)
         val position: TextView = view.findViewById(R.id.position)
-        val company: TextView = view.findViewById(R.id.company)
+        val workplace: TextView = view.findViewById(R.id.workplace)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
@@ -26,7 +26,7 @@ class CardAdapter(private val cardList: List<Card>) : RecyclerView.Adapter<CardA
         val card = cardList[position]
         holder.name.text = card.name
         holder.position.text = card.position
-        holder.company.text = card.company
+        holder.workplace.text = card.workplace
     }
 
     override fun getItemCount() = cardList.size

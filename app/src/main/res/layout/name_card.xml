@@ -99,7 +99,7 @@
                         android:backgroundTint="@color/white"/>
 
                     <TextView
-                        android:id="@+id/tv_address"
+                        android:id="@+id/tv_workplace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -124,7 +124,7 @@
                         android:backgroundTint="@color/white"/>
 
                     <TextView
-                        android:id="@+id/tv_age_gender"
+                        android:id="@+id/tv_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -153,7 +153,7 @@
                         android:backgroundTint="@color/white"/>
 
                     <TextView
-                        android:id="@+id/tv_cur_job"
+                        android:id="@+id/tv_position"
                         android:text="프리랜서"
                         android:textSize="13dp"
                         android:layout_marginStart="2dp"
