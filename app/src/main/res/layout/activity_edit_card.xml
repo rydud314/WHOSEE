@@ -19,14 +19,15 @@
         android:alpha="0.8"
         android:background="@drawable/make_card_background_glass" />
 
+    <!-- ScrollView 추가 -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="15dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="15dp"
             android:orientation="vertical">
 
             <!-- 타이틀 묶음 -->
@@ -44,7 +45,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="명함 만들기"
+                    android:text="명함 정보 수정하기"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:textSize="30dp"/>
@@ -58,12 +59,17 @@
                 android:gravity="center"
                 android:padding="30dp">
 
+                <!-- 바로 밑에 버튼이랑 imageview랑 kotlin 코드 연결시켜서 쓰면 된다 교영!!-->
+
                 <Button
                     android:id="@+id/btn_add_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rotated_background_card_1"
+                    android:textColor="@color/white"
                     android:text="이미지 추가"
                     android:layout_marginTop="10dp"/>
+
 
                 <ImageView
                     android:id="@+id/iv_added_image"
@@ -87,7 +93,7 @@
                         android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="이름을 입력하세요"
+                        android:hint="김나연"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="text"/>
@@ -109,7 +115,7 @@
                         android:id="@+id/et_job"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="직업을 입력하세요"
+                        android:hint="학생"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="text"/>
@@ -131,7 +137,7 @@
                         android:id="@+id/et_introduction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="소개를 입력하세요"
+                        android:hint="안녕하슈"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="text"/>
@@ -153,7 +159,7 @@
                         android:id="@+id/et_workplace"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="직장을 입력하세요"
+                        android:hint="영남대학교"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="text"/>
@@ -175,7 +181,7 @@
                         android:id="@+id/et_age"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="나이를 입력하세요"
+                        android:hint="24"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="number"/>
@@ -186,7 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center"
+                    android:gravity="center|start"
                     android:layout_marginBottom="10dp">
                     <TextView
                         android:layout_width="wrap_content"
@@ -196,10 +202,10 @@
                         android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/tv_gender"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:hint="성별을 선택하세요"
+                        android:hint="여"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="text"/>
@@ -249,7 +255,7 @@
                         android:id="@+id/et_annual"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="연차를 입력하세요"
+                        android:hint="뉴비"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="number"/>
@@ -271,7 +277,7 @@
                         android:id="@+id/et_tel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="연락처를 입력하세요"
+                        android:hint="010-1234-5678"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="phone"/>
@@ -293,10 +299,10 @@
                         android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="email 주소를 입력하세요"
+                        android:hint="nayeon@naver.com"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
-                        android:inputType="text"/>
+                        android:inputType="textUri"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -315,7 +321,7 @@
                         android:id="@+id/et_sns"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="SNS 주소를 입력하세요"
+                        android:hint="nayeon"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:inputType="textUri"/>
@@ -336,7 +342,7 @@
                         android:id="@+id/et_portfolio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="포트폴리오 URL을 입력하세요"
+                        android:hint="URL"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
                         android:textColorHint="#9A9C9E"
@@ -345,11 +351,17 @@
 
                 <Button
                     android:layout_marginTop="20dp"
-                    android:id="@+id/btn_create_card"
+                    android:id="@+id/btn_edit_card"
+                    android:background="@drawable/rotated_background_card_1"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="명함 생성"/>
+                    android:text="수정하기"/>
+
             </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
+
 </RelativeLayout>

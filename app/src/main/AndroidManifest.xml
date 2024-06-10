@@ -80,6 +80,13 @@
             android:exported="false">
         </activity>
         <activity
+            android:name=".EditCard"
+            android:exported="false">
+        </activity>
+        <activity android:name=".AccountActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name=".ChooseReport"
             android:exported="false">
         </activity>
@@ -89,6 +96,18 @@
         </activity>
         <activity
             android:name=".Report_Monthly"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".CardList_to_Edit"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".NameCardData"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".NameCardDetail"
             android:exported="false">
         </activity>
     </application>

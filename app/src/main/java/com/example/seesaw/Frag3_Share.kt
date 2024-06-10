@@ -26,12 +26,5 @@ class Frag3_Share : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // findViewById는 이제 view에서 호출
-        val btn_camera: Button = view.findViewById(R.id.btn_camera)
-        btn_camera.setOnClickListener{
-            val intent = Intent(context, CameraActivity::class.java)
-            startActivity(intent)
-        }
     }
 }

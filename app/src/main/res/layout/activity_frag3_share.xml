@@ -6,11 +6,14 @@
     android:gravity="center|top"
     android:orientation="vertical">
 
-    <include
+    <TextView
         layout="@layout/toolbar_share"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="10dp" />
+        android:text="공유"
+        android:textSize="30dp"
+        android:gravity="center|start"
+        android:layout_marginStart="10dp" />
 
     <LinearLayout
         android:layout_marginTop="30dp"
@@ -44,7 +47,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/custom_empty_card"/>
+            android:background="@drawable/custom_empty_card_background"/>
 
         <ImageView
             android:layout_width="60dp"

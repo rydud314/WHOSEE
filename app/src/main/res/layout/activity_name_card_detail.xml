@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="명함 상세 정보"
+        android:textSize="40dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Job Title"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Name"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Address"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_age_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Age/Gender"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_cur_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Current Job"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Email"
+        android:padding="10dp"/>
+
+    <Button
+        android:id="@+id/btn_edit_card"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:text="명함 편집"
+        android:background="@drawable/btn_calendar"
+        android:layout_gravity="center"/>
+</LinearLayout>

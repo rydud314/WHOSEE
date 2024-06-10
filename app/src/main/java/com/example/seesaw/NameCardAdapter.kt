@@ -1,5 +1,6 @@
 package com.example.seesaw
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +14,12 @@ class NameCardAdapter(private val cards: List<NameCardData>) : RecyclerView.Adap
         val nameTextView: TextView = view.findViewById(R.id.tv_name)
         val addressTextView: TextView = view.findViewById(R.id.tv_address)
         val ageGenderTextView: TextView = view.findViewById(R.id.tv_age_gender)
-        val curJobTextView: TextView = view.findViewById(R.id.tv_cur_job)
+        val curJobTextView: TextView = view.findViewById(R.id.tv_season)
         val emailTextView: TextView = view.findViewById(R.id.tv_email)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NameCardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.name_card, parent, false)
-        view.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
         return NameCardViewHolder(view)
     }
 
@@ -31,19 +28,17 @@ class NameCardAdapter(private val cards: List<NameCardData>) : RecyclerView.Adap
         holder.jobTextView.text = card.job
         holder.nameTextView.text = card.name
         holder.addressTextView.text = card.address
-        holder.ageGenderTextView.text = card.ageGender
-        holder.curJobTextView.text = card.curJob
+        holder.ageGenderTextView.text = card.age + "/" +card.Gender
+        holder.curJobTextView.text = card.annual
         holder.emailTextView.text = card.email
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, NameCardDetail::class.java)
+            intent.putExtra("card", card)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount() = cards.size
 }
-
-data class NameCardData(
-    val job: String,
-    val name: String,
-    val address: String,
-    val ageGender: String,
-    val curJob: String,
-    val email: String
-)

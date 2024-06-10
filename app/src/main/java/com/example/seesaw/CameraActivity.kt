@@ -1,6 +1,7 @@
 package com.example.seesaw
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -26,10 +27,6 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class CameraActivity : AppCompatActivity() {
-
-    companion object {
-        private const val TAG = "CameraActivity"
-    }
 
     private lateinit var previewView: PreviewView
     private lateinit var imageViewPhoto: ImageView

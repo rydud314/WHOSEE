@@ -36,7 +36,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/custom_empty_card"/>
+            android:background="@drawable/custom_empty_card_background"/>
 
         <ImageView
             android:layout_width="70dp"
