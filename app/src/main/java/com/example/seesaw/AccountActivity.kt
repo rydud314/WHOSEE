@@ -40,12 +40,27 @@ class AccountActivity : AppCompatActivity() {
         }
         //로그아웃
         binding.btnLogout.setOnClickListener {
-            logoutAndRedirectToLogin()
+            showLogoutDialog()
         }
         //정보 수정
         binding.btnChangeDetail.setOnClickListener {
 
         }
+    }
+
+    //로그아웃 다이얼로그 창
+    private fun showLogoutDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_logout, null)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton("확인") { _, _ ->
+                logoutAndRedirectToLogin()
+            }
+            .setNegativeButton("취소", null)
+            .create()
+
+        dialog.show()
     }
 
     //다이얼로그 창-> 사용자 재인증함
