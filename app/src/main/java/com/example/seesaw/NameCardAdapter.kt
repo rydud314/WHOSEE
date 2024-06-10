@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NameCardAdapter(private val cards: List<NameCardData>) : RecyclerView.Adapter<NameCardAdapter.NameCardViewHolder>() {
+class NameCardAdapter(private val cards: List<Card>) : RecyclerView.Adapter<NameCardAdapter.NameCardViewHolder>() {
 
     class NameCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val jobTextView: TextView = view.findViewById(R.id.tv_job)
         val nameTextView: TextView = view.findViewById(R.id.tv_name)
-        val addressTextView: TextView = view.findViewById(R.id.tv_address)
-        val ageGenderTextView: TextView = view.findViewById(R.id.tv_age_gender)
-        val curJobTextView: TextView = view.findViewById(R.id.tv_cur_job)
+        val workplaceTextView: TextView = view.findViewById(R.id.tv_workplace)
+        val genderTextView: TextView = view.findViewById(R.id.tv_gender)
+        val positionTextView: TextView = view.findViewById(R.id.tv_position)
         val emailTextView: TextView = view.findViewById(R.id.tv_email)
     }
 
@@ -30,9 +30,9 @@ class NameCardAdapter(private val cards: List<NameCardData>) : RecyclerView.Adap
         val card = cards[position]
         holder.jobTextView.text = card.job
         holder.nameTextView.text = card.name
-        holder.addressTextView.text = card.address
-        holder.ageGenderTextView.text = card.ageGender
-        holder.curJobTextView.text = card.curJob
+        holder.workplaceTextView.text = card.workplace
+        holder.genderTextView.text = card.gender
+        holder.positionTextView.text = card.position
         holder.emailTextView.text = card.email
     }
 
@@ -40,10 +40,10 @@ class NameCardAdapter(private val cards: List<NameCardData>) : RecyclerView.Adap
 }
 
 data class NameCardData(
-    val job: String,
     val name: String,
-    val address: String,
-    val ageGender: String,
-    val curJob: String,
+    val position: String,
+    val workplace: String,
+    val gender: String,
+    val job: String,
     val email: String
 )
