@@ -31,7 +31,7 @@
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/btn_change_detail"
+            android:id="@+id/btn_change_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="정보변경" />

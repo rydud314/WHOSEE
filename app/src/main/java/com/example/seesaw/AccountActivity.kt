@@ -40,12 +40,43 @@ class AccountActivity : AppCompatActivity() {
         }
         //로그아웃
         binding.btnLogout.setOnClickListener {
-            logoutAndRedirectToLogin()
+            showLogoutDialog()
         }
         //정보 수정
-        binding.btnChangeDetail.setOnClickListener {
-
+        binding.btnChangeInfo.setOnClickListener {
+            showChangeInfoDialog()
         }
+    }
+
+    //정보 수정 다이얼로그 창
+    private fun showChangeInfoDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.activity_doublecheck_pw, null)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton("확인") { _, _ ->
+                val intent = Intent(this, ChangeInfo::class.java)
+                startActivity(intent)
+            }
+            .setNegativeButton("취소", null)
+            .create()
+
+        dialog.show()
+    }
+
+    //로그아웃 다이얼로그 창
+    private fun showLogoutDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_logout, null)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton("확인") { _, _ ->
+                logoutAndRedirectToLogin()
+            }
+            .setNegativeButton("취소", null)
+            .create()
+
+        dialog.show()
     }
 
     //다이얼로그 창-> 사용자 재인증함

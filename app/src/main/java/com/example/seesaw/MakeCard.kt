@@ -24,7 +24,7 @@ class MakeCard : AppCompatActivity() {
 
     private var gender: String? = null
     private var imageUri: Uri? = null
-    private var cardId: String? = null
+    private var cardId: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,19 +144,22 @@ class MakeCard : AppCompatActivity() {
                         )
 
                         if (document.exists()) {
-                            // 문서가 존재하면
-                            val existingArray = document.get("cards") as? ArrayList<HashMap<String, Any>>?
-                            if (existingArray != null) {
-                                // 배열이 이미 존재하면 새 데이터 추가
-                                existingArray.add(cardData)
-                                cardRef.update("cards", existingArray)
-                            } else {
-                                // 배열이 존재하지 않으면 새로운 배열 생성 후 데이터 추가
-                                cardRef.set(mapOf("cards" to arrayListOf(cardData)))
-                            }
+                            Log.d(TAG,"명함 아이디 중복 체크 실패")
+//                            // 문서가 존재하면
+//                            val existingArray = document.get("cards") as? ArrayList<HashMap<String, Any>>?
+//                            if (existingArray != null) {
+//                                // 배열이 이미 존재하면 새 데이터 추가
+//                                existingArray.add(cardData)
+//                                cardRef.update("cards", existingArray)
+//                            } else {
+//                                // 배열이 존재하지 않으면 새로운 배열 생성 후 데이터 추가
+//                                cardRef.set(mapOf("cards" to arrayListOf(cardData)))
+//                            }
                         } else {
                             // 문서가 없으면 새 문서 생성 후 데이터 추가
-                            cardRef.set(mapOf("cards" to arrayListOf(cardData)))
+                            cardRef.set(cardData)
+//                            // 문서가 없으면 새 문서 생성 후 데이터 추가
+//                            cardRef.set(mapOf("cards" to arrayListOf(cardData)))
                         }
 
                         // 성공 메시지 표시 및 액티비티 종료

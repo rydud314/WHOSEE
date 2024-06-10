@@ -16,16 +16,20 @@ class NameCardDetail : AppCompatActivity() {
         setContentView(binding.root)
 
         // 인텐트로부터 데이터 가져오기
-        val card = intent.getParcelableExtra<NameCardData>("card")
+        val card = intent.getParcelableExtra<Card>("card")
 
         // 뷰에 데이터 설정
         card?.let {
-            binding.tvName.text = "name : " + it.name
-            binding.tvJob.text = "job : " + it.job
-            binding.tvAddress.text = "address : " + it.address
-            binding.tvAgeGender.text = "age/gender : " + it.age + "/" + it.Gender
-            binding.tvCurJob.text = "annual : " + it.annual
-            binding.tvEmail.text = "email : " + it.email
+            binding.tvName.text = "Name : " + it.name
+            binding.tvJob.text = "Job : " + it.job
+            binding.tvIntroduction.text = "Introduction : " + it.workplace
+            binding.tvWorkplace.text = "Workplace : " + it.workplace
+            binding.tvAgeGender.text = "Age/Gender : " + it.age + "/" + it.gender
+            binding.tvAnnual.text = "Annual : " + it.annual
+            binding.tvTel.text = "Tel : " + it.tel
+            binding.tvEmail.text = "Email : " + it.email
+            binding.tvSns.text = "SNS : " + it.sns
+            binding.tvPortfolio.text = "Portfolio : " + it.pofol
         }
 
         // 버튼 클릭 리스너 설정

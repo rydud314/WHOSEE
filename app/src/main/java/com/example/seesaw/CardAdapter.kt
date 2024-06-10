@@ -14,8 +14,8 @@ class CardAdapter(private val cardList: List<Card>, private val context: Context
     class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val profileImage: ImageView = view.findViewById(R.id.profile_image)
         val name: TextView = view.findViewById(R.id.name)
-        val position: TextView = view.findViewById(R.id.position)
-        val company: TextView = view.findViewById(R.id.company)
+        val annual: TextView = view.findViewById(R.id.annual)
+        val workplace: TextView = view.findViewById(R.id.workplace)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
@@ -27,8 +27,8 @@ class CardAdapter(private val cardList: List<Card>, private val context: Context
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val card = cardList[position]
         holder.name.text = card.name
-        holder.position.text = card.position
-        holder.company.text = card.company
+        holder.annual.text = card.annual
+        holder.workplace.text = card.workplace
 
         holder.itemView.setOnClickListener{
             val intent = Intent(context, EditCard::class.java)

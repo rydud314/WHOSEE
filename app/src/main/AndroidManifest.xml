@@ -102,12 +102,20 @@
             android:name=".CardList_to_Edit"
             android:exported="false">
         </activity>
+<!--        <activity-->
+<!--            android:name=".NameCardData"-->
+<!--            android:exported="false">-->
+<!--        </activity>-->
         <activity
-            android:name=".NameCardData"
+            android:name=".NameCardDetail"
             android:exported="false">
         </activity>
         <activity
-            android:name=".NameCardDetail"
+            android:name=".NameCardAdapter_empty"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".ChangeInfo"
             android:exported="false">
         </activity>
     </application>

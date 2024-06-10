@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NameCardAdapter(private val cards: List<NameCardData>) : RecyclerView.Adapter<NameCardAdapter.NameCardViewHolder>() {
+class NameCardAdapter(private val cards: List<Card>) : RecyclerView.Adapter<NameCardAdapter.NameCardViewHolder>() {
 
     class NameCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val jobTextView: TextView = view.findViewById(R.id.tv_job)
         val nameTextView: TextView = view.findViewById(R.id.tv_name)
-        val addressTextView: TextView = view.findViewById(R.id.tv_address)
+        val workplaceTextView: TextView = view.findViewById(R.id.tv_workplace)
         val ageGenderTextView: TextView = view.findViewById(R.id.tv_age_gender)
-        val curJobTextView: TextView = view.findViewById(R.id.tv_season)
+        val annualTextView: TextView = view.findViewById(R.id.tv_annual)
         val emailTextView: TextView = view.findViewById(R.id.tv_email)
     }
 
@@ -27,9 +27,9 @@ class NameCardAdapter(private val cards: List<NameCardData>) : RecyclerView.Adap
         val card = cards[position]
         holder.jobTextView.text = card.job
         holder.nameTextView.text = card.name
-        holder.addressTextView.text = card.address
-        holder.ageGenderTextView.text = card.age + "/" +card.Gender
-        holder.curJobTextView.text = card.annual
+        holder.workplaceTextView.text = card.workplace
+        holder.ageGenderTextView.text = "${card.age}/${card.gender}"
+        holder.annualTextView.text = card.annual
         holder.emailTextView.text = card.email
 
         holder.itemView.setOnClickListener {

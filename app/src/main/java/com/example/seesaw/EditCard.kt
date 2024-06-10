@@ -32,20 +32,20 @@ class EditCard : AppCompatActivity() {
         // 가져오는 코드
 
         // 인텐트로부터 데이터 가져오기
-        val card = intent.getParcelableExtra<NameCardData>("card")
+        val card = intent.getParcelableExtra<Card>("card")
 
         // EditText 힌트에 데이터 설정
         card?.let {
             binding.etJob.hint = it.job
             binding.etName.hint = it.name
-            binding.etWorkplace.hint = it.address
+            binding.etWorkplace.hint = it.workplace
             binding.etAge.hint = it.age
-            binding.tvGender.hint = it.Gender
+            binding.tvGender.hint = it.gender
             binding.etAnnual.hint = it.annual
-            binding.etTel.hint = it.call
+            binding.etTel.hint = it.tel
             binding.etEmail.hint = it.email
-            binding.etSns.hint = it.SNS
-            binding.etPortfolio.hint = it.portpolio
+            binding.etSns.hint = it.sns
+            binding.etPortfolio.hint = it.pofol
         }
 
         // 성별 선택에 따른 이벤트 코드
