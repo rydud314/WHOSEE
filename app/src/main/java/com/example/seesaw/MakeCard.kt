@@ -126,6 +126,7 @@ class MakeCard : AppCompatActivity() {
 
                 cardRef.get()
                     .addOnSuccessListener { document ->
+                        val imageName = if (imageUri != null) "uploads/$cardId.jpg" else "uploads/default.jpg"
                         val cardData = hashMapOf<String, Any>(
                             "cardId" to cardId!!,
                             "name" to name,
@@ -138,7 +139,7 @@ class MakeCard : AppCompatActivity() {
                             "tel" to tel,
                             "sns" to sns,
                             "pofol" to pofol,
-                            "imageName" to "uploads/$cardId.jpg"
+                            "imageName" to imageName
                         )
 
                         if (document.exists()) {
@@ -187,7 +188,11 @@ class MakeCard : AppCompatActivity() {
                                 }
                                 // 성공 메시지 표시 및 액티비티 종료
                                 Log.d(TAG, "명함이 저장되었습니다.")
-                                uploadImage()
+
+                                if (imageUri != null) {
+                                    uploadImage()
+                                }
+
                                 finish()
                             }
                             .addOnFailureListener { e ->
