@@ -1,5 +1,6 @@
 package com.example.seesaw
 
+import android.content.ContentValues.TAG
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -42,7 +43,7 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         val currentUser = auth.currentUser
         val uid = currentUser?.uid.toString()
-        Log.d(ContentValues.TAG, "UID =  $uid")
+        Log.d(TAG, "UID =  $uid")
 
         var cardId = ""
         var card_list = mutableListOf<String>()
@@ -59,7 +60,7 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         if (cards != null) {
                             for (card in cards) {
                                 cardId = card["cardId"].toString()
-                                Log.d(ContentValues.TAG, "cardId = $cardId")
+                                Log.d(TAG, "cardId = $cardId")
                                 card_list.add(cardId)
 
                             }
@@ -67,10 +68,10 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
                             //자신의 카드 정보 가져오기
                             firestore.collection("all_card_list").whereIn("cardId", card_list).get().addOnSuccessListener { querySnapshot ->
                                 val documents = querySnapshot.documents.toMutableList()
-                                Log.d(ContentValues.TAG, "querysnapshot complete")
+                                Log.d(TAG, "querysnapshot complete")
 
                                 if (documents != null && documents.isNotEmpty()){
-                                    Log.d(ContentValues.TAG, "result.document is not null")
+                                    Log.d(TAG, "result.document is not null")
 
                                     for (document in documents){
                                         val cardId = document["cardId"].toString()
@@ -78,8 +79,7 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
                                         val workplace = document["workplace"].toString()
                                         val introduction = document["introduction"].toString()
                                         val email = document["email"].toString()
-                                        val annual = document["annual"].toString()
-                                        val age = document["age"].toString()
+                                        val position = document["position"].toString()
                                         val gender  = document["gender"].toString()
                                         val imageName= document["imageName"].toString()
                                         val job = document["job"].toString()
@@ -87,34 +87,34 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
                                         val sns = document["sns"].toString()
                                         val tel = document["tel"].toString()
 
-                                        Log.d(ContentValues.TAG, "cardData => $name($cardId)")
-                                        myCardList.add(Card(name, annual, workplace, email, cardId, age, gender, imageName, introduction, job, pofol, sns, tel))
+                                        Log.d(TAG, "cardData => $name($cardId)")
+                                        myCardList.add(Card(name, position, workplace, email, cardId, gender, imageName, introduction, job, pofol, sns, tel))
                                     }
                                 }
-                                Log.d(ContentValues.TAG, "${myCardList.size}")
+                                Log.d(TAG, "${myCardList.size}")
 
                                 recyclerView.adapter = CardAdapter(myCardList, requireContext())
 
 
-                            }.addOnFailureListener{ Log.d(ContentValues.TAG, "querysnapshot 실패")}
+                            }.addOnFailureListener{Log.d(TAG, "querysnapshot 실패")}
 
                         } else {
-                            Log.d(ContentValues.TAG, "wallet_list에 uid 문서는 있는데 필드가 없음 -> 명함 저장 시 제대로 이뤄지지 않음")
+                            Log.d(TAG, "wallet_list에 uid 문서는 있는데 필드가 없음 -> 명함 저장 시 제대로 이뤄지지 않음")
                         }
                     } else {
-                        Log.d(ContentValues.TAG, "No such wallet document")
+                        Log.d(TAG, "No such wallet document")
                         Toast.makeText(context, "보유한 친구 명함이 없습니다.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Log.d(ContentValues.TAG, "get failed with ", task.exception)
+                    Log.d(TAG, "get failed with ", task.exception)
                 }
             }
         }
         else{
-            Log.d(ContentValues.TAG, "when check the my card, uid is null")
+            Log.d(TAG, "when check the my card, uid is null")
         }
 
-        Log.d(ContentValues.TAG, "second : ${myCardList.size}")
+        Log.d(TAG, "second : ${myCardList.size}")
 
 
         /*
@@ -128,22 +128,6 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         return view
 
-//        // 샘플 데이터
-//        val cardList = listOf(
-//            Card("구교영", "Software Engineer", "영남대학교"),
-//            Card("홍아랑", "Software Engineer", "영남대학교"),
-//            Card("박해세", "Software Engineer", "영남대학교"),
-//            Card("Lucy", "Software Engineer", "영남대학교"),
-//            Card("홍알랑", "Software Engineer", "영남대학교"),
-//            Card("꼬랑지", "Software Engineer", "영남대학교"),
-//            Card("김나연", "Software Engineer", "영남대학교"),
-//            Card("구영교", "Software Engineer", "영남대학교"),
-//            Card("김현수", "Graphic Designer", "영남대학교")
-//            // 카드 추가 여기서 하기
-//        )
-//
-//        recyclerView.adapter = CardAdapter(cardList, requireContext())
-//        return view
     }
     companion object{
         fun newInstance() : Frag2_Wallet{

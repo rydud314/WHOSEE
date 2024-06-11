@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CardAdapter(private val cardList: List<Card>, private val context: Context) : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
+class CardAdapter_for_Edit(private val cardList: List<Card>, private val context: Context) : RecyclerView.Adapter<CardAdapter_for_Edit.CardViewHolder>() {
 
     class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val profileImage: ImageView = view.findViewById(R.id.profile_image)
@@ -30,10 +30,10 @@ class CardAdapter(private val cardList: List<Card>, private val context: Context
         holder.position.text = card.position
         holder.workplace.text = card.workplace
 
-//        holder.itemView.setOnClickListener{
-//            val intent = Intent(context, EditCard::class.java)
-//            context.startActivity(intent)
-//        }
+        holder.itemView.setOnClickListener{
+            val intent = Intent(context, EditCard::class.java)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount() = cardList.size

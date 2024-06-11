@@ -5,11 +5,10 @@ import android.os.Parcelable
 
 data class Card(
     val name: String,
-    val annual: String,
+    val position: String,
     val workplace: String,
     val email: String,
     val cardId: String,
-    val age: String,
     val gender: String,
     val imageName: String,
     val introduction: String,
@@ -30,17 +29,15 @@ data class Card(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!,
         parcel.readString()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
-        parcel.writeString(annual)
+        parcel.writeString(position)
         parcel.writeString(workplace)
         parcel.writeString(email)
         parcel.writeString(cardId)
-        parcel.writeString(age)
         parcel.writeString(gender)
         parcel.writeString(imageName)
         parcel.writeString(introduction)

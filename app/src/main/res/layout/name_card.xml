@@ -124,13 +124,13 @@
                         android:backgroundTint="@color/white"/>
 
                     <TextView
-                        android:id="@+id/tv_age_gender"
+                        android:id="@+id/tv_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:textSize="13dp"
-                        android:text="28세/여"
+                        android:text="여"
                         android:layout_marginStart="2dp"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -153,8 +153,8 @@
                         android:backgroundTint="@color/white"/>
 
                     <TextView
-                        android:id="@+id/tv_annual"
-                        android:text="2년차"
+                        android:id="@+id/tv_position"
+                        android:text="프리랜서"
                         android:textSize="13dp"
                         android:layout_marginStart="2dp"
                         android:layout_width="wrap_content"

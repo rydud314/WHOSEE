@@ -118,6 +118,10 @@
             android:name=".ChangeInfo"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".CardAdapter_for_Edit"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

@@ -58,6 +58,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
         setHasOptionsMenu(true)
 
+        // ViewPager2 설정
         val viewPager: ViewPager2 = view.findViewById(R.id.view_pager)
         val tabLayout: TabLayout = view.findViewById(R.id.tab_layout)
 
@@ -102,8 +103,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                                         val workplace = document["workplace"].toString()
                                         val introduction = document["introduction"].toString()
                                         val email = document["email"].toString()
-                                        val annual = document["annual"].toString()
-                                        val age = document["age"].toString()
+                                        val position = document["position"].toString()
                                         val gender  = document["gender"].toString()
                                         val imageName= document["imageName"].toString()
                                         val job = document["job"].toString()
@@ -112,7 +112,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                                         val tel = document["tel"].toString()
 
                                         Log.d(ContentValues.TAG, "cardData => $name($cardId)")
-                                        myCardList.add(Card(name, annual , workplace, email, cardId, age, gender, imageName, introduction, job, pofol, sns, tel))
+                                        myCardList.add(Card(name, position, workplace, email, cardId, gender, imageName, introduction, job, pofol, sns, tel))
                                     }
                                 }
                                 Log.d(ContentValues.TAG, "${myCardList.size}")
@@ -136,60 +136,78 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                                     }.attach()
                                 }
 
+//                                // ViewPager2에 어댑터 설정
+//                                viewPager.adapter = NameCardAdapter(myCardList)
+//
+//                                // TabLayout과 ViewPager2를 연결
+//                                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+//                                    // 탭을 초기화하지 않음
+//                                }.attach()
 
+                            }.addOnFailureListener{
+                                Log.d(ContentValues.TAG, "querysnapshot 실패")
+                                // ViewPager2에 어댑터 설정
+                                viewPager.adapter = NameCardAdapterEmpty()
 
-
-                            }.addOnFailureListener{Log.d(ContentValues.TAG, "querysnapshot 실패")}
+                                // TabLayout과 ViewPager2를 연결
+                                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                                    // 탭을 초기화하지 않음
+                                }.attach()
+                            }
 
                         } else {
-                            viewPager.adapter = NameCardAdapterEmpty()
-                            TabLayoutMediator(tabLayout, viewPager) { tab, position -> }.attach()
                             Log.d(ContentValues.TAG, "보유한 명함이 없습니다.")
+                            // ViewPager2에 어댑터 설정
+                            viewPager.adapter = NameCardAdapterEmpty()
+
+                            // TabLayout과 ViewPager2를 연결
+                            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                                // 탭을 초기화하지 않음
+                            }.attach()
                         }
                     } else {
-                        viewPager.adapter = NameCardAdapterEmpty()
-                        TabLayoutMediator(tabLayout, viewPager) { tab, position -> }.attach()
                         Log.d(ContentValues.TAG, "No such document")
+                        // ViewPager2에 어댑터 설정
+                        viewPager.adapter = NameCardAdapterEmpty()
+
+                        // TabLayout과 ViewPager2를 연결
+                        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                            // 탭을 초기화하지 않음
+                        }.attach()
                     }
                 } else {
-                    viewPager.adapter = NameCardAdapterEmpty()
-                    TabLayoutMediator(tabLayout, viewPager) { tab, position -> }.attach()
                     Log.d(ContentValues.TAG, "get failed with ", task.exception)
+                    // ViewPager2에 어댑터 설정
+                    viewPager.adapter = NameCardAdapterEmpty()
+
+                    // TabLayout과 ViewPager2를 연결
+                    TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                        // 탭을 초기화하지 않음
+                    }.attach()
                 }
             }
         }
         else{
-            viewPager.adapter = NameCardAdapterEmpty()
-            TabLayoutMediator(tabLayout, viewPager) { tab, position -> }.attach()
             Log.d(ContentValues.TAG, "when check the my card, uid is null")
+            // ViewPager2에 어댑터 설정
+            viewPager.adapter = NameCardAdapterEmpty()
+
+            // TabLayout과 ViewPager2를 연결
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                // 탭을 초기화하지 않음
+            }.attach()
         }
 
         Log.d(ContentValues.TAG, "second : ${myCardList.size}")
-//
-//        if (uid != null) {
-//            firestore.collection("my_card_list").document(uid).get().addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    val document = task.result
-//                    if (document != null && document.exists()) {
-//                        val cards = document.get("cards") as? List<Map<String, Any>>
-//                        if (cards != null) {
-//                            for (card in cards) {
-//                                cardId = card["cardId"].toString()
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        val cards = listOf(
-//            NameCardData("오지윤", "UXUI Designer", "안녕하슈", "영남대학교", "28세", "여", "뉴비", "010-1234-5678", "nayeon@naver.com", "nayeon",""),
-//            NameCardData("김철수", "UXUI Designer", "안녕하소", "영남대학교", "28세", "남", "뉴비", "010-1234-5678", "hyeonsoo@naver.com", "hyeonsoo","")
-//        )
-//
-//        viewPager.adapter = NameCardAdapter(cards)
-//
-//        TabLayoutMediator(tabLayout, viewPager) { tab, position -> }.attach()
+
+        /*
+        // 카드 데이터 목록
+        val cards = listOf(
+            NameCardData("UXUI Designer", "오지윤", "서울 특별시 성북구", "28세/여", "프리랜서", "knk0208@naver.com"),
+            NameCardData("UXUI Designer", "김철수", "서울 특별시 강남구", "30세/남", "회사원", "chulsu@example.com"),
+            NameCardData("Product Manager", "이영희", "부산광역시 해운대구", "27세/여", "회사원", "younghee@example.com")
+            // 추가 카드 데이터...
+        )*/
 
         val btn_make_card: Button = view.findViewById(R.id.btn_make_card)
         btn_make_card.setOnClickListener {

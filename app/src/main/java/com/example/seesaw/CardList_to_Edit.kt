@@ -61,8 +61,7 @@ class CardList_to_Edit : AppCompatActivity(){
                                         val workplace = document["workplace"].toString()
                                         val introduction = document["introduction"].toString()
                                         val email = document["email"].toString()
-                                        val annual = document["annual"].toString()
-                                        val age = document["age"].toString()
+                                        val position = document["position"].toString()
                                         val gender  = document["gender"].toString()
                                         val imageName= document["imageName"].toString()
                                         val job = document["job"].toString()
@@ -71,12 +70,12 @@ class CardList_to_Edit : AppCompatActivity(){
                                         val tel = document["tel"].toString()
 
                                         Log.d("CardList_to_Edit", "cardData => $name($cardId)")
-                                        myCardList.add(Card(name, annual, workplace, email, cardId, age, gender, imageName, introduction, job, pofol, sns, tel))
+                                        myCardList.add(Card(name, position, workplace, email, cardId, gender, imageName, introduction, job, pofol, sns, tel))
                                     }
                                 }
                                 Log.d("CardList_to_Edit", "${myCardList.size}")
 
-                                binding.recyclerView.adapter = CardAdapter(myCardList, this)
+                                binding.recyclerView.adapter = CardAdapter_for_Edit(myCardList, this)
                             }.addOnFailureListener{ Log.d("CardList_to_Edit", "querysnapshot 실패")}
                         } else {
                             Log.d("CardList_to_Edit", "wallet_list에 uid 문서는 있는데 필드가 없음 -> 명함 저장 시 제대로 이뤄지지 않음")

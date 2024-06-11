@@ -13,13 +13,17 @@ class NameCardAdapter(private val cards: List<Card>) : RecyclerView.Adapter<Name
         val jobTextView: TextView = view.findViewById(R.id.tv_job)
         val nameTextView: TextView = view.findViewById(R.id.tv_name)
         val workplaceTextView: TextView = view.findViewById(R.id.tv_workplace)
-        val ageGenderTextView: TextView = view.findViewById(R.id.tv_age_gender)
-        val annualTextView: TextView = view.findViewById(R.id.tv_annual)
+        val genderTextView: TextView = view.findViewById(R.id.tv_gender)
+        val positionTextView: TextView = view.findViewById(R.id.tv_position)
         val emailTextView: TextView = view.findViewById(R.id.tv_email)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NameCardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.name_card, parent, false)
+        view.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         return NameCardViewHolder(view)
     }
 
@@ -28,8 +32,8 @@ class NameCardAdapter(private val cards: List<Card>) : RecyclerView.Adapter<Name
         holder.jobTextView.text = card.job
         holder.nameTextView.text = card.name
         holder.workplaceTextView.text = card.workplace
-        holder.ageGenderTextView.text = "${card.age}/${card.gender}"
-        holder.annualTextView.text = card.annual
+        holder.genderTextView.text = card.gender
+        holder.positionTextView.text = card.position
         holder.emailTextView.text = card.email
 
         holder.itemView.setOnClickListener {
@@ -42,3 +46,12 @@ class NameCardAdapter(private val cards: List<Card>) : RecyclerView.Adapter<Name
 
     override fun getItemCount() = cards.size
 }
+
+data class NameCardData(
+    val name: String,
+    val position: String,
+    val workplace: String,
+    val gender: String,
+    val job: String,
+    val email: String
+)

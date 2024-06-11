@@ -24,8 +24,8 @@ class NameCardDetail : AppCompatActivity() {
             binding.tvJob.text = "Job : " + it.job
             binding.tvIntroduction.text = "Introduction : " + it.workplace
             binding.tvWorkplace.text = "Workplace : " + it.workplace
-            binding.tvAgeGender.text = "Age/Gender : " + it.age + "/" + it.gender
-            binding.tvAnnual.text = "Annual : " + it.annual
+            binding.tvGender.text = "Gender : " + it.gender
+            binding.tvPosition.text = "Position : " + it.position
             binding.tvTel.text = "Tel : " + it.tel
             binding.tvEmail.text = "Email : " + it.email
             binding.tvSns.text = "SNS : " + it.sns

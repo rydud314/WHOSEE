@@ -170,28 +170,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="나이 : "
-                        android:textSize="15dp"
-                        android:textStyle="bold"/>
-                    <EditText
-                        android:id="@+id/et_age"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="24"
-                        android:padding="3dp"
-                        android:background="@drawable/box_shape"
-                        android:inputType="number"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center|start"
                     android:layout_marginBottom="10dp">
                     <TextView
@@ -248,11 +226,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="연차 : "
+                        android:text="직책 : "
                         android:textSize="15dp"
                         android:textStyle="bold"/>
                     <EditText
-                        android:id="@+id/et_annual"
+                        android:id="@+id/et_position"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="뉴비"

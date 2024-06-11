@@ -39,9 +39,9 @@ class EditCard : AppCompatActivity() {
             binding.etJob.hint = it.job
             binding.etName.hint = it.name
             binding.etWorkplace.hint = it.workplace
-            binding.etAge.hint = it.age
+            binding.etIntroduction.hint = it.introduction
             binding.tvGender.hint = it.gender
-            binding.etAnnual.hint = it.annual
+            binding.etPosition.hint = it.position
             binding.etTel.hint = it.tel
             binding.etEmail.hint = it.email
             binding.etSns.hint = it.sns
