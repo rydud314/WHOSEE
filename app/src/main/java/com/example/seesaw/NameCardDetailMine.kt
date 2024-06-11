@@ -2,17 +2,16 @@ package com.example.seesaw
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.seesaw.databinding.ActivityNameCardDetailBinding
+import com.example.seesaw.databinding.ActivityNameCardDetailMineBinding
 
-class NameCardDetail : AppCompatActivity() {
+class NameCardDetailMine : AppCompatActivity() {
 
-    private lateinit var binding: ActivityNameCardDetailBinding
+    private lateinit var binding: ActivityNameCardDetailMineBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNameCardDetailBinding.inflate(layoutInflater)
+        binding = ActivityNameCardDetailMineBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // 인텐트로부터 데이터 가져오기

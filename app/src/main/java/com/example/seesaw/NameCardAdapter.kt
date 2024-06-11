@@ -38,7 +38,7 @@ class NameCardAdapter(private val cards: List<Card>) : RecyclerView.Adapter<Name
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, NameCardDetail::class.java)
+            val intent = Intent(context, NameCardDetailMine::class.java)
             intent.putExtra("card", card)
             context.startActivity(intent)
         }

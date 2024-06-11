@@ -30,10 +30,12 @@ class CardAdapter(private val cardList: List<Card>, private val context: Context
         holder.position.text = card.position
         holder.workplace.text = card.workplace
 
-//        holder.itemView.setOnClickListener{
-//            val intent = Intent(context, EditCard::class.java)
-//            context.startActivity(intent)
-//        }
+        holder.itemView.setOnClickListener{
+            val intent = Intent(context, NameCardDetailOthers::class.java).apply {
+                putExtra("card", card)
+            }
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount() = cardList.size
