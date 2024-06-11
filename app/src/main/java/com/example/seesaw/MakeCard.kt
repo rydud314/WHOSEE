@@ -186,6 +186,8 @@ class MakeCard : AppCompatActivity() {
                                     uploadImage()
                                 }
 
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
                                 finish()
                             }
                             .addOnFailureListener { e ->

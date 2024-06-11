@@ -1,6 +1,7 @@
 package com.example.seesaw
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
@@ -25,6 +28,8 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
+    private var myCardList : ArrayList<Card> = arrayListOf()
+
 
     companion object {
         fun newInstance(): Frag1_Home {
@@ -42,6 +47,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
         drawerLayout = view.findViewById(R.id.drawer_layout_frag1_home)
         navView = view.findViewById(R.id.navigation_view)
         navView.setNavigationItemSelectedListener(this)
+
 
 //        val toolbar: androidx.appcompat.widget.Toolbar = view.findViewById(R.id.toolbar)
 //        (activity as AppCompatActivity).setSupportActionBar(toolbar)
@@ -72,7 +78,6 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
         var cardId = ""
         var card_list = mutableListOf<String>()
 
-        val myCardList : MutableList<Card> = mutableListOf()
         myCardList.clear()
 
         if (uid != null) {
@@ -84,7 +89,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                         if (cards != null) {
                             for (card in cards) {
                                 cardId = card["cardId"].toString()
-                                Log.d(ContentValues.TAG, "cardId = $cardId")
+                                Log.d(TAG, "cardId = $cardId")
                                 card_list.add(cardId)
 
                             }
@@ -92,7 +97,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                             //자신의 카드 정보 가져오기
                             firestore.collection("all_card_list").whereIn("cardId", card_list).get().addOnSuccessListener { querySnapshot ->
                                 val documents = querySnapshot.documents.toMutableList()
-                                Log.d(ContentValues.TAG, "querysnapshot complete")
+                                Log.d(TAG, "querysnapshot complete")
 
                                 if (documents != null && documents.isNotEmpty()){
                                     Log.d(ContentValues.TAG, "result.document is not null")
@@ -115,58 +120,22 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                                         myCardList.add(Card(name, position, workplace, email, cardId, gender, imageName, introduction, job, pofol, sns, tel))
                                     }
                                 }
-                                Log.d(ContentValues.TAG, "${myCardList.size}")
+                                Log.d(TAG, "${myCardList.size}")
 
-                                // 명함이 있는 경우
-                                if (myCardList.isNotEmpty()) {
-                                    // ViewPager2에 어댑터 설정
-                                    viewPager.adapter = NameCardAdapter(myCardList)
-
-                                    // TabLayout과 ViewPager2를 연결
-                                    TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                                        // 탭을 초기화하지 않음
-                                    }.attach()
-                                } else {
-                                    // ViewPager2에 어댑터 설정
-                                    viewPager.adapter = NameCardAdapterEmpty()
-
-                                    // TabLayout과 ViewPager2를 연결
-                                    TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                                        // 탭을 초기화하지 않음
-                                    }.attach()
-                                }
-
-//                                // ViewPager2에 어댑터 설정
-//                                viewPager.adapter = NameCardAdapter(myCardList)
-//
-//                                // TabLayout과 ViewPager2를 연결
-//                                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-//                                    // 탭을 초기화하지 않음
-//                                }.attach()
-
-                            }.addOnFailureListener{
-                                Log.d(ContentValues.TAG, "querysnapshot 실패")
                                 // ViewPager2에 어댑터 설정
-                                viewPager.adapter = NameCardAdapterEmpty()
+                                viewPager.adapter = NameCardAdapter(myCardList)
 
                                 // TabLayout과 ViewPager2를 연결
                                 TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                                     // 탭을 초기화하지 않음
                                 }.attach()
-                            }
+
+                            }.addOnFailureListener{ Log.d(TAG, "querysnapshot 실패") }
 
                         } else {
-                            Log.d(ContentValues.TAG, "보유한 명함이 없습니다.")
-                            // ViewPager2에 어댑터 설정
-                            viewPager.adapter = NameCardAdapterEmpty()
-
-                            // TabLayout과 ViewPager2를 연결
-                            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                                // 탭을 초기화하지 않음
-                            }.attach()
-                        }
+                            Log.d(TAG, "보유한 명함이 없습니다.") }
                     } else {
-                        Log.d(ContentValues.TAG, "No such document")
+                        Log.d(TAG, "No such document")
                         // ViewPager2에 어댑터 설정
                         viewPager.adapter = NameCardAdapterEmpty()
 
@@ -175,30 +144,11 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                             // 탭을 초기화하지 않음
                         }.attach()
                     }
-                } else {
-                    Log.d(ContentValues.TAG, "get failed with ", task.exception)
-                    // ViewPager2에 어댑터 설정
-                    viewPager.adapter = NameCardAdapterEmpty()
-
-                    // TabLayout과 ViewPager2를 연결
-                    TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                        // 탭을 초기화하지 않음
-                    }.attach()
-                }
+                } else { Log.d(TAG, "get failed with ", task.exception) }
             }
-        }
-        else{
-            Log.d(ContentValues.TAG, "when check the my card, uid is null")
-            // ViewPager2에 어댑터 설정
-            viewPager.adapter = NameCardAdapterEmpty()
+        } else{ Log.d(TAG, "when check the my card, uid is null") }
 
-            // TabLayout과 ViewPager2를 연결
-            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                // 탭을 초기화하지 않음
-            }.attach()
-        }
-
-        Log.d(ContentValues.TAG, "second : ${myCardList.size}")
+        Log.d(TAG, "second : ${myCardList.size}")
 
         /*
         // 카드 데이터 목록
@@ -209,15 +159,19 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
             // 추가 카드 데이터...
         )*/
 
+
+
         val btn_make_card: Button = view.findViewById(R.id.btn_make_card)
         btn_make_card.setOnClickListener {
             val intent = Intent(context, MakeCard::class.java)
             startActivity(intent)
+
         }
 
         val btn_edit_card: Button = view.findViewById(R.id.btn_edit_card)
         btn_edit_card.setOnClickListener {
             val intent = Intent(context, ChooseEditCard::class.java)
+            intent.putExtra("myCardList", myCardList)
             startActivity(intent)
         }
 
@@ -238,6 +192,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
             drawerLayout.openDrawer(GravityCompat.END)
         }
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
