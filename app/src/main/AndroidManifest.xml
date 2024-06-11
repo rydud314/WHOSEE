@@ -110,10 +110,10 @@
             android:name=".NameCardDetail"
             android:exported="false">
         </activity>
-        <activity
-            android:name=".NameCardAdapter_empty"
-            android:exported="false">
-        </activity>
+<!--        <activity-->
+<!--            android:name=".NameCardAdapter_empty"-->
+<!--            android:exported="false">-->
+<!--        </activity>-->
         <activity
             android:name=".ChangeInfo"
             android:exported="false">
