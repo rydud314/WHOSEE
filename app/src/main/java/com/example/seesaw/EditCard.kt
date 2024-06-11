@@ -48,6 +48,20 @@ class EditCard : AppCompatActivity() {
             binding.etPortfolio.hint = it.pofol
         }
 
+        // EditText에 선입력 되어있도록
+        card?.let {
+            binding.etJob.setText(it.job)
+            binding.etName.setText(it.name)
+            binding.etWorkplace.setText(it.workplace)
+            binding.etIntroduction.setText(it.introduction)
+            binding.tvGender.setText(it.gender)
+            binding.etPosition.setText(it.position)
+            binding.etTel.setText(it.tel)
+            binding.etEmail.setText(it.email)
+            binding.etSns.setText(it.sns)
+            binding.etPortfolio.setText(it.pofol)
+        }
+
         // 성별 선택에 따른 이벤트 코드
         binding.btnMale.setOnClickListener {
             // 성별 설정

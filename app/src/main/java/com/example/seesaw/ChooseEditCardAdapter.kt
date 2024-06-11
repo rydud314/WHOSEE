@@ -1,48 +1,42 @@
 package com.example.seesaw
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NameCardAdapter_for_Edit(private val cards: List<Card>) : RecyclerView.Adapter<NameCardAdapter_for_Edit.NameCardViewHolder>() {
+class ChooseEditCardAdapter(private val cardList: List<Card>, private val context: Context) : RecyclerView.Adapter<ChooseEditCardAdapter.CardViewHolder>() {
 
-    class NameCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val jobTextView: TextView = view.findViewById(R.id.tv_job)
-        val nameTextView: TextView = view.findViewById(R.id.tv_name)
-        val workplaceTextView: TextView = view.findViewById(R.id.tv_workplace)
-        val genderTextView: TextView = view.findViewById(R.id.tv_gender)
-        val positionTextView: TextView = view.findViewById(R.id.tv_position)
-        val emailTextView: TextView = view.findViewById(R.id.tv_email)
+    class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val profileImage: ImageView = view.findViewById(R.id.profile_image)
+        val name: TextView = view.findViewById(R.id.name)
+        val position: TextView = view.findViewById(R.id.position)
+        val workplace: TextView = view.findViewById(R.id.workplace)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NameCardViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.name_card, parent, false)
-        view.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        return NameCardViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_card, parent, false)
+        return CardViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: NameCardViewHolder, position: Int) {
-        val card = cards[position]
-        holder.jobTextView.text = card.job
-        holder.nameTextView.text = card.name
-        holder.workplaceTextView.text = card.workplace
-        holder.genderTextView.text = card.gender
-        holder.positionTextView.text = card.position
-        holder.emailTextView.text = card.email
+    override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+        val card = cardList[position]
+        holder.name.text = card.name
+        holder.position.text = card.position
+        holder.workplace.text = card.workplace
 
-        holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, EditCard::class.java)
-            intent.putExtra("card", card)
+        holder.itemView.setOnClickListener{
+            val intent = Intent(context, EditCard::class.java).apply {
+                putExtra("card", card)
+            }
             context.startActivity(intent)
         }
     }
 
-    override fun getItemCount() = cards.size
+    override fun getItemCount() = cardList.size
 }
