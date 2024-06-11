@@ -99,7 +99,7 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".CardList_to_Edit"
+            android:name=".ChooseEditCard"
             android:exported="false">
         </activity>
 <!--        <activity-->

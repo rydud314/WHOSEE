@@ -217,7 +217,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
         val btn_edit_card: Button = view.findViewById(R.id.btn_edit_card)
         btn_edit_card.setOnClickListener {
-            val intent = Intent(context, CardList_to_Edit::class.java)
+            val intent = Intent(context, ChooseEditCard::class.java)
             startActivity(intent)
         }
 

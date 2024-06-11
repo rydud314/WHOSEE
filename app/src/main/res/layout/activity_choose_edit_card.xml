@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="명함첩"
+        android:text="내 명함 목록"
         android:textSize="30dp"
         android:padding="16dp"
         android:textColor="@color/black"
