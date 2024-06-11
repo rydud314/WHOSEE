@@ -19,8 +19,7 @@ class ChooseEditCardAdapter(private val cardList: List<Card>, private val contex
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_card, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card, parent, false)
         return CardViewHolder(view)
     }
 
