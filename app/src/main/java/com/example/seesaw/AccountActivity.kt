@@ -31,6 +31,17 @@ class AccountActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
+        //로그아웃
+        binding.btnLogout.setOnClickListener {
+            showLogoutDialog()
+        }
+        //정보 수정
+        binding.btnChangeInfo.setOnClickListener {
+            val currentUser = auth.currentUser
+            if (currentUser != null) {
+                showChangeInfoDialog(currentUser)
+            }
+        }
         //탈퇴하기
         binding.btnExit.setOnClickListener {
             val currentUser = auth.currentUser
@@ -38,33 +49,9 @@ class AccountActivity : AppCompatActivity() {
                 showReauthenticateDialog(currentUser)
             }
         }
-        //로그아웃
-        binding.btnLogout.setOnClickListener {
-            showLogoutDialog()
-        }
-        //정보 수정
-        binding.btnChangeInfo.setOnClickListener {
-            showChangeInfoDialog()
-        }
     }
 
-    //정보 수정 다이얼로그 창
-    private fun showChangeInfoDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.activity_doublecheck_pw, null)
-
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .setPositiveButton("확인") { _, _ ->
-                val intent = Intent(this, ChangeInfo::class.java)
-                startActivity(intent)
-            }
-            .setNegativeButton("취소", null)
-            .create()
-
-        dialog.show()
-    }
-
-    //로그아웃 다이얼로그 창
+    //로그아웃 다이얼로그 창 -> 로그아웃 호출
     private fun showLogoutDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_logout, null)
 
@@ -79,7 +66,25 @@ class AccountActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    //다이얼로그 창-> 사용자 재인증함
+    //정보 수정 다이얼로그 창 -> 재인증 호출
+    private fun showChangeInfoDialog(user: FirebaseUser) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_reauthenticate, null)
+        val passwordEditText = dialogView.findViewById<EditText>(R.id.editTextPassword)
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("비밀번호를 입력하세요")
+            .setView(dialogView)
+            .setPositiveButton("확인") { _, _ ->
+                val password = passwordEditText.text.toString().trim()
+                reauthenticateAndChange(user, password)
+            }
+            .setNegativeButton("취소", null)
+            .create()
+
+        dialog.show()
+    }
+
+    //계정 탈퇴 다이얼로그 창-> 재인증 호출
     private fun showReauthenticateDialog(user: FirebaseUser) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_reauthenticate, null)
         val passwordEditText = dialogView.findViewById<EditText>(R.id.editTextPassword)
@@ -88,7 +93,7 @@ class AccountActivity : AppCompatActivity() {
             .setTitle("비밀번호를 입력하세요")
             .setView(dialogView)
             .setPositiveButton("확인") { _, _ ->
-                val password = passwordEditText.text.toString()
+                val password = passwordEditText.text.toString().trim()
                 reauthenticateAndDelete(user, password)
             }
             .setNegativeButton("취소", null)
@@ -97,6 +102,28 @@ class AccountActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    //재인증이 완료되면 정보 수정 호출
+    private fun reauthenticateAndChange(user: FirebaseUser, password: String) {
+        val email = user.email
+        if (email != null) {
+            val credential = EmailAuthProvider.getCredential(email, password)
+            user.reauthenticate(credential)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val intent = Intent(this, ChangeInfo::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this, "재인증에 실패했습니다: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        val currentUser = auth.currentUser
+                        if (currentUser != null) {
+                            showChangeInfoDialog(currentUser)
+                        }
+                    }
+                }
+        }
+    }
+
+    //재인증이 완료되면 계정 삭제 호출
     private fun reauthenticateAndDelete(user: FirebaseUser, password: String) {
         val email = user.email
         if (email != null) {
@@ -107,6 +134,10 @@ class AccountActivity : AppCompatActivity() {
                         deleteUserAccount(user)
                     } else {
                         Toast.makeText(this, "재인증에 실패했습니다: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        val currentUser = auth.currentUser
+                        if (currentUser != null) {
+                            showReauthenticateDialog(currentUser)
+                        }
                     }
                 }
         }

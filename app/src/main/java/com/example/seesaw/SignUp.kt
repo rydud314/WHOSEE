@@ -46,12 +46,12 @@ class SignUp : AppCompatActivity() {
 
         binding.btnJoin.setOnClickListener {
 
-            var id = binding.idJoin.text.toString()
-            val emailDomain = binding.spinnerEmailDomains.selectedItem.toString()
-            var pw = binding.pwJoin.text.toString()
-            var name = binding.nameJoin.text.toString()
-            var tel1 = binding.telJoin01.text.toString()
-            var tel2 = binding.telJoin02.text.toString()
+            var id = binding.idJoin.text.toString().trim()
+            val emailDomain = binding.spinnerEmailDomains.selectedItem.toString().trim()
+            var pw = binding.pwJoin.text.toString().trim()
+            var name = binding.nameJoin.text.toString().trim()
+            var tel1 = binding.telJoin01.text.toString().trim()
+            var tel2 = binding.telJoin02.text.toString().trim()
 
             var email = "$id$emailDomain"
 

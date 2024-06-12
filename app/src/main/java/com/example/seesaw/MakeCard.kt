@@ -98,16 +98,16 @@ class MakeCard : AppCompatActivity() {
     }
 
     private fun createCard() {
-        val name = binding.etName.text.toString()
-        val job = binding.etJob.text.toString()
-        val introduction = binding.etIntroduction.text.toString()
-        val workplace = binding.etWorkplace.text.toString()
-        val email = binding.etEmail.text.toString()
-        val gender = binding.tvGender.text.toString()
-        val position = binding.etPosition.text.toString()
-        val tel = binding.etTel.text.toString()
-        val sns = binding.etSns.text.toString()
-        val pofol = binding.etPortfolio.text.toString()
+        val name = binding.etName.text.toString().trim()
+        val job = binding.etJob.text.toString().trim()
+        val introduction = binding.etIntroduction.text.toString().trim()
+        val workplace = binding.etWorkplace.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
+        val gender = binding.tvGender.text.toString().trim()
+        val position = binding.etPosition.text.toString().trim()
+        val tel = binding.etTel.text.toString().trim()
+        val sns = binding.etSns.text.toString().trim()
+        val pofol = binding.etPortfolio.text.toString().trim()
 
         if (cardId == "") {
             cardId = getRandomString(10)

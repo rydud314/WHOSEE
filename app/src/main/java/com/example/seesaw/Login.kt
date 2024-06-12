@@ -30,8 +30,8 @@ class Login : AppCompatActivity() {
 //        setContentView(R.layout.activity_login)
 
         binding.btnLogin.setOnClickListener {
-            val id = binding.loginId.text.toString()
-            val password = binding.loginPw.text.toString()
+            val id = binding.loginId.text.toString().trim()
+            val password = binding.loginPw.text.toString().trim()
 
             if (id.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "아이디와 비밀번호를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()

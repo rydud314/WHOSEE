@@ -76,7 +76,7 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/editTextTextPassword3"
+                android:id="@+id/et_pwNew"
                 android:layout_width="223dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -84,7 +84,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tv_pwHint"
             android:layout_width="372dp"
             android:layout_height="wrap_content"
             android:text="6자리이상 10자리 이하여야 합니다"
@@ -105,7 +105,7 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/editTextTextPassword2"
+                android:id="@+id/et_pwNew_again"
                 android:layout_width="223dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -113,7 +113,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/tv_pwError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="비밀번호가 일치하지 않습니다."
