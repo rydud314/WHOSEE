@@ -122,6 +122,8 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                                 }
                                 Log.d(TAG, "${myCardList.size}")
 
+                                myCardList.sortBy { it.name }
+
                                 // ViewPager2에 어댑터 설정
                                 viewPager.adapter = NameCardAdapter(myCardList)
 

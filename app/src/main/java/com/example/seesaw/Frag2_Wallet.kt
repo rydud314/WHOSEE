@@ -1,7 +1,6 @@
 package com.example.seesaw
 
 import android.content.ContentValues.TAG
-import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -26,6 +26,12 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
+    private lateinit var btnSearchCard : Button
+    private lateinit var etSearchCard : EditText
+    private lateinit var btnReturn : Button
+
+    private var myCardList : ArrayList<Card> = arrayListOf()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_frag2_wallet, container, false)
@@ -34,6 +40,10 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
         drawerLayout = view.findViewById(R.id.drawer_layout_frag2_wallet)
         navView = view.findViewById(R.id.navigation_view)
         navView.setNavigationItemSelectedListener(this)
+        btnSearchCard = view.findViewById(R.id.btn_search_card)
+        etSearchCard = view.findViewById(R.id.et_search_card)
+        btnReturn = view.findViewById(R.id.btn_return)
+
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -48,7 +58,6 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
         var cardId = ""
         var card_list = mutableListOf<String>()
 
-        val myCardList : MutableList<Card> = mutableListOf()
         myCardList.clear()
 
         if (uid != null) {
@@ -93,8 +102,9 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
                                 }
                                 Log.d(TAG, "${myCardList.size}")
 
-                                recyclerView.adapter = CardAdapter(myCardList, requireContext())
+                                myCardList.sortBy { it.name } //이름 오름차순 정렬
 
+                                recyclerView.adapter = CardAdapter(myCardList, requireContext())
 
                             }.addOnFailureListener{Log.d(TAG, "querysnapshot 실패")}
 
@@ -117,18 +127,48 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
         Log.d(TAG, "second : ${myCardList.size}")
 
 
-        /*
-        // 샘플 데이터
-        val cardList = listOf(
-            Card("김나연", "사원", "영남대학교", "@gmail.com", "cardId", "여",
-                "imageName", "안냐세요", "개발자", "포폴", "sns안해요", "010-1234-1234")
-            //Card("김현수", "Graphic Designer", "영남대학교")
-            // 카드 추가 여기서 하기
-        )*/
+        btnSearchCard.setOnClickListener {
+            Log.d(TAG, "검색 버튼 누름")
+
+            val searchList = searchCard(myCardList)
+            Log.d(TAG, "검색어 = ${searchList.size}")
+
+            recyclerView.adapter = CardAdapter(searchList, requireContext())
+            btnReturn.visibility = View.VISIBLE
+            btnReturn.isEnabled = true
+            //return@setOnClickListener
+        }
+
+        btnReturn.setOnClickListener {
+
+            recyclerView.adapter = CardAdapter(myCardList, requireContext())
+            btnReturn.visibility =View.INVISIBLE
+            btnReturn.isEnabled = false
+            etSearchCard.text.clear()
+            Log.d(TAG, "검색 취소 -> 전체 결과")
+        }
 
         return view
 
     }
+
+    private fun searchCard(myCardList: ArrayList<Card>): List<Card> {
+        val search = etSearchCard.text.toString().trim()
+        Log.d(TAG, "search = $search")
+
+        val searchList = myCardList.filter { it.name.contains(search) }
+
+        if (searchList.isNotEmpty()) {
+            searchList.sortedBy { it.name }
+        }else{
+            Toast.makeText(context, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "검색 결과가 없습니다.")
+
+        }
+        return searchList
+    }
+
+
     companion object{
         fun newInstance() : Frag2_Wallet{
             return Frag2_Wallet()
