@@ -236,7 +236,7 @@
                         android:hint="뉴비"
                         android:padding="3dp"
                         android:background="@drawable/box_shape"
-                        android:inputType="number"/>
+                        android:inputType="text"/>
                 </LinearLayout>
 
                 <LinearLayout

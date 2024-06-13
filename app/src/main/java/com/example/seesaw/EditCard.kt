@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.seesaw.databinding.ActivityEditCardBinding
 import com.example.seesaw.databinding.ActivityMakeCardBinding
@@ -34,6 +35,7 @@ class EditCard : AppCompatActivity() {
         // 인텐트로부터 데이터 가져오기
         val card = intent.getParcelableExtra<Card>("card")
 
+
         // EditText 힌트에 데이터 설정
         card?.let {
             binding.etJob.hint = it.job
@@ -50,6 +52,7 @@ class EditCard : AppCompatActivity() {
 
         // EditText에 선입력 되어있도록
         card?.let {
+
             binding.etJob.setText(it.job)
             binding.etName.setText(it.name)
             binding.etWorkplace.setText(it.workplace)
@@ -84,8 +87,62 @@ class EditCard : AppCompatActivity() {
         // 명함 수정 버튼 설정
 //        val btn_edit_card: Button = findViewById(R.id.btn_edit_card)
         binding.btnEditCard.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            //이미지도 넣어야 함
+            val name = binding.etName.text.toString().trim()
+            val job = binding.etJob.text.toString().trim()
+            val introduction = binding.etIntroduction.text.toString().trim()
+            val workplace = binding.etWorkplace.text.toString().trim()
+            val email = binding.etEmail.text.toString().trim()
+            val gender = binding.tvGender.text.toString().trim()
+            val position = binding.etPosition.text.toString().trim()
+            val tel = binding.etTel.text.toString().trim()
+            val sns = binding.etSns.text.toString().trim()
+            val pofol = binding.etPortfolio.text.toString().trim()
+
+            if (name.isEmpty()) {
+                // 이름이 비어있을 경우 경고 메시지 표시
+                Toast.makeText(this, "이름은 필수 입력사항입니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                // 업데이트할 데이터를 Map으로 준비
+                val cardData = mapOf(
+                    "name" to name,
+                    "job" to job,
+                    "introduction" to introduction,
+                    "workplace" to workplace,
+                    "email" to email,
+                    "gender" to gender,
+                    "position" to position,
+                    "tel" to tel,
+                    "sns" to sns,
+                    "pofol" to pofol
+                )
+
+//                var check = false;
+
+                // Firestore에 업데이트
+                card?.let {
+                    firestore.collection("all_card_list").document(it.cardId)
+                        .update(cardData)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "명함 수정 완료", Toast.LENGTH_SHORT).show()
+//                            check = true;
+//                            MainActivity로 이동
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "명함 수정 실패: ${e.message}", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                }
+
+//                if (check == true) {
+//                    val intent = Intent(this, ChooseEditCard::class.java)
+//                    startActivity(intent)
+//                }
+
+            }
         }
     }
 }
