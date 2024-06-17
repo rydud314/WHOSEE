@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.seesaw.databinding.ActivityMakeCardBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -41,7 +40,7 @@ class MakeCard : AppCompatActivity() {
         binding.btnMale.setOnClickListener {
             // 성별 설정
             gender = "남"
-            binding.tvGender.setText(gender)
+            binding.tvGender.text = gender
             binding.btnMale.setBackgroundResource(R.drawable.selected_box_shape)
             binding.btnFemale.setBackgroundResource(R.drawable.box_shape)
         }
@@ -49,7 +48,7 @@ class MakeCard : AppCompatActivity() {
         binding.btnFemale.setOnClickListener {
             // 성별 설정
             gender = "여"
-            binding.tvGender.setText(gender)
+            binding.tvGender.text = gender
             binding.btnFemale.setBackgroundResource(R.drawable.selected_box_shape)
             binding.btnMale.setBackgroundResource(R.drawable.box_shape)
         }
@@ -81,17 +80,17 @@ class MakeCard : AppCompatActivity() {
         }
     }
 
-    private fun uploadImage() {
+    private fun uploadImage(onSuccess: (String) -> Unit, onFailure: () -> Unit) {
         imageUri?.let { uri ->
             val fileRef = storageRef.child("uploads/$cardId.jpg")
             fileRef.putFile(uri)
                 .addOnSuccessListener { taskSnapshot ->
                     fileRef.downloadUrl.addOnSuccessListener { uri ->
-                        Toast.makeText(this, "Upload successful. URL: $uri", Toast.LENGTH_SHORT).show()
+                        onSuccess(uri.toString())
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Upload failed", Toast.LENGTH_SHORT).show()
+                    onFailure()
                     Log.e(TAG, "Upload failed", e)
                 }
         }
@@ -122,93 +121,86 @@ class MakeCard : AppCompatActivity() {
             val currentUser = auth.currentUser
             val uid = currentUser?.uid
 
-
             //val cardRef = firestore.collection("all_card_list").document(cardId)
+
 
             uid?.let { userId ->
                 val cardRef = firestore.collection("all_card_list").document(cardId)
 
-                cardRef.get()
-                    .addOnSuccessListener { document ->
-                        val imageName = if (imageUri != null) "uploads/$cardId.jpg" else "uploads/default.jpg"
-                        val cardData = hashMapOf<String, Any>(
-                            "cardId" to cardId!!,
-                            "name" to name,
-                            "job" to job,
-                            "introduction" to introduction,
-                            "workplace" to workplace,
-                            "email" to email,
-                            "gender" to gender,
-                            "position" to position,
-                            "tel" to tel,
-                            "sns" to sns,
-                            "pofol" to pofol,
-                            "imageName" to imageName
-                        )
+                val handleCardCreation: (String) -> Unit = { imageUrl ->
+                    val cardData = hashMapOf<String, Any>(
+                        "cardId" to cardId,
+                        "name" to name,
+                        "job" to job,
+                        "introduction" to introduction,
+                        "workplace" to workplace,
+                        "email" to email,
+                        "gender" to gender,
+                        "position" to position,
+                        "tel" to tel,
+                        "sns" to sns,
+                        "pofol" to pofol,
+                        "imageName" to imageUrl
+                    )
 
-                        if (document.exists()) {
-                            Log.d(TAG,"명함 아이디 중복 체크 실패")
-                        } else {
-                            // 문서가 없으면 새 문서 생성 후 데이터 추가
-                            cardRef.set(cardData)
-                        }
-                        // 성공 메시지 표시 및 액티비티 종료
+                    cardRef.set(cardData).addOnSuccessListener {
                         Log.d(TAG, "명함이 생성되었습니다.")
-
-
-                        // my_card_list에 저장하는 코드
-                        val myCardRef = firestore.collection("my_card_list").document(userId)
-                        //                          Toast.makeText(this, "$userId", Toast.LENGTH_SHORT).show()
-                        myCardRef.get()
-                            .addOnSuccessListener { document ->
-                                val cardData1 = hashMapOf<String, Any>(
-                                    "cardId" to cardId!!
-                                )
-                                if (document.exists()) {
-                                    // 문서가 존재하면
-                                    val existingArray = document.get("cards") as? ArrayList<HashMap<String, Any>>?
-                                    if (existingArray != null) {
-                                        // 배열이 이미 존재하면 새 데이터 추가
-                                        existingArray.add(cardData1)
-                                        myCardRef.update("cards", existingArray)
-                                    } else {
-                                        // 배열이 존재하지 않으면 새로운 배열 생성 후 데이터 추가
-                                        myCardRef.set(mapOf("cards" to arrayListOf(cardData1)))
-                                    }
-                                } else {
-                                    // 문서가 없으면 새 문서 생성 후 데이터 추가
-                                    myCardRef.set(mapOf("cards" to arrayListOf(cardData1)))
-                                }
-                                // 성공 메시지 표시 및 액티비티 종료
-                                Log.d(TAG, "명함이 저장되었습니다.")
-
-                                if (imageUri != null) {
-                                    uploadImage()
-                                }
-
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
-                            .addOnFailureListener { e ->
-                                // 실패 메시지 표시
-                                Log.d(TAG, "명함 저장 실패")
-                            }
-                    }
-                    .addOnFailureListener { e ->
-                        // 실패 메시지 표시
+                        saveToMyCardList(userId, cardId)
+                    }.addOnFailureListener {
                         Log.d(TAG, "명함 생성 실패")
                     }
+                }
+
+                if (imageUri != null) {
+                    uploadImage(handleCardCreation) {
+                        Toast.makeText(this, "Upload failed", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    handleCardCreation("https://firebasestorage.googleapis.com/v0/b/card-93c5d.appspot.com/o/uploads%2Fdefault.jpg?alt=media&token=72346948-df0a-41d8-9a98-1633526cf919")
+                }
             }
         }
     }
 
+    private fun saveToMyCardList(userId: String, cardId: String) {
+        // my_card_list에 저장하는 코드
+        val myCardRef = firestore.collection("my_card_list").document(userId)
+        myCardRef.get().addOnSuccessListener { document ->
+            val cardData = hashMapOf<String, Any>(
+                "cardId" to cardId
+            )
+            if (document.exists()) {
+                // 문서가 존재하면
+                val existingArray = document.get("cards") as? ArrayList<HashMap<String, Any>>
+                if (existingArray != null) {
+                    // 배열이 이미 존재하면 새 데이터 추가
+                    existingArray.add(cardData)
+                    myCardRef.update("cards", existingArray)
+                } else {
+                    // 배열이 존재하지 않으면 새로운 배열 생성 후 데이터 추가
+                    myCardRef.set(mapOf("cards" to arrayListOf(cardData)))
+                }
+            } else {
+                // 문서가 없으면 새 문서 생성 후 데이터 추가
+                myCardRef.set(mapOf("cards" to arrayListOf(cardData)))
+            }
+            // 성공 메시지 표시 및 액티비티 종료
+            Log.d(TAG, "명함이 저장되었습니다.")
+            finishCreation()
+        }.addOnFailureListener { e ->
+            Log.d(TAG, "명함 저장 실패")
+        }
+    }
+
+    private fun finishCreation() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
     fun getRandomString(length: Int): String {
         val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        return (1..length)
-            .map { charset.random() }
-            .joinToString("")
+        return (1..length).map { charset.random() }.joinToString("")
     }
 
     companion object {

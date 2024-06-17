@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 class ChooseEditCardAdapter(private val cardList: List<Card>, private val context: Context) : RecyclerView.Adapter<ChooseEditCardAdapter.CardViewHolder>() {
 
@@ -29,7 +31,15 @@ class ChooseEditCardAdapter(private val cardList: List<Card>, private val contex
         holder.position.text = card.position
         holder.workplace.text = card.workplace
 
-        holder.itemView.setOnClickListener{
+        // Glide를 사용하여 이미지를 로드하고 동그랗게 자릅니다.
+        Glide.with(context)
+            .load(card.imageName)
+            .apply(RequestOptions.circleCropTransform())
+            .placeholder(R.drawable.ic_profile_placeholder)
+            .error(R.drawable.ic_profile_placeholder)
+            .into(holder.profileImage)
+
+        holder.itemView.setOnClickListener {
             val intent = Intent(context, EditCard::class.java).apply {
                 putExtra("card", card)
             }
