@@ -28,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
 //            startActivity(intent)
             Handler().postDelayed({
                 // 여기서 MainActivity는 다음 화면으로 넘어갈 액티비티를 의미합니다. 실제 앱에서는 적절한 액티비티로 변경해야 합니다.
-                val intent = Intent(this, Login::class.java)
+                val intent = Intent(this, OnboardingActivity::class.java)
                 startActivity(intent)
                 finish() // SplashActivity 종료
             }, 2000) // 3000ms = 3초 딜레이
