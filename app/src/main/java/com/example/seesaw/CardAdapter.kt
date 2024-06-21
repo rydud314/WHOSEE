@@ -29,6 +29,7 @@ class CardAdapter(private val cardList: List<Card>, private val context: Context
         holder.name.text = card.name
         holder.position.text = card.position
         holder.workplace.text = card.workplace
+        card.index = position
 
         holder.itemView.setOnClickListener{
             val intent = Intent(context, NameCardDetailOthers::class.java).apply {

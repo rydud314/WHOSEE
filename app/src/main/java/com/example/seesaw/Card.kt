@@ -15,7 +15,8 @@ data class Card(
     val job: String,
     val pofol: String,
     val sns: String,
-    val tel: String
+    val tel: String,
+    var index : Int
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -29,7 +30,8 @@ data class Card(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!
+        parcel.readString()!!,
+        parcel.readInt()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -45,6 +47,7 @@ data class Card(
         parcel.writeString(pofol)
         parcel.writeString(sns)
         parcel.writeString(tel)
+        parcel.writeInt(index)
     }
 
     override fun describeContents(): Int {

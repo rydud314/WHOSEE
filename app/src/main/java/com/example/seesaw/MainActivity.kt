@@ -204,16 +204,21 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.seesaw.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var viewModel:CardViewModel
 
     private lateinit var frag1Home: Frag1_Home
     private lateinit var frag2Wallet: Frag2_Wallet
@@ -234,6 +239,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //ViewModel 인스턴스 생성
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(CardViewModel::class.java)
+        Log.d("mainAct : ", "초기화 -> ${viewModel.myCardList.size}")
+
+
+
+
         // 툴바 설정
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -251,6 +263,8 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frame, Frag1_Home.newInstance())
                 .commit()
+
+
         }
 
         // qr코드 생성버튼 리스너 설정
@@ -317,3 +331,6 @@ class MainActivity : AppCompatActivity() {
         true
     }
 }
+
+
+

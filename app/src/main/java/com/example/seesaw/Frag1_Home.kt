@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
@@ -23,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var viewModel:CardViewModel
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
@@ -43,6 +46,9 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //ViewModel 인스턴스 생성
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(CardViewModel::class.java)
 
         drawerLayout = view.findViewById(R.id.drawer_layout_frag1_home)
         navView = view.findViewById(R.id.navigation_view)
@@ -131,6 +137,8 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                                 TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                                     // 탭을 초기화하지 않음
                                 }.attach()
+                                viewModel.myCardList = myCardList
+                                Log.d("frag Home : ", "${viewModel.myCardList.size}")
 
                             }.addOnFailureListener{ Log.d(TAG, "querysnapshot 실패") }
 
