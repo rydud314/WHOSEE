@@ -240,8 +240,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
         // FAB 초기 색상 저장
-        initialFabIconColor = binding.fab.imageTintList
-        initialFabBackgroundColor = binding.fab.backgroundTintList
+        initialFabIconColor = binding.makeQrBtn.imageTintList
+        initialFabBackgroundColor = binding.makeQrBtn.backgroundTintList
 
         // bottomNavigationView를 직접 참조하는 대신에 binding을 통해 접근
         binding.bottomNav.setOnNavigationItemSelectedListener(onBottomNavItemSelectedListener)
@@ -253,13 +253,13 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-        // FAB 클릭 리스너 설정
-        binding.fab.setOnClickListener {
+        // qr코드 생성버튼 리스너 설정
+        binding.makeQrBtn.setOnClickListener {
             // 클릭 시 아이콘 및 배경 색상 변경
-            binding.fab.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.selected_color))
-            binding.fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.selected_color))
+            binding.makeQrBtn.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.selected_color))
+            binding.makeQrBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.selected_color))
 
-            // FAB 클릭 시 Frag3_Share 프래그먼트로 화면 전환
+            // qr코드 생성버튼 클릭 시 Frag3_Share 프래그먼트로 화면 전환
             switchToShareFragment()
         }
     }
@@ -290,8 +290,8 @@ class MainActivity : AppCompatActivity() {
 
     private val onBottomNavItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         // 다른 아이템 선택 시 FAB 색상을 초기 상태로 복원
-        binding.fab.imageTintList = initialFabIconColor
-        binding.fab.backgroundTintList = initialFabBackgroundColor
+        binding.makeQrBtn.imageTintList = initialFabIconColor
+        binding.makeQrBtn.backgroundTintList = initialFabBackgroundColor
 
         when (item.itemId) {
             R.id.bottom_nav_home -> {
