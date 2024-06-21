@@ -45,17 +45,22 @@
         android:layout_marginTop="20dp">
 
         <ImageView
+            android:id="@+id/qr_code_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/custom_empty_card_background"/>
 
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_image"/>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <Button
+        android:id="@+id/btn_generate_qr"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QR 코드 생성"
+        android:background="@drawable/custom_btn"
+        android:textColor="@color/white"
+        android:textSize="15dp"/>
 
     <LinearLayout
         android:layout_marginTop="30dp"
@@ -224,8 +229,6 @@
 
         </TableRow>
 
-
     </TableLayout>
-
 
 </LinearLayout>
