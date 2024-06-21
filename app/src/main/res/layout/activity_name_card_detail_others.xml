@@ -7,38 +7,87 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="명함 상세 정보"
-        android:textSize="40dp"
-        android:layout_marginBottom="10dp"/>
+        android:textSize="40sp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/white"
+        android:text="Name"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:padding="10dp"
+        android:text="Job"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_workplace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:padding="10dp"
+            android:text="Workplace"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginStart="60dp"
+            android:text="Gender"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:padding="10dp"
+            android:text="Position"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:padding="10dp"
+            android:text="Email"
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginTop="0dp"
         android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Name"
-                android:padding="10dp"/>
-
-            <TextView
-                android:id="@+id/tv_job"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Job"
-                android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/tv_introduction"
@@ -48,29 +97,6 @@
                 android:text="Introduction"
                 android:padding="10dp"/>
 
-            <TextView
-                android:id="@+id/tv_workplace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Workplace"
-                android:padding="10dp"/>
-
-            <TextView
-                android:id="@+id/tv_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Gender"
-                android:padding="10dp"/>
-
-            <TextView
-                android:id="@+id/tv_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Position"
-                android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/tv_tel"
@@ -78,14 +104,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="Tel"
-                android:padding="10dp"/>
-
-            <TextView
-                android:id="@+id/tv_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Email"
                 android:padding="10dp"/>
 
             <TextView
@@ -104,13 +122,16 @@
                 android:text="Portfolio"
                 android:padding="10dp"/>
 
-<!--            <Button-->
-<!--                android:id="@+id/btn_edit_card"-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:text="명함 편집"-->
-<!--                android:background="@drawable/btn_calendar"-->
-<!--                android:layout_gravity="center"/>-->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#875FFD"
+                android:layout_marginTop="0dp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:id="@+id/btn_edit_card"
+                android:text="1:1 채팅하기"
+                android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
