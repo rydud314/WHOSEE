@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/glass_background_card1"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <!--    <androidx.appcompat.widget.Toolbar-->
@@ -17,6 +17,10 @@
     <!--        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
     <!--        -->
     <!--        tools:ignore="MissingConstraints" />-->
+    <include
+        layout="@layout/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
 
     <LinearLayout
         android:paddingTop="100dp"
@@ -27,7 +31,7 @@
         <Button
             android:layout_marginTop="10dp"
             android:layout_width="400dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:id="@+id/btn_logout"
             android:textStyle="bold"
@@ -46,7 +50,7 @@
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:background="#764AF4"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:text="정보변경" />
 
         <Button
@@ -58,7 +62,7 @@
             android:textSize="25dp"
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:text="탈퇴하기" />
     </LinearLayout>
 

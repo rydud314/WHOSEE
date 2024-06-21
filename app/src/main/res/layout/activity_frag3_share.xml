@@ -10,7 +10,7 @@
     <TextView
         layout="@layout/toolbar_share"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:text="공유"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -19,11 +19,19 @@
         android:layout_marginStart="10dp" />
 
     <ImageView
+        android:id="@+id/card_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+
+        android:background="@drawable/card_face"/>
+
+    <ImageView
         android:id="@+id/show_qr"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="200dp"/>
+        android:layout_marginTop="100dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

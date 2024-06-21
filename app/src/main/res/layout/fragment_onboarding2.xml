@@ -4,18 +4,20 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:padding="16dp"
-android:gravity="center">
+android:gravity="bottom">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_width="350dp"
+        android:layout_gravity="center"
+        android:layout_height="500dp"
         android:background="@drawable/onboarding_2"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="0dp"/>
 
     <Button
         android:id="@+id/btnNext2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:background="@drawable/btn_onboarding_background"
         android:text="다음"
         android:textColor="@color/white"
