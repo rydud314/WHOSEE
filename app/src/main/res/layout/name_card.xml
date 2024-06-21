@@ -68,18 +68,18 @@
             android:layout_marginStart="18dp"
             android:layout_gravity="center|left|top"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:text="MAIN"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="25dp"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="15dp"-->
+<!--            android:text="MAIN"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:layout_marginTop="25dp"/>-->
 
         <TableLayout
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="35dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">

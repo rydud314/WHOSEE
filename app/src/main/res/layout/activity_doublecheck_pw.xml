@@ -5,22 +5,32 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:layout_height="match_parent">
-
+    <include
+        layout="@layout/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"/>
     <TextView
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:textColor="#545F71"
+        android:textStyle="bold"
         android:id="@+id/textView"
-        android:paddingTop="50dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="본인 인증하기"
         android:textSize="30dp"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="70dp" />
+       />
 
     <TextView
+        android:layout_marginTop="30dp"
+        android:textColor="#545F71"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="기존의 비밀번호를 입력하시오"
+        android:layout_marginBottom="20dp"
         tools:layout_editor_absoluteX="51dp"
         tools:layout_editor_absoluteY="141dp" />
 
@@ -31,7 +41,7 @@
 
         <EditText
             android:id="@+id/editTextTextPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
@@ -40,19 +50,21 @@
 
 
         <Button
+            android:background="#875FFD"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
             android:id="@+id/btn_check"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="확인"
-            tools:layout_editor_absoluteX="268dp"
-            tools:layout_editor_absoluteY="193dp" />
+            android:layout_marginEnd="0dp"/>
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/confirm"
         android:layout_width="299dp"
-        android:layout_height="3dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:text="인증되었습니다." />
 </LinearLayout>
