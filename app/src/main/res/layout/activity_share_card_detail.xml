@@ -123,15 +123,14 @@
                 android:padding="10dp"/>
 
             <Button
-
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#875FFD"
                 android:layout_marginTop="0dp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:id="@+id/btn_chat"
-                android:text="1:1 채팅하기"
+                android:id="@+id/btn_save_card"
+                android:text="명함 저장하기"
                 android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>

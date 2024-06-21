@@ -203,7 +203,9 @@ package com.example.seesaw
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
+import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -229,7 +231,7 @@ class MainActivity : AppCompatActivity() {
     // View Binding 인스턴스 선언
     private lateinit var binding: ActivityMainBinding
 
-    // 초기 FAB 색상 정의
+    // 초기 qr코드 생성버튼 색상 정의
     private var initialFabIconColor: ColorStateList? = null
     private var initialFabBackgroundColor: ColorStateList? = null
 
@@ -244,6 +246,19 @@ class MainActivity : AppCompatActivity() {
         Log.d("mainAct : ", "초기화 -> ${viewModel.myCardList.size}")
 
 
+        val uri = intent.data
+        Log.d(TAG, "uri = $uri")
+
+        if (uri != null){
+            var params = uri.pathSegments
+            val cardId = params.get(params.size-1)
+            Log.d(TAG, "cardid = $cardId")
+
+            val intent = Intent(this, ShareCardDetail::class.java)
+            intent.putExtra("cardId", cardId)
+            startActivity(intent)
+        }
+
 
 
         // 툴바 설정
@@ -251,7 +266,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
-        // FAB 초기 색상 저장
+        // qr코드 생성 버튼 초기 색상 저장
         initialFabIconColor = binding.makeQrBtn.imageTintList
         initialFabBackgroundColor = binding.makeQrBtn.backgroundTintList
 
