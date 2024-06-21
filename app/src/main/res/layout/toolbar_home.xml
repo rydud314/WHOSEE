@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="#ABA1FF">
+    android:background="@color/white">
 
 <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        android:id="@+id/toolbar"-->
@@ -30,19 +30,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/title_text"
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_centerInParent="true"
-        android:text="WHOSEE"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:src="@drawable/img_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <!--    <Button-->
 <!--        android:id="@+id/action_account"-->

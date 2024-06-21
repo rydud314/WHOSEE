@@ -9,22 +9,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/make_card_background"
+        android:background="@color/white"
         android:orientation="vertical"
         android:padding="30dp"
         tools:layout_editor_absoluteX="110dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="95dp"
             android:gravity="center"
-            android:text="WHOSEE"
-            android:textColor="#552CC6"
-            android:textSize="40dp"
-            android:textStyle="bold" />
+            android:src="@drawable/img_logo" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,8 +47,6 @@
                 android:hint="이메일을 입력하세요"
                 android:inputType="text"
                 android:padding="12dp"
-                android:textColor="#552CC6"
-                android:textColorHint="#552CC6"
                 android:textSize="20dp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -107,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:text="회원가입"
-                    android:textColor="@color/white"
+                    android:textColor="@color/unselected_color"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
@@ -118,7 +113,7 @@
                     android:layout_marginStart="20dp"
                     android:background="@android:color/transparent"
                     android:text="비밀번호 찾기"
-                    android:textColor="@color/white"
+                    android:textColor="@color/unselected_color"
                     android:textSize="15dp"
                     android:textStyle="bold" />
             </LinearLayout>

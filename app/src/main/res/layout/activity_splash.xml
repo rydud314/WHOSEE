@@ -8,14 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
+
+        <ImageView
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="35dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:text="WHOSEE"/>
+            android:src="@drawable/img_splash" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

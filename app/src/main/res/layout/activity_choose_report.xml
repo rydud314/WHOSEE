@@ -50,23 +50,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:padding="30dp">
+            android:padding="20dp">
 
             <Button
-                android:layout_marginTop="20dp"
                 android:id="@+id/btn_open_annual_report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Annual"/>
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:background="#B79EFB"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/white"
+                android:text="연간 보고서"
+                android:textStyle="bold"
+                android:textSize="25dp"/>
 
             <Button
-                android:layout_marginTop="20dp"
                 android:id="@+id/btn_open_monthly_report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monthly"/>
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:background="#B79EFB"
+                android:layout_marginStart="10dp"
+                android:text="월간 보고서"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="25dp"/>
 
 
         </LinearLayout>

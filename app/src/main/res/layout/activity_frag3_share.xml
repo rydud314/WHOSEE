@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center|top"
+    android:background="@drawable/bachground_share"
     android:orientation="vertical">
 
     <TextView
@@ -11,221 +12,263 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:text="공유"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="30dp"
         android:gravity="center|start"
         android:layout_marginStart="10dp" />
 
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="김나경"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textColor="#3C4451"/>
-
-        <TextView
-            android:layout_marginTop="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="\@rlaskrud"
-            android:textSize="15dp"
-            android:textColor="#545F71"/>
-    </LinearLayout>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <ImageView
+        android:id="@+id/show_qr"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="20dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/custom_empty_card_background"/>
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_image"/>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"/>
 
     <LinearLayout
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/tv_qr"
-            android:layout_width="275dp"
-            android:layout_height="40dp"
-            android:padding="10dp"
-            android:hint="QR 링크 어쩌구"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:textColorHint="#9BA5B7"
-            android:background="@drawable/custom_input_qr"/>
+        <ImageButton
+            android:scaleType="centerCrop"
+            android:padding="0dp"
+            android:src="@drawable/ic_save_img"
+            android:id="@+id/save_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
-        <Button
-            android:layout_marginStart="5dp"
-            android:layout_width="65dp"
-            android:layout_height="25dp"
-            android:background="@drawable/custom_btn"
-            android:layout_alignRight="@+id/tv_qr"
-            android:text="복사하기"
-            android:textColor="@color/white"
-            android:textSize="15dp"/>
+        <ImageButton
+            android:scaleType="centerCrop"
+            android:padding="0dp"
+            android:src="@drawable/ic_save_qr"
+            android:id="@+id/save_qr"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <ImageButton
+            android:scaleType="centerCrop"
+            android:padding="0dp"
+            android:src="@drawable/ic_quickshare"
+            android:id="@+id/quick_share"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
     </LinearLayout>
 
-    <TableLayout
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TableRow
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <!--    <LinearLayout-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical">-->
 
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="김나경"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textColor="#3C4451"/>-->
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_img"/>
+<!--        <TextView-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="\@rlaskrud"-->
+<!--            android:textSize="15dp"-->
+<!--            android:textColor="#545F71"/>-->
+<!--    </LinearLayout>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="이미지 저장"
-                    android:textSize="12dp"
-                    android:textColor="#545F71"/>
-            </LinearLayout>
+<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_marginTop="20dp">-->
 
-            <LinearLayout
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:background="@drawable/custom_empty_card_background"/>-->
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_save"/>
+<!--        <ImageView-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@drawable/ic_image"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="QR 저장"
-                    android:textSize="12dp"
-                    android:textColor="#545F71"/>
-            </LinearLayout>
+<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_kakaotalk"/>
+<!--        <EditText-->
+<!--            android:id="@+id/tv_qr"-->
+<!--            android:layout_width="275dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:padding="10dp"-->
+<!--            android:hint="QR 링크 어쩌구"-->
+<!--            android:textSize="15dp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textColorHint="#9BA5B7"-->
+<!--            android:background="@drawable/custom_input_qr"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="카카오톡"
-                    android:textSize="12dp"
-                    android:textColor="#545F71"/>
-            </LinearLayout>
+<!--        <Button-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_width="65dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:background="@drawable/custom_btn"-->
+<!--            android:layout_alignRight="@+id/tv_qr"-->
+<!--            android:text="복사하기"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="15dp"/>-->
+<!--    </LinearLayout>-->
 
-        </TableRow>
+<!--    <TableLayout-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
 
-        <TableRow
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<!--        <TableRow-->
+<!--            android:gravity="center"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
 
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:gravity="center"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_msg"/>
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:background="@drawable/ic_img"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="메시지"
-                    android:textSize="12dp"
-                    android:textColor="#545F71"/>
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="이미지 저장"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:textColor="#545F71"/>-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:layout_marginStart="30dp"-->
+<!--                android:layout_marginEnd="30dp"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_email"/>
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:background="@drawable/ic_save"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="이메일"
-                    android:textSize="12dp"
-                    android:textColor="#545F71"/>
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="QR 저장"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:textColor="#545F71"/>-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:gravity="center"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_share"/>
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:background="@drawable/ic_kakaotalk"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="공유"
-                    android:textSize="12dp"
-                    android:textColor="#545F71"/>
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="카카오톡"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:textColor="#545F71"/>-->
+<!--            </LinearLayout>-->
 
-        </TableRow>
+<!--        </TableRow>-->
+
+<!--        <TableRow-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <LinearLayout-->
+<!--                android:gravity="center"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:background="@drawable/ic_msg"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="메시지"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:textColor="#545F71"/>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_marginStart="30dp"-->
+<!--                android:layout_marginEnd="30dp"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:background="@drawable/ic_email"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="이메일"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:textColor="#545F71"/>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:gravity="center"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:background="@drawable/ic_share"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="공유"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:textColor="#545F71"/>-->
+<!--            </LinearLayout>-->
+
+<!--        </TableRow>-->
 
 
-    </TableLayout>
+<!--    </TableLayout>-->
 
 
 </LinearLayout>
