@@ -24,9 +24,9 @@ class Frag3_Share : Fragment() {
     private lateinit var idViewModel : CardIdViewModel
 
     private var view: View? = null
-    private lateinit var qrCodeImage: ImageView
-    private lateinit var qrEditText: EditText
-    private lateinit var generateQrButton: Button
+    private lateinit var showQr: ImageView
+    //private lateinit var qrEditText: EditText
+    //private lateinit var generateQrButton: Button
     lateinit var card : Card
     //val cardId = "bfuBfMhtRK"
 
@@ -48,15 +48,15 @@ class Frag3_Share : Fragment() {
 //        var myCardList = intent.getSerializableExtra("myCardList") as ArrayList<Card>
 //        loadCards(myCardList)
 
+        showQr = view.findViewById(R.id.show_qr)
 
         arguments?.let {
-            card = it.getParcelable("card")!!
+            card = it.getParcelable("shareCard")!!
         }
-        Log.d(TAG, "프레그3 : card = ${card.cardId}")
-
-        qrCodeImage = view.findViewById(R.id.show_qr)
 
         val cardId = card.cardId.toString()
+        Log.d(TAG, "프레그3 : card = ${card.cardId}")
+
         val qrCodeUrl = "whosee://sharelink/Splash?cardId=$cardId"
         val encodedUrl = URLEncoder.encode(qrCodeUrl, "UTF-8")
         Log.d(TAG, "encode : $encodedUrl")
@@ -86,7 +86,7 @@ class Frag3_Share : Fragment() {
                     bitmap.setPixel(x, y, if (bitMatrix[x, y]) android.graphics.Color.BLACK else android.graphics.Color.WHITE)
                 }
             }
-            qrCodeImage.setImageBitmap(bitmap)
+            showQr.setImageBitmap(bitmap)
         } catch (e: WriterException) {
             e.printStackTrace()
         }

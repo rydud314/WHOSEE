@@ -307,14 +307,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun switchToShareFragment() {
-        /*frag3Share = Frag3_Share.newInstance()
-        supportFragmentManager.beginTransaction().replace(R.id.main_frame, frag3Share).commit()
-        binding.bottomNav.menu.findItem(R.id.bottom_nav_share).isChecked = true*/
+        val bundle = Bundle()
+        bundle.putParcelable("shareCard", myCardList[0])
+        Log.d(TAG, "쉐어qr Card이름= ${myCardList[0].cardId}")
 
-        val intent = Intent(this, ChooseShareCard::class.java).apply {
+        frag3Share = Frag3_Share.newInstance()
+        frag3Share.arguments = bundle
+
+        supportFragmentManager.beginTransaction().replace(R.id.main_frame, frag3Share).commit()
+        binding.bottomNav.menu.findItem(R.id.bottom_nav_share).isChecked = true
+
+        /*val intent = Intent(this, ChooseShareCard::class.java).apply {
             putExtra("myCardList", myCardList)
         }
-        startActivity(intent)
+        startActivity(intent)*/
     }
 
     private val onBottomNavItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
