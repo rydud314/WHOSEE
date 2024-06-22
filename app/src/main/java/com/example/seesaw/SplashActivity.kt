@@ -3,6 +3,9 @@ package com.example.seesaw
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.service.controls.ControlsProviderService
+import android.service.controls.ControlsProviderService.TAG
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.input.key.Key.Companion.Home
@@ -14,6 +17,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+
 
         val database: FirebaseFirestore = Firebase.firestore
 
@@ -34,15 +39,31 @@ class SplashActivity : AppCompatActivity() {
             }, 2000) // 3000ms = 3초 딜레이
         }
         else{  //자동 로그인 정보가 있을 경우, 홈화면으로
-//            val intent = Intent(this, MainActivity::class.java)
-            Toast.makeText(this, "자동 로그인", Toast.LENGTH_SHORT).show()
-//            startActivity(intent)
-            Handler().postDelayed({
-                // 여기서 MainActivity는 다음 화면으로 넘어갈 액티비티를 의미합니다. 실제 앱에서는 적절한 액티비티로 변경해야 합니다.
+
+            //큐알로 들어온 경우
+            val uri = intent.data
+            Log.d(ControlsProviderService.TAG, "uri = $uri")
+
+            if (uri != null){
+                val cardId = uri.getQueryParameters("cardId").toString()
+                Log.d(TAG, "cardid = $cardId")
+
                 val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("uriExist", cardId)
                 startActivity(intent)
-                finish() // SplashActivity 종료
-            }, 2000) // 3000ms = 3초 딜레이
+                finish()
+            }
+            else{
+                //            val intent = Intent(this, MainActivity::class.java)
+                Toast.makeText(this, "자동 로그인", Toast.LENGTH_SHORT).show()
+//            startActivity(intent)
+                Handler().postDelayed({
+                    // 여기서 MainActivity는 다음 화면으로 넘어갈 액티비티를 의미합니다. 실제 앱에서는 적절한 액티비티로 변경해야 합니다.
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish() // SplashActivity 종료
+                }, 2000) // 3000ms = 3초 딜레이
+            }
         }
 
 //        // Handler를 사용하여 3초 후에 MainActivity로 이동
@@ -54,3 +75,5 @@ class SplashActivity : AppCompatActivity() {
 //        }, 2000) // 3000ms = 3초 딜레이
     }
 }
+
+

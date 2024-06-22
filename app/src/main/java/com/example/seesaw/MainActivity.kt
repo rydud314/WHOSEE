@@ -246,21 +246,6 @@ class MainActivity : AppCompatActivity() {
         Log.d("mainAct : ", "초기화 -> ${viewModel.myCardList.size}")
 
 
-        val uri = intent.data
-        Log.d(TAG, "uri = $uri")
-
-        if (uri != null){
-            var params = uri.pathSegments
-            val cardId = params.get(params.size-1)
-            Log.d(TAG, "cardid = $cardId")
-
-            val intent = Intent(this, ShareCardDetail::class.java)
-            intent.putExtra("cardId", cardId)
-            startActivity(intent)
-        }
-
-
-
         // 툴바 설정
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -278,9 +263,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frame, Frag1_Home.newInstance())
                 .commit()
-
-
         }
+
+
 
         // qr코드 생성버튼 리스너 설정
         binding.makeQrBtn.setOnClickListener {
@@ -290,6 +275,14 @@ class MainActivity : AppCompatActivity() {
 
             // qr코드 생성버튼 클릭 시 Frag3_Share 프래그먼트로 화면 전환
             switchToShareFragment()
+        }
+
+        val cardId = intent?.getSerializableExtra("uriExist").toString()
+        if(cardId != null){
+            Log.d(TAG, "main cardId = $cardId")
+            val intent = Intent(this, ShareCardDetail::class.java)
+            intent.putExtra("uriExist", cardId)
+            startActivity(intent)
         }
     }
 

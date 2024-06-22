@@ -52,7 +52,7 @@ class Frag3_Share : Fragment() {
 
         qrCodeImage = view.findViewById(R.id.show_qr)
 
-        val qrCodeUrl = "whosee://sharelink/Main?cardId=$cardId"
+        val qrCodeUrl = "whosee://sharelink/Splash?cardId=$cardId"
         val encodedUrl = URLEncoder.encode(qrCodeUrl, "UTF-8")
         Log.d(TAG, "encode : $encodedUrl")
 

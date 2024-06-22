@@ -26,16 +26,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="whosee" android:host="sharelink" android:path="/Main" />
+                <data android:scheme="whosee" android:host="sharelink" android:path="/Splash" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
         </activity>
         <activity
             android:name=".Login"
@@ -134,6 +135,10 @@
         </activity>
         <activity
             android:name=".OnboardingActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".ShareCardDetail"
             android:exported="false">
         </activity>
     </application>
