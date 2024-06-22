@@ -278,7 +278,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val cardId = intent?.getSerializableExtra("uriExist").toString()
-        if(cardId != null){
+        if(cardId != "null"){
             Log.d(TAG, "main cardId = $cardId")
             val intent = Intent(this, ShareCardDetail::class.java)
             intent.putExtra("uriExist", cardId)
@@ -305,13 +305,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun switchToShareFragment() {
-        frag3Share = Frag3_Share.newInstance()
+        /*frag3Share = Frag3_Share.newInstance()
         supportFragmentManager.beginTransaction().replace(R.id.main_frame, frag3Share).commit()
-        binding.bottomNav.menu.findItem(R.id.bottom_nav_share).isChecked = true
+        binding.bottomNav.menu.findItem(R.id.bottom_nav_share).isChecked = true*/
+
+        val intent = Intent(this, ChooseShareCard::class.java)
+        startActivity(intent)
     }
 
     private val onBottomNavItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        // 다른 아이템 선택 시 FAB 색상을 초기 상태로 복원
+        // 다른 아이템 선택 시 qr코드 생성버튼  색상을 초기 상태로 복원
         binding.makeQrBtn.imageTintList = initialFabIconColor
         binding.makeQrBtn.backgroundTintList = initialFabBackgroundColor
 

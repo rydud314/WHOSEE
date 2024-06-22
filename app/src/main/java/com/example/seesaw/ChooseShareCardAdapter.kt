@@ -61,7 +61,7 @@ class ChooseShareCardAdapter(private val cardList: List<Card>, private val conte
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, Frag3_Share::class.java).apply {
-                putExtra("card", card)
+                putExtra("c", card)
 
             }
             context.startActivity(intent)

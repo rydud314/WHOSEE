@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.seesaw.databinding.ActivityNameCardDetailOthersBinding
 import com.example.seesaw.databinding.ActivityShareCardDetailBinding
@@ -31,8 +32,9 @@ class ShareCardDetail : AppCompatActivity() {
 
 
         // 인텐트로부터 데이터 가져오기
-        var cardId= intent.getParcelableExtra<Card>("uriExist").toString()
-        cardId = cardId.slice(1..-1)
+        var cardId= intent.getSerializableExtra("uriExist").toString()
+        cardId = cardId.replace("[", "")
+        cardId = cardId.replace("]", "")
         Log.d(TAG, "share : $cardId")
 
         //자신의 카드 정보 가져오기
@@ -99,8 +101,22 @@ class ShareCardDetail : AppCompatActivity() {
                 val existingArray = document.get("cards") as? ArrayList<HashMap<String, Any>>
                 if (existingArray != null) {
                     // 배열이 이미 존재하면 새 데이터 추가
-                    existingArray.add(cardData)
-                    myCardRef.update("cards", existingArray)
+
+                    //이미 가지고 있는 명함인지 확인
+                    var isExisted = false
+                    for(i in existingArray){
+                        if (i.containsValue(cardId)){
+                            isExisted = true
+                            break
+                        }
+                    }
+                    if(isExisted == false){
+                        existingArray.add(cardData)
+                        myCardRef.update("cards", existingArray)
+                    }
+                    else{ //이미 가지고 있는 명함일때
+                        Toast.makeText(this, "이미 저장한 명함입니다.", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
                     // 배열이 존재하지 않으면 새로운 배열 생성 후 데이터 추가
                     myCardRef.set(mapOf("cards" to arrayListOf(cardData)))

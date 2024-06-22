@@ -141,6 +141,10 @@
             android:name=".ShareCardDetail"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".ChooseShareCard"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

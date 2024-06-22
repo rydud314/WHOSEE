@@ -21,13 +21,13 @@ import java.net.URLEncoder
 
 class Frag3_Share : Fragment() {
 
-    private lateinit var viewModel : CardViewModel
+    private lateinit var idViewModel : CardIdViewModel
 
     private var view: View? = null
     private lateinit var qrCodeImage: ImageView
     private lateinit var qrEditText: EditText
     private lateinit var generateQrButton: Button
-    val cardId = "bfuBfMhtRK"
+    //val cardId = "bfuBfMhtRK"
 
     companion object {
         fun newInstance(): Frag3_Share {
@@ -45,13 +45,14 @@ class Frag3_Share : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //ViewModel 인스턴스 생성
-        viewModel= ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(CardViewModel::class.java)
+        idViewModel= ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(CardIdViewModel::class.java)
 
-        Log.d(TAG, "fra_share3: viewModel : ${viewModel.myCardList.size}")
+        Log.d(TAG, "fra_share3: viewModel : ${idViewModel.cardId}")
 
 
         qrCodeImage = view.findViewById(R.id.show_qr)
 
+        val cardId = idViewModel.cardId
         val qrCodeUrl = "whosee://sharelink/Splash?cardId=$cardId"
         val encodedUrl = URLEncoder.encode(qrCodeUrl, "UTF-8")
         Log.d(TAG, "encode : $encodedUrl")
