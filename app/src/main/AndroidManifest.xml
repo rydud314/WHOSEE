@@ -55,7 +55,7 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".Frag3_Share"
+            android:name=".Frag3_Share2"
             android:exported="false">
         </activity>
         <activity
@@ -143,6 +143,10 @@
         </activity>
         <activity
             android:name=".ChooseShareCard"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Frag3_Share1"
             android:exported="false">
         </activity>
     </application>

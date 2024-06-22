@@ -7,7 +7,6 @@ import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.seesaw.databinding.ActivityNameCardDetailOthersBinding
 import com.example.seesaw.databinding.ActivityShareCardDetailBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ShareCardDetail : AppCompatActivity() {
 
     private lateinit var binding: ActivityShareCardDetailBinding
-    private lateinit var frag3Share: Frag3_Share
+    private lateinit var frag3Share: Frag3_Share2
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
 

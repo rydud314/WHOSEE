@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var frag1Home: Frag1_Home
     private lateinit var frag2Wallet: Frag2_Wallet
-    private lateinit var frag3Share: Frag3_Share
+    private lateinit var frag3Share1: Frag3_Share1
     private lateinit var frag4Chat: Frag4_Chat
     private lateinit var frag5Auction: Frag5_Auction
     private var myCardList : ArrayList<Card> = arrayListOf()
@@ -263,6 +263,22 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        // FAB 클릭 리스너 설정
+        binding.makeQrBtn.setOnClickListener {
+//            // 클릭 시 아이콘 색상 변경
+//            it as FloatingActionButton
+//            it.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.nav_item_color_selector))
+//
+//            // 클릭 시 배경 색상 변경
+//            it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.nav_item_color_selector))
+
+            // 클릭 시 아이콘 및 배경 색상 변경
+            binding.makeQrBtn.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.selected_color))
+            binding.makeQrBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.selected_color))
+
+            // FAB 클릭 시 Frag3_Share 프래그먼트로 화면 전환
+            switchToShareFragment()
+        }
 
 
         // qr코드 생성버튼 리스너 설정
@@ -307,14 +323,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun switchToShareFragment() {
-        /*frag3Share = Frag3_Share.newInstance()
-        supportFragmentManager.beginTransaction().replace(R.id.main_frame, frag3Share).commit()
-        binding.bottomNav.menu.findItem(R.id.bottom_nav_share).isChecked = true*/
+        frag3Share1 = Frag3_Share1.newInstance(myCardList)
+        supportFragmentManager.beginTransaction().replace(R.id.main_frame, frag3Share1).commit()
+        binding.bottomNav.menu.findItem(R.id.bottom_nav_share).isChecked = true
 
-        val intent = Intent(this, ChooseShareCard::class.java).apply {
-            putExtra("myCardList", myCardList)
-        }
-        startActivity(intent)
+//        val intent = Intent(this, ChooseShareCard::class.java).apply {
+//            putExtra("myCardList", myCardList)
+//        }
+//        startActivity(intent)
     }
 
     private val onBottomNavItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

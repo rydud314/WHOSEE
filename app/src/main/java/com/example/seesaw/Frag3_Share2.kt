@@ -2,8 +2,6 @@ package com.example.seesaw
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.content.Intent
-import android.net.Uri
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,13 +11,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import java.net.URLEncoder
 
-class Frag3_Share : Fragment() {
+class Frag3_Share2 : Fragment() {
 
     private lateinit var idViewModel : CardIdViewModel
 
@@ -31,13 +28,13 @@ class Frag3_Share : Fragment() {
     //val cardId = "bfuBfMhtRK"
 
     companion object {
-        fun newInstance(): Frag3_Share {
-            return Frag3_Share()
+        fun newInstance(): Frag3_Share2 {
+            return Frag3_Share2()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        view = inflater.inflate(R.layout.activity_frag3_share, container, false)
+        view = inflater.inflate(R.layout.activity_frag3_share2, container, false)
         return view
 
     }

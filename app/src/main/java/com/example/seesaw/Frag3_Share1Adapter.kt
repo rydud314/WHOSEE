@@ -1,7 +1,6 @@
 package com.example.seesaw
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
@@ -11,14 +10,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 
-class ChooseShareCardAdapter(private val cardList: List<Card>, private val context: Context,) : RecyclerView.Adapter<ChooseShareCardAdapter.CardViewHolder>() {
+class Frag3_Share1Adapter(private val cardList: List<Card>, private val context: Context,) : RecyclerView.Adapter<Frag3_Share1Adapter.CardViewHolder>() {
 
 
     class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -56,16 +53,26 @@ class ChooseShareCardAdapter(private val cardList: List<Card>, private val conte
 
             Log.d(TAG, "쉐어리사이클러 Card이름= ${card.cardId}")
 
-            val activity = it!!.context as AppCompatActivity
+            val activity = it.context as AppCompatActivity
+            val frag3Share2 = Frag3_Share2()
+            frag3Share2.arguments = bundle
 
-            val frag3Share = Frag3_Share()
-            frag3Share.arguments = bundle
-
-            activity.supportFragmentManager.beginTransaction().replace(R.id.recycler_view_share, frag3Share)
-                //.addToBackStack(null)
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frame, frag3Share2)
+                .addToBackStack(null)
                 .commit()
 
-           // activity.supportFragmentManager.beginTransaction().replace(R.id.recycler_view_share, frag3Share).commit()
+
+//            val activity = it!!.context as AppCompatActivity
+//
+//            val frag3Share = Frag3_Share()
+//            frag3Share.arguments = bundle
+//
+//            activity.supportFragmentManager.beginTransaction().replace(R.id.recycler_view_share, frag3Share)
+//                //.addToBackStack(null)
+//                .commit()
+//
+//           // activity.supportFragmentManager.beginTransaction().replace(R.id.recycler_view_share, frag3Share).commit()
         }
     }
 
