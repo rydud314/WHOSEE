@@ -200,23 +200,18 @@
 //}
 package com.example.seesaw
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.net.Uri
 import android.os.Bundle
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.seesaw.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -227,6 +222,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var frag3Share: Frag3_Share
     private lateinit var frag4Chat: Frag4_Chat
     private lateinit var frag5Auction: Frag5_Auction
+    private var myCardList : ArrayList<Card> = arrayListOf()
+
 
     // View Binding 인스턴스 선언
     private lateinit var binding: ActivityMainBinding
@@ -267,6 +264,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
         // qr코드 생성버튼 리스너 설정
         binding.makeQrBtn.setOnClickListener {
             // 클릭 시 아이콘 및 배경 색상 변경
@@ -284,6 +282,10 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("uriExist", cardId)
             startActivity(intent)
         }
+    }
+
+    fun getMyCardList(homeCardList: ArrayList<Card>){
+       myCardList = homeCardList
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -309,7 +311,9 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.main_frame, frag3Share).commit()
         binding.bottomNav.menu.findItem(R.id.bottom_nav_share).isChecked = true*/
 
-        val intent = Intent(this, ChooseShareCard::class.java)
+        val intent = Intent(this, ChooseShareCard::class.java).apply {
+            putExtra("myCardList", myCardList)
+        }
         startActivity(intent)
     }
 

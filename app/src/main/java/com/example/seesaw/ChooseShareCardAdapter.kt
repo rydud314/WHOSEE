@@ -3,31 +3,24 @@ package com.example.seesaw
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.service.controls.ControlsProviderService.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class ChooseShareCardAdapter(private val cardList: List<Card>, private val context: Context) : RecyclerView.Adapter<ChooseShareCardAdapter.CardViewHolder>() {
-/*
-    companion object {
-        private lateinit var arguments: Bundle
-        private const val ARG_USER = "user_key"
 
-        fun shareInstance(shareCard: Card): ChooseShareCardAdapter {
-            val fragment = ChooseShareCardAdapter
-            val bundle = Bundle().apply {
-                putParcelable(ARG_USER, shareCard)
-            }
-            fragment.arguments = bundle
-            return fragment
-        }
-    }*/
+class ChooseShareCardAdapter(private val cardList: List<Card>, private val context: Context,) : RecyclerView.Adapter<ChooseShareCardAdapter.CardViewHolder>() {
+
+
     class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val profileImage: ImageView = view.findViewById(R.id.profile_image)
         val name: TextView = view.findViewById(R.id.name)
@@ -35,7 +28,6 @@ class ChooseShareCardAdapter(private val cardList: List<Card>, private val conte
         val workplace: TextView = view.findViewById(R.id.workplace)
     }
 
-    lateinit var viewModel_share : CardViewModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card, parent, false)
@@ -47,8 +39,6 @@ class ChooseShareCardAdapter(private val cardList: List<Card>, private val conte
         holder.name.text = card.name
         holder.position.text = card.position
         holder.workplace.text = card.workplace
-        var Frag3_Share = Frag3_Share()
-        val bundle = Bundle()
 
 
         // Glide를 사용하여 이미지를 로드하고 동그랗게 자릅니다.
@@ -60,11 +50,22 @@ class ChooseShareCardAdapter(private val cardList: List<Card>, private val conte
             .into(holder.profileImage)
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, Frag3_Share::class.java).apply {
-                putExtra("c", card)
 
-            }
-            context.startActivity(intent)
+            val bundle = Bundle()
+            bundle.putParcelable("card", card)
+
+            Log.d(TAG, "쉐어리사이클러 Card이름= ${card.cardId}")
+
+            val activity = it!!.context as AppCompatActivity
+
+            val frag3Share = Frag3_Share()
+            frag3Share.arguments = bundle
+
+            activity.supportFragmentManager.beginTransaction().replace(R.id.recycler_view_share, frag3Share)
+                //.addToBackStack(null)
+                .commit()
+
+           // activity.supportFragmentManager.beginTransaction().replace(R.id.recycler_view_share, frag3Share).commit()
         }
     }
 

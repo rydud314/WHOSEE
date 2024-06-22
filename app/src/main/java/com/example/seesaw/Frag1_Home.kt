@@ -135,6 +135,11 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
                                 viewModel.myCardList = myCardList
                                 Log.d("frag Home : ", "${viewModel.myCardList.size}")
 
+                                //메인에 명함리스트 정보 넘기기
+                                val mainActivity = activity as MainActivity
+                                mainActivity.getMyCardList(myCardList)
+
+
                             }.addOnFailureListener{ Log.d(TAG, "querysnapshot 실패") }
 
                         } else {

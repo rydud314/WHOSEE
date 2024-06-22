@@ -11,13 +11,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ChooseShareCard : AppCompatActivity() {
 
-    private lateinit var viewModel:CardViewModel
-
-
     private lateinit var binding: ActivityChooseShareCardBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-    private lateinit var adapter: ChooseShareCardAdapter
+    private lateinit var adapter_share: ChooseShareCardAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,19 +24,15 @@ class ChooseShareCard : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewShare.layoutManager = LinearLayoutManager(this)
 
-        //ViewModel 인스턴스 생성
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(CardViewModel::class.java)
-        Log.d("ChooseShareAct : ", "초기화 -> ${viewModel.myCardList.size}")
-
-        val myCardList = viewModel.myCardList
+        var myCardList = intent.getSerializableExtra("myCardList") as ArrayList<Card>
         loadCards(myCardList)
-    }
 
+    }
     private fun loadCards(myCardList : ArrayList<Card>) {
 
-        adapter = ChooseShareCardAdapter(myCardList, this)
-        binding.recyclerView.adapter = adapter
+        adapter_share = ChooseShareCardAdapter(myCardList, this)
+        binding.recyclerViewShare.adapter = adapter_share
     }
 }

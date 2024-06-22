@@ -27,6 +27,7 @@ class Frag3_Share : Fragment() {
     private lateinit var qrCodeImage: ImageView
     private lateinit var qrEditText: EditText
     private lateinit var generateQrButton: Button
+    lateinit var card : Card
     //val cardId = "bfuBfMhtRK"
 
     companion object {
@@ -44,21 +45,21 @@ class Frag3_Share : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //ViewModel 인스턴스 생성
-        idViewModel= ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(CardIdViewModel::class.java)
+//        var myCardList = intent.getSerializableExtra("myCardList") as ArrayList<Card>
+//        loadCards(myCardList)
 
-        Log.d(TAG, "fra_share3: viewModel : ${idViewModel.cardId}")
 
+        arguments?.let {
+            card = it.getParcelable("card")!!
+        }
+        Log.d(TAG, "프레그3 : card = ${card.cardId}")
 
         qrCodeImage = view.findViewById(R.id.show_qr)
 
-        val cardId = idViewModel.cardId
+        val cardId = card.cardId.toString()
         val qrCodeUrl = "whosee://sharelink/Splash?cardId=$cardId"
         val encodedUrl = URLEncoder.encode(qrCodeUrl, "UTF-8")
         Log.d(TAG, "encode : $encodedUrl")
-
-
-
 
         generateQRCode(qrCodeUrl)
 
