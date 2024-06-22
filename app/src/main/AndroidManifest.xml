@@ -141,10 +141,10 @@
             android:name=".ShareCardDetail"
             android:exported="false">
         </activity>
-        <activity
-            android:name=".ChooseShareCard"
-            android:exported="false">
-        </activity>
+<!--        <activity-->
+<!--            android:name=".ChooseShareCard"-->
+<!--            android:exported="false">-->
+<!--        </activity>-->
         <activity
             android:name=".Frag3_Share1"
             android:exported="false">
