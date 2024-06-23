@@ -64,6 +64,9 @@ class MessageActivity : AppCompatActivity() {
         destinationUid = intent.getStringExtra("destinationUid")
         uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = binding.messageActivityRecyclerview
+        Log.v("체크용2",uid.toString())
+        Log.v("체크용3", Firebase.auth.currentUser.toString())
+
 
 
         sendBtn.setOnClickListener {
@@ -103,20 +106,20 @@ class MessageActivity : AppCompatActivity() {
 
     private fun checkChatRoom(){
         fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {
-                }
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (item in snapshot.children){
-                        val chatModel = item.getValue<ChatModel>()
-                        if(chatModel?.users!!.containsKey(destinationUid)){
-                            chatRoomUid = item.key
-                            binding.sendBtn.isEnabled = true
-                            recyclerView?.layoutManager = LinearLayoutManager(this@MessageActivity)
-                            recyclerView?.adapter = RecyclerViewAdapter(this@MessageActivity)
-                        }
+            override fun onCancelled(error: DatabaseError) {
+            }
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (item in snapshot.children){
+                    val chatModel = item.getValue<ChatModel>()
+                    if(chatModel?.users!!.containsKey(destinationUid)){
+                        chatRoomUid = item.key
+                        binding.sendBtn.isEnabled = true
+                        recyclerView?.layoutManager = LinearLayoutManager(this@MessageActivity)
+                        recyclerView?.adapter = RecyclerViewAdapter(this@MessageActivity)
                     }
                 }
-            })
+            }
+        })
     }
 
     inner class RecyclerViewAdapter(val context: Context) : RecyclerView.Adapter<RecyclerViewAdapter.MessageViewHolder>() {
@@ -127,7 +130,7 @@ class MessageActivity : AppCompatActivity() {
 
         init{
 
-            firestore.collection("all_card_list").document(destinationUid.toString()).get().addOnSuccessListener {document->
+            firestore.collection("id_list").document(destinationUid.toString()).get().addOnSuccessListener {document->
                 friend = Friend(document["email"].toString(),document["name"].toString(),document["imageName"].toString(),document["cardId"].toString(),document["job"].toString())
                 binding.messageScreenTop.text = document["name"].toString()
                 getMessageList()
