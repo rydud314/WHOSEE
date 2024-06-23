@@ -36,10 +36,10 @@ class Frag5_Auction : Fragment(), NavigationView.OnNavigationItemSelectedListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val menuButton: Button = view.findViewById(R.id.menu_button)
-        menuButton.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.END)
-        }
+//        val menuButton: Button = view.findViewById(R.id.menu_button)
+//        menuButton.setOnClickListener {
+//            drawerLayout.openDrawer(GravityCompat.END)
+//        }
     }
 
 
