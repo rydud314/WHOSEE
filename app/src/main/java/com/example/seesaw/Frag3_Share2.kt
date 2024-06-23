@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -18,10 +20,15 @@ import java.net.URLEncoder
 
 class Frag3_Share2 : Fragment() {
 
+    private lateinit var idViewModel : CardIdViewModel
+
     private var view: View? = null
     private lateinit var qrCodeImage: ImageView
     private lateinit var cardImage: ImageView
-    lateinit var card: Card
+    private lateinit var qrEditText: EditText
+    private lateinit var generateQrButton: Button
+    lateinit var card : Card
+    //val cardId = "bfuBfMhtRK"
 
     companion object {
         fun newInstance(): Frag3_Share2 {
@@ -32,10 +39,15 @@ class Frag3_Share2 : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         view = inflater.inflate(R.layout.activity_frag3_share2, container, false)
         return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        var myCardList = intent.getSerializableExtra("myCardList") as ArrayList<Card>
+//        loadCards(myCardList)
+
 
         arguments?.let {
             card = it.getParcelable("card")!!
@@ -45,7 +57,6 @@ class Frag3_Share2 : Fragment() {
         qrCodeImage = view.findViewById(R.id.show_qr)
         cardImage = view.findViewById(R.id.card_image)
 
-        // 카드 ID를 사용하여 QR 코드 URL 생성
         val cardId = card.cardId.toString()
         val qrCodeUrl = "whosee://sharelink/Splash?cardId=$cardId"
         val encodedUrl = URLEncoder.encode(qrCodeUrl, "UTF-8")
@@ -56,6 +67,15 @@ class Frag3_Share2 : Fragment() {
 
         // Glide를 사용하여 이미지 로드 및 적용
         loadCardImage(card.imageName)
+
+        //qrEditText = view.findViewById(R.id.tv_qr)
+        //generateQrButton = view.findViewById(R.id.btn_generate_qr)
+
+        /*generateQrButton.setOnClickListener {
+            val qrText = "KimNaKung\n@rlaskrud"
+            qrEditText.setText(qrText)
+            generateQRCode(qrText)
+        }*/
     }
 
     private fun generateQRCode(text: String) {

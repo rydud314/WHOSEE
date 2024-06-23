@@ -68,11 +68,11 @@ dependencies {
     implementation ("com.google.android.material:material:1.8.0") // Check for the latest version
 
     // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-database-ktx")
 
     //cameraX
     val camerax_version = "1.1.0-beta01"
