@@ -18,6 +18,15 @@
         android:text="Name"
         android:padding="10dp"/>
 
+    <ImageView
+        android:id="@+id/card_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center|top|end"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/card_face"/>
+
     <TextView
         android:id="@+id/tv_job"
         android:layout_width="wrap_content"

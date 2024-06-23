@@ -32,7 +32,6 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     private var myCardList : ArrayList<Card> = arrayListOf()
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_frag2_wallet, container, false)
 
@@ -43,7 +42,6 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
         btnSearchCard = view.findViewById(R.id.btn_search_card)
         etSearchCard = view.findViewById(R.id.et_search_card)
         btnReturn = view.findViewById(R.id.btn_return)
-
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -71,7 +69,6 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
                                 cardId = card["cardId"].toString()
                                 Log.d(TAG, "cardId = $cardId")
                                 card_list.add(cardId)
-
                             }
 
                             //자신의 카드 정보 가져오기
@@ -104,10 +101,9 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
                                 myCardList.sortBy { it.name } //이름 오름차순 정렬
 
-                                recyclerView.adapter = CardAdapter(myCardList, requireContext())
+                                recyclerView.adapter = WalletAdapter(myCardList, requireContext())
 
                             }.addOnFailureListener{Log.d(TAG, "querysnapshot 실패")}
-
                         } else {
                             Log.d(TAG, "wallet_list에 uid 문서는 있는데 필드가 없음 -> 명함 저장 시 제대로 이뤄지지 않음")
                         }
@@ -126,30 +122,27 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         Log.d(TAG, "second : ${myCardList.size}")
 
-
         btnSearchCard.setOnClickListener {
             Log.d(TAG, "검색 버튼 누름")
 
             val searchList = searchCard(myCardList)
             Log.d(TAG, "검색어 = ${searchList.size}")
 
-            recyclerView.adapter = CardAdapter(searchList, requireContext())
+            recyclerView.adapter = WalletAdapter(searchList, requireContext())
             btnReturn.visibility = View.VISIBLE
             btnReturn.isEnabled = true
             //return@setOnClickListener
         }
 
         btnReturn.setOnClickListener {
-
-            recyclerView.adapter = CardAdapter(myCardList, requireContext())
-            btnReturn.visibility =View.INVISIBLE
+            recyclerView.adapter = WalletAdapter(myCardList, requireContext())
+            btnReturn.visibility = View.INVISIBLE
             btnReturn.isEnabled = false
             etSearchCard.text.clear()
             Log.d(TAG, "검색 취소 -> 전체 결과")
         }
 
         return view
-
     }
 
     private fun searchCard(myCardList: ArrayList<Card>): List<Card> {
@@ -160,17 +153,15 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         if (searchList.isNotEmpty()) {
             searchList.sortedBy { it.name }
-        }else{
+        } else {
             Toast.makeText(context, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show()
             Log.d(TAG, "검색 결과가 없습니다.")
-
         }
         return searchList
     }
 
-
-    companion object{
-        fun newInstance() : Frag2_Wallet{
+    companion object {
+        fun newInstance(): Frag2_Wallet {
             return Frag2_Wallet()
         }
     }
