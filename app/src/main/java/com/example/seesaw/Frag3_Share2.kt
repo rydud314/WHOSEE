@@ -20,8 +20,6 @@ import java.net.URLEncoder
 
 class Frag3_Share2 : Fragment() {
 
-    private lateinit var idViewModel : CardIdViewModel
-
     private var view: View? = null
     private lateinit var qrCodeImage: ImageView
     private lateinit var cardImage: ImageView
