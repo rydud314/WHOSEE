@@ -71,14 +71,14 @@ class Frag4_Chat : Fragment() {
         binding.chatfragmentRecyclerview.adapter = RecyclerViewAdapter()
 
 
-        binding.auction.setOnClickListener {
-            binding.auction.setTextColor(Color.parseColor("#FF545F71"))
-            binding.nameCredit.setTextColor(Color.parseColor("#FF9BA5B7"))
-        }
+//        binding.auction.setOnClickListener {
+//            binding.auction.setTextColor(Color.parseColor("#FF545F71"))
+//            binding.nameCredit.setTextColor(Color.parseColor("#FF9BA5B7"))
+//        }
 
         binding.nameCredit.setOnClickListener {
             binding.nameCredit.setTextColor(Color.parseColor("#FF545F71"))
-            binding.auction.setTextColor(Color.parseColor("#FF9BA5B7"))
+            //binding.auction.setTextColor(Color.parseColor("#FF9BA5B7"))
         }
 
         binding.searchOption1.setOnClickListener {

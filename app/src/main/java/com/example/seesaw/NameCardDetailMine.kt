@@ -28,7 +28,7 @@ class NameCardDetailMine : AppCompatActivity() {
         card?.let {
             binding.tvName.text = it.name
             //binding.tvJob.text = "Job : " + it.job
-            binding.tvIntroduction.text = "Introduction : " + it.workplace
+            //binding.tvIntroduction.text = "Introduction : " + it.workplace
             //binding.tvWorkplace.text = "Workplace : " + it.workplace
             //binding.tvGender.text = "Gender : " + it.gender
             //binding.tvPosition.text = "Position : " + it.position

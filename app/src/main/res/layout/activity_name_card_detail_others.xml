@@ -43,13 +43,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_introduction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Introduction"
-                android:padding="10dp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_introduction"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="18sp"-->
+<!--                android:text="Introduction"-->
+<!--                android:padding="10dp"/>-->
 
             <TextView
                 android:id="@+id/tv_tel"
@@ -83,7 +83,7 @@
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:id="@+id/btn_edit_card"
-                android:text="명함 편집"
+                android:text="1:1 채팅하기"
                 android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>

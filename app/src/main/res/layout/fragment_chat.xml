@@ -22,18 +22,18 @@
             android:textSize="18.5sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/auction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="25dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="cursive"
-            android:text="함께해요"
-            android:textColor="#FF9BA5B7"
-            android:textSize="18.5sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/auction"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:layout_marginLeft="25dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:fontFamily="cursive"-->
+<!--            android:text="함께해요"-->
+<!--            android:textColor="#FF9BA5B7"-->
+<!--            android:textSize="18.5sp"-->
+<!--            android:textStyle="bold" />-->
 
     </LinearLayout>
 
