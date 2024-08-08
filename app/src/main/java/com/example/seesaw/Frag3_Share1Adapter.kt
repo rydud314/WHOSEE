@@ -62,17 +62,6 @@ class Frag3_Share1Adapter(private val cardList: List<Card>, private val context:
                 .addToBackStack(null)
                 .commit()
 
-
-//            val activity = it!!.context as AppCompatActivity
-//
-//            val frag3Share = Frag3_Share()
-//            frag3Share.arguments = bundle
-//
-//            activity.supportFragmentManager.beginTransaction().replace(R.id.recycler_view_share, frag3Share)
-//                //.addToBackStack(null)
-//                .commit()
-//
-//           // activity.supportFragmentManager.beginTransaction().replace(R.id.recycler_view_share, frag3Share).commit()
         }
     }
 

@@ -10,12 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.seesaw.databinding.ActivityShareCardDetailBinding
+import com.example.seesaw.databinding.NameCardDetailBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ShareCardDetail : AppCompatActivity() {
 
     private lateinit var binding: ActivityShareCardDetailBinding
+    private lateinit var detailBinding: NameCardDetailBinding
+
     private lateinit var frag3Share: Frag3_Share2
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
@@ -29,6 +32,9 @@ class ShareCardDetail : AppCompatActivity() {
 
         val currentUser = auth.currentUser
         val uid = currentUser?.uid
+
+        // 포함된 레이아웃 바인딩 초기화
+        detailBinding = NameCardDetailBinding.bind(binding.root.findViewById(R.id.shared_name_card_detail_container))
 
         // 인텐트로부터 데이터 가져오기
         var cardId = intent.getSerializableExtra("uriExist").toString()
@@ -62,16 +68,31 @@ class ShareCardDetail : AppCompatActivity() {
                         Log.d(ContentValues.TAG, "cardData => $name($cardId)")
 
                         // 뷰에 데이터 설정
-                        binding.tvName.text = "Name: " + name
-                        binding.tvJob.text = "Job: " + job
-                        binding.tvIntroduction.text = "Introduction: " + introduction
-                        binding.tvWorkplace.text = "Workplace: " + workplace
-                        binding.tvGender.text = "Gender: " + gender
-                        binding.tvPosition.text = "Position: " + position
-                        binding.tvTel.text = "Tel: " + tel
-                        binding.tvEmail.text = "Email: " + email
+                        binding.tvName.text = name
+                        //binding.tvJob.text = "Job: " + it.job
+                        //binding.tvIntroduction.text = "Introduction: " + introduction
+                        //binding.tvWorkplace.text = "Workplace: " + it.workplace
+                        //binding.tvGender.text = "Gender: " + it.gender
+                        //binding.tvPosition.text = "Position: " + it.position
+                        binding.tvTel.text = tel
+                        //binding.tvEmail.text = "Email: " + it.email
                         binding.tvSns.text = "SNS: " + sns
                         binding.tvPortfolio.text = "Portfolio: " + pofol
+
+                        // 이미지 설정
+                        loadCardImage(imageName)
+
+                        // 뷰에 데이터 설정
+                        detailBinding.tvName.text = name
+                        detailBinding.tvJob.text = job
+                        detailBinding.tvIntroduction.text = introduction
+                        detailBinding.tvWorkplace.text = workplace
+                        detailBinding.tvGender.text = gender
+                        detailBinding.tvPosition.text = position
+                        //detailBinding.tvTel.text = "Tel : " + it.tel
+                        detailBinding.tvEmail.text = email
+//            detailBinding.tvSns.text = "SNS : " + it.sns
+//            detailBinding.tvPortfolio.text = "Portfolio : " + it.pofol
 
                         // 이미지 설정
                         loadCardImage(imageName)
@@ -93,7 +114,7 @@ class ShareCardDetail : AppCompatActivity() {
             .apply(RequestOptions.circleCropTransform())
             .placeholder(R.drawable.ic_profile_placeholder)
             .error(R.drawable.ic_profile_placeholder)
-            .into(binding.cardImage)
+            .into(detailBinding.cardImage)
     }
 
     private fun saveToMyCardList(userId: String, cardId: String) {

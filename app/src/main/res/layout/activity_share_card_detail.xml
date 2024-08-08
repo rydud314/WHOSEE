@@ -1,158 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@drawable/img_1"
+android:padding="16dp">
+
+<TextView
+    android:id="@+id/tv_name"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/card_detail_backgroundd"
-    android:padding="16dp">
+    android:layout_height="wrap_content"
+    android:textSize="40sp"
+    android:gravity="center"
+    android:layout_marginTop="30dp"
+    android:textColor="@color/white"
+    android:text="Name"
+    android:padding="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/white"
-        android:text="Name"
-        android:padding="10dp"/>
+<androidx.cardview.widget.CardView
+    android:layout_marginTop="20dp"
+    android:id="@+id/shared_name_card_detail_container"
+    android:layout_width="350dp"
+    android:layout_height="300dp"
+    android:layout_gravity="center"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/tv_job"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="20dp"
-        android:padding="10dp"
-        android:text="Job"
-        android:textSize="18sp" />
+    <include layout="@layout/name_card_detail" />
 
-    <ImageView
-        android:id="@+id/card_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center|top|end"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/card_face"/>
+</androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btn_save_card"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="0dp"
-        android:background="#875FFD"
-        android:text="명함 저장하기"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold" />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:layout_marginTop="0dp"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="170dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_introduction"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="18sp"-->
+<!--            android:text="Introduction"-->
+<!--            android:padding="10dp"/>-->
 
         <TextView
-            android:id="@+id/tv_workplace"
+            android:id="@+id/tv_tel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:padding="10dp"
-            android:text="Workplace"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:text="Tel"
+            android:padding="10dp"/>
 
         <TextView
-            android:id="@+id/tv_gender"
+            android:id="@+id/tv_sns"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginStart="60dp"
-            android:text="Gender"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            android:textSize="18sp"
+            android:text="SNS"
+            android:padding="10dp"/>
 
         <TextView
-            android:id="@+id/tv_position"
+            android:id="@+id/tv_portfolio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:padding="10dp"
-            android:text="Position"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:text="Portfolio"
+            android:padding="10dp"/>
 
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:padding="10dp"
-            android:text="Email"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="0dp"
-        android:padding="10dp">
-
-        <LinearLayout
+        <Button
+            android:id="@+id/btn_save_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_introduction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Introduction"
-                android:padding="10dp"/>
-
-
-            <TextView
-                android:id="@+id/tv_tel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Tel"
-                android:padding="10dp"/>
-
-            <TextView
-                android:id="@+id/tv_sns"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="SNS"
-                android:padding="10dp"/>
-
-            <TextView
-                android:id="@+id/tv_portfolio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Portfolio"
-                android:padding="10dp"/>
-
-            <!-- <Button
-                 android:layout_width="match_parent"
-                 android:layout_height="40dp"
-                 android:background="#875FFD"
-                 android:layout_marginTop="0dp"
-                 android:textStyle="bold"
-                 android:textColor="#FFFFFF"
-                 android:id="@+id/btn_save_card"
-                 android:text="명함 저장하기"
-                 android:layout_gravity="center"/>-->
-        </LinearLayout>
-    </ScrollView>
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:background="#875FFD"
+            android:text="명함 저장하기"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>
+

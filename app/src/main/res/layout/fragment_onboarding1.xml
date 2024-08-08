@@ -15,7 +15,7 @@
 <!--        android:textSize="24sp" />-->
 
     <ImageView
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_gravity="center"
         android:layout_height="500dp"
         android:background="@drawable/onboarding_1"

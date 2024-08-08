@@ -71,14 +71,14 @@ class Frag4_Chat : Fragment() {
         binding.chatfragmentRecyclerview.adapter = RecyclerViewAdapter()
 
 
-        binding.auction.setOnClickListener {
-            binding.auction.setTextColor(Color.parseColor("#FF545F71"))
-            binding.nameCredit.setTextColor(Color.parseColor("#FF9BA5B7"))
-        }
+//        binding.auction.setOnClickListener {
+//            binding.auction.setTextColor(Color.parseColor("#FF545F71"))
+//            binding.nameCredit.setTextColor(Color.parseColor("#FF9BA5B7"))
+//        }
 
         binding.nameCredit.setOnClickListener {
             binding.nameCredit.setTextColor(Color.parseColor("#FF545F71"))
-            binding.auction.setTextColor(Color.parseColor("#FF9BA5B7"))
+            //binding.auction.setTextColor(Color.parseColor("#FF9BA5B7"))
         }
 
         binding.searchOption1.setOnClickListener {
@@ -97,7 +97,6 @@ class Frag4_Chat : Fragment() {
         if(sharedPreferences.getString("userState", "").toString() == "back"){
 
         }
-        var optionSetting = arrayListOf<String>("시간순","이름순")
         return binding.root
     }
 
@@ -141,23 +140,12 @@ class Frag4_Chat : Fragment() {
                 }
             }
 
-            firestore.collection("your-collection-name").document(destinationUid.toString())
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        Log.d("Firestore", "DocumentSnapshot data: ${document.data}")
-                    } else {
-                        Log.d("Firestore", "No such document")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("Firestore", "get failed with ", exception)
-                }
 
             //
             //변경
             //
-            firestore.collection("all_card_list").document(destinationUid.toString()).get().addOnSuccessListener {document->
+            //이준현 추가 - 이 부분이 임시로 수정한건데 일단 계정단위 친구여서 어떤 카드로 친구추가한지 몰라서 id_list에서 이름이랑 사진을 들고왔습니다
+            firestore.collection("id_list").document(destinationUid.toString()).get().addOnSuccessListener {document->
                 Glide.with(holder.itemView.context).load( document["imageName"].toString()).into(holder.userImage)
                 holder.userImage.clipToOutline = true
                 holder.userName.text = document["name"].toString()

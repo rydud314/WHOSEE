@@ -49,20 +49,6 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
         navView = view.findViewById(R.id.navigation_view)
         navView.setNavigationItemSelectedListener(this)
 
-
-//        val toolbar: androidx.appcompat.widget.Toolbar = view.findViewById(R.id.toolbar)
-//        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-//        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
-//
-//        // 상태 설명 문자열 없이 ActionBarDrawerToggle 생성자 사용
-//        val toggle = ActionBarDrawerToggle(
-//            requireActivity(), drawerLayout, toolbar,
-//            0, 0
-//        )
-//
-//        drawerLayout.addDrawerListener(toggle)
-//        toggle.syncState()
-
         setHasOptionsMenu(true)
 
         // ViewPager2 설정
@@ -197,10 +183,10 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
             startActivity(intent)
         }
 
-        val menuButton: Button = view.findViewById(R.id.menu_button)
-        menuButton.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.END)
-        }
+//        val menuButton: Button = view.findViewById(R.id.menu_button)
+//        menuButton.setOnClickListener {
+//            drawerLayout.openDrawer(GravityCompat.END)
+//        }
     }
 
 

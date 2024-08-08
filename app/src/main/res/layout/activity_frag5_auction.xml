@@ -7,6 +7,8 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,14 +17,44 @@
         <include
             layout="@layout/toolbar_home"
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="60dp"
+            android:layout_marginBottom="100dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="경매"
-            android:textSize="40dp"/>
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_logout"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:text="로그아웃"
+            android:background="#764AF4" />
 
+        <Button
+            android:id="@+id/btn_change_info"
+            android:layout_marginTop="10dp"
+            android:layout_width="400dp"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:background="#764AF4"
+            android:layout_height="50dp"
+            android:text="정보변경" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_marginTop="10dp"
+            android:background="#764AF4"
+            android:layout_width="400dp"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:layout_height="50dp"
+            android:text="탈퇴하기" />
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

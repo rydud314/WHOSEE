@@ -168,10 +168,10 @@ class Frag2_Wallet : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val menuButton: Button = view.findViewById(R.id.menu_button)
-        menuButton.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.END)
-        }
+//        val menuButton: Button = view.findViewById(R.id.menu_button)
+//        menuButton.setOnClickListener {
+//            drawerLayout.openDrawer(GravityCompat.END)
+//        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

@@ -21,8 +21,8 @@
             android:icon="@drawable/ic_chat"/>
 
         <item android:id="@+id/bottom_nav_auction"
-            android:title="경매"
-            android:icon="@drawable/ic_chart"/>
+            android:title="내 계정"
+            android:icon="@drawable/ic_account"/>
     </group>
 
 </menu>
