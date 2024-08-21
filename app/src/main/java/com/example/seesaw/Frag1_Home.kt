@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -164,7 +163,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
         }
 
-        val btn_edit_card: Button = view.findViewById(R.id.btn_edit_card)
+        val btn_edit_card: Button = view.findViewById(R.id.btn_chat)
         btn_edit_card.setOnClickListener {
             val intent = Intent(context, ChooseEditCard::class.java)
             intent.putExtra("myCardList", myCardList)
