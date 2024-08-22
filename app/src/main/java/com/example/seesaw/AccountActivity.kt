@@ -182,6 +182,7 @@ class AccountActivity : AppCompatActivity() {
 
         // 로그인 화면으로 전환
         val intent = Intent(this, Login::class.java)
+        finishAffinity()
         startActivity(intent)
         Toast.makeText(this, "로그아웃", Toast.LENGTH_SHORT).show()
     }

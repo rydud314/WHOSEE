@@ -73,6 +73,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
+    implementation ("com.google.firebase:firebase-dynamic-links-ktx")
 
     //cameraX
     val camerax_version = "1.1.0-beta01"

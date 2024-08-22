@@ -1,6 +1,7 @@
 package com.example.seesaw
 
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
@@ -13,10 +14,16 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.Firebase
+import com.google.firebase.dynamiclinks.androidParameters
+import com.google.firebase.dynamiclinks.dynamicLink
+import com.google.firebase.dynamiclinks.dynamicLinks
+import com.google.firebase.dynamiclinks.iosParameters
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import java.net.URLEncoder
+
 
 class Frag3_Share2 : Fragment() {
 
@@ -26,7 +33,7 @@ class Frag3_Share2 : Fragment() {
     private lateinit var qrEditText: EditText
     private lateinit var generateQrButton: Button
     lateinit var card : Card
-    //val cardId = "bfuBfMhtRK"
+
 
     companion object {
         fun newInstance(): Frag3_Share2 {
@@ -56,30 +63,42 @@ class Frag3_Share2 : Fragment() {
         cardImage = view.findViewById(R.id.card_image)
 
         val cardId = card.cardId.toString()
-        val qrCodeUrl = "whosee://sharelink/Splash?cardId=$cardId"
+
+        /* 예전 큐알 url 만드는 코드
+        val qrCodeUrl = "https://whosee/Splash?cardId=$cardId"
         val encodedUrl = URLEncoder.encode(qrCodeUrl, "UTF-8")
         Log.d(TAG, "encode : $encodedUrl")
 
         // QR 코드 생성
         generateQRCode(qrCodeUrl)
+        */
+
+
+        val dynamicLink = Firebase.dynamicLinks.dynamicLink {
+            link = Uri.parse("https://whosee/Splash?cardId=$cardId")
+            domainUriPrefix = "https://whosee.page.link"
+            androidParameters {
+                //("com.example.seesaw.android")
+                fallbackUrl = Uri.parse("https://play.google.com/store/apps")
+            }
+        }
+        val dynamicLinkUri = dynamicLink.uri
+        Log.d(TAG, "dynamicLink : $dynamicLinkUri")
+
+        // QR 코드 생성
+        generateQRCode(dynamicLinkUri)
 
         // Glide를 사용하여 이미지 로드 및 적용
         loadCardImage(card.imageName)
-
-        //qrEditText = view.findViewById(R.id.tv_qr)
-        //generateQrButton = view.findViewById(R.id.btn_generate_qr)
-
-        /*generateQrButton.setOnClickListener {
-            val qrText = "KimNaKung\n@rlaskrud"
-            qrEditText.setText(qrText)
-            generateQRCode(qrText)
-        }*/
+        
     }
 
-    private fun generateQRCode(text: String) {
+    
+    //다이나믹 링크 형식때무네 return 타입 Uri로 바꿈. 수정 시 참고
+    private fun generateQRCode(text: Uri) {
         val qrCodeWriter = QRCodeWriter()
         try {
-            val bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200)
+            val bitMatrix = qrCodeWriter.encode(text.toString(), BarcodeFormat.QR_CODE, 200, 200)
             val width = bitMatrix.width
             val height = bitMatrix.height
             val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)

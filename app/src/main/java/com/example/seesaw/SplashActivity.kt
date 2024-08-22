@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,7 @@ class SplashActivity : AppCompatActivity() {
         //1번째는 데이터 키 값이고 2번째는 키 값에 데이터가 존재하지않을때 대체 값 입니다.
 
         if(savedid == "") {  //자동 로그인 정보가 없을 경우, 로그인으로
+            Log.d(TAG, "자동로그인 X")
 //            val intent = Intent(this, Login::class.java)
 //            startActivity(intent)
             Handler().postDelayed({
@@ -39,6 +41,7 @@ class SplashActivity : AppCompatActivity() {
             }, 2000) // 3000ms = 3초 딜레이
         }
         else{  //자동 로그인 정보가 있을 경우, 홈화면으로
+            Log.d(TAG, "자동로그인 O")
 
             //큐알로 들어온 경우
             val uri = intent.data
@@ -46,12 +49,12 @@ class SplashActivity : AppCompatActivity() {
 
             if (uri != null){
                 val cardId = uri.getQueryParameters("cardId").toString()
-                Log.d(TAG, "cardid = $cardId")
+                Log.d(TAG, "Splash : cardid = $cardId")
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("uriExist", cardId)
                 startActivity(intent)
-                Toast.makeText(this, "명함이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "명함이 저장되었습니다.", Toast.LENGTH_SHORT).show()
                 finish()
             }
             else{

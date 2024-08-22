@@ -30,7 +30,7 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="whosee" android:host="sharelink" android:path="/Splash" />
+                <data android:scheme="https" android:host="whosee" android:path="/Splash" />
             </intent-filter>
         </activity>
         <activity
@@ -154,5 +154,8 @@
             android:exported="false">
         </activity>
     </application>
+    <queries>
+        <package android:name="com.example.seesaw"/>
+    </queries>
 
 </manifest>
