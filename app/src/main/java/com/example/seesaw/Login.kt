@@ -10,9 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.seesaw.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 
 class Login : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -39,14 +42,36 @@ class Login : AppCompatActivity() {
 
                 auth.signInWithEmailAndPassword(id, password)
                     .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
+                        val currentUser = Firebase.auth.currentUser
+                        if (task.isSuccessful && currentUser != null) {
                             if (binding.chkAutoLogin.isChecked) {
                                 saveDate(id) // 자동로그인
                             }
-                            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+
+                            val userUid = currentUser.uid
+                            Firebase.messaging.token.addOnCompleteListener {
+                                val token = it.result
+                                val user = mutableMapOf<String, Any>()
+                                user["userUid"] = userUid
+                                user["userEmail"] = id
+                                user["fcmToken"] = token
+
+
+                                val DB_URL = "https://card-93c5d-default-rtdb.firebaseio.com/"
+                                val DB_USERS = "users"
+
+                                Firebase.database(DB_URL).reference.child(DB_USERS).child(userUid).updateChildren(user)
+
+                                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+
+//                            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+//                            val intent = Intent(this, MainActivity::class.java)
+//                            startActivity(intent)
+//                            finish()
                         } else {
                             Toast.makeText(
                                 this,
