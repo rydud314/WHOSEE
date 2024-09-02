@@ -43,6 +43,8 @@ android {
 
 dependencies {
 
+    implementation ("com.google.firebase:firebase-messaging-ktx")
+
     implementation ("com.google.zxing:core:3.3.0")
     implementation ("com.journeyapps:zxing-android-embedded:3.6.0")
 

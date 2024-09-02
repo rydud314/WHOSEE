@@ -1,8 +1,11 @@
 package com.example.seesaw
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.service.controls.ControlsProviderService
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +16,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class Login : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -47,6 +51,26 @@ class Login : AppCompatActivity() {
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                             finish()
+                            // FCM 토큰 갱신 및 Firestore에 저장
+                            FirebaseMessaging.getInstance().token.addOnCompleteListener { tokenTask ->
+                                if (tokenTask.isSuccessful) {
+                                    val token = tokenTask.result
+                                    Log.d(TAG, "FCM 토큰 갱신: $token")
+                                    val user = FirebaseAuth.getInstance().currentUser
+                                    user?.let {
+                                        firestore.collection("id_list").document(user.uid)
+                                            .update("fcmToken", token)
+                                            .addOnSuccessListener {
+                                                Log.d(TAG, "FCM 토큰이 Firestore에 성공적으로 저장되었습니다.")
+                                            }
+                                            .addOnFailureListener { e ->
+                                                Log.w(TAG, "Firestore에 FCM 토큰 저장 실패", e)
+                                            }
+                                    }
+                                } else {
+                                    Log.w(TAG, "FCM 토큰 가져오기 실패", tokenTask.exception)
+                                }
+                            }
                         } else {
                             Toast.makeText(
                                 this,
