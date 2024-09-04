@@ -312,7 +312,8 @@ class MainActivity : AppCompatActivity() {
                     if (cardId != null) {
                         val intent = Intent(this, ShareCardDetail::class.java)
                         intent.putExtra("uriExist", cardId)
-                        startActivity(intent)
+                        //setResult(1, intent)
+                        startActivityForResult(intent, 1)
                     }
                 }
 
