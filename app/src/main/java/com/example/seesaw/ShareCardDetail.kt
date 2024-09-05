@@ -79,7 +79,7 @@ class ShareCardDetail : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ){
 
-        // SubOne에서 결과를 받아옴
+        // mainActivity Intent에서 결과를 받아옴
         if(it.resultCode == 1){
             val intent = it.data
             cardId = intent!!.getStringExtra("uriExist").toString()
@@ -88,7 +88,7 @@ class ShareCardDetail : AppCompatActivity() {
             Log.d(TAG, "shareDetail : uriCardID = $cardId")
         }
 
-        // SubTwo에서 결과를 받아옴
+        // shareCardDetail Intent에서 결과를 받아옴
         else if(it.resultCode == 2){
             val intent = it.data
             cardId = intent!!.getStringExtra("saveCardImage").toString()
