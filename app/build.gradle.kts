@@ -79,19 +79,21 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-dynamic-links-ktx")
 
+    /*
     // Google Calendar API 관련 라이브러리
-    implementation ("androidx.media:media:1.3.1")
     implementation ("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation ("com.google.android.gms:play-services-auth:19.0.0")
+    implementation ("com.google.android.gms:play-services-auth:21.2.0")
     implementation ("pub.devrel:easypermissions:0.3.0")
-    implementation ("com.google.api-client:google-api-client-android:1.33.0")
-    //{
-       // exclude group: 'org.apache.httpcomponents'
-    //}
-    implementation("com.google.apis:google-api-services-calendar:v3-rev305-1.33.0")
-    //{
-       // exclude group: 'org.apache.httpcomponents'
-    //}
+    implementation("com.google.api-client:google-api-client-android:1.22.0")
+    /*{
+        exclude group: 'org.apache.httpcomponents'
+    }*/
+    implementation("com.google.apis:google-api-services-calendar:v3-rev235-1.22.0")
+    /*{
+        exclude group: 'org.apache.httpcomponents'
+    }*/
+
+    */
 
     // 기타 라이브러리
     implementation("com.google.zxing:core:3.3.0")
