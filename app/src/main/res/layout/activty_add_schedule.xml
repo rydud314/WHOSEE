@@ -150,5 +150,15 @@
                 android:inputType="text"
                 android:text="Name" />
         </LinearLayout>
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:text="Add"
+            android:id="@+id/btn_save_schedule">
+
+        </Button>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

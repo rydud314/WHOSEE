@@ -182,6 +182,12 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
             startActivity(intent)
         }
 
+        val btn_calender : Button = view.findViewById(R.id.btn_gotocalendar)
+        btn_calender.setOnClickListener{
+            val intent = Intent(context, Calender::class.java)
+            startActivity(intent)
+        }
+
 //        val menuButton: Button = view.findViewById(R.id.menu_button)
 //        menuButton.setOnClickListener {
 //            drawerLayout.openDrawer(GravityCompat.END)
