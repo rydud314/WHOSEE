@@ -159,6 +159,14 @@
             android:name=".MessageActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".Calender"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".AddSchedule"
+            android:exported="false">
+        </activity>
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
