@@ -3,13 +3,10 @@ package com.example.seesaw
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +14,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -28,11 +22,6 @@ import com.example.seesaw.databinding.ActivityMessageBinding
 import com.example.seesaw.model.ChatModel
 import com.example.seesaw.model.ChatModel.Comment
 import com.example.seesaw.model.Friend
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
-import com.google.auth.oauth2.GoogleCredentials
-import java.io.FileInputStream
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
@@ -46,13 +35,9 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
 import org.json.JSONObject
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import com.google.api.client.json.jackson2.JacksonFactory
-import okhttp3.*
-import java.util.*
 
 class MessageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMessageBinding
@@ -76,13 +61,6 @@ class MessageActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-//        // OAuth 2.0 인증 설정 및 토큰 자동 갱신 설정
-//        val httpTransport = GoogleNetHttpTransport.newTrustedTransport()
-//        val jsonFactory = JacksonFactory.getDefaultInstance()
-//
-//        googleCredential = GoogleCredential.getApplicationDefault(httpTransport, jsonFactory)
-//            .createScoped(listOf("https://www.googleapis.com/auth/cloud-platform"))
-
         val sendBtn = binding.sendBtn
         val messageText = binding.messageText
 
@@ -101,137 +79,98 @@ class MessageActivity : AppCompatActivity() {
 
         Log.e("otherUserFcmToken", "otherUserFcmToken: $otherUserFcmToken")
 
-
-
         sendBtn.setOnClickListener {
-            if (messageText.text.isNotEmpty()) {
+            if (messageText.text.isNotEmpty() && otherUserFcmToken != null) { // FCM 토큰 null 체크 추가
                 val chatModel = ChatModel()
                 chatModel.users[uid.toString()] = true
                 chatModel.users[destinationUid!!] = true
                 val time = System.currentTimeMillis()
                 val dateFormat = SimpleDateFormat("yy.MM.dd.kk:mm")
                 val curTime = dateFormat.format(Date(time)).toString()
-                //
+
                 val comment = Comment(uid, messageText.text.toString(), curTime)
-
-//                // 상대방의 FCM 토큰을 가져오기 위한 코드 추가
-//                val otherUserRef =
-//                    fireDatabase.child("users").child(destinationUid!!).child("fcmToken")
-//                otherUserRef.get().addOnSuccessListener { dataSnapshot ->
-//                    otherUserFcmToken = dataSnapshot.getValue(String::class.java)
-//                }
-//
-//                Log.e("otherUserFcmToken", "otherUserFcmToken: $otherUserFcmToken")
-
 
                 if (chatRoomUid == null) {
                     sendBtn.isEnabled = false
                     fireDatabase.child("chatrooms").push().setValue(chatModel)
                         .addOnSuccessListener {
-                            //채팅방 생성
+                            // 채팅방 생성
                             checkChatRoom()
-                            //메세지 보내기
                             Handler().postDelayed({
                                 fireDatabase.child("chatrooms").child(chatRoomUid.toString())
                                     .child("comments").push().setValue(comment)
 
-                                val client = OkHttpClient()
-
-                                val root = JSONObject()
-                                val message = JSONObject()
-                                val notification = JSONObject()
-                                val android = JSONObject()
-                                notification.put("title", getString(R.string.app_name))
-                                notification.put("body", messageText.text.toString())
-                                android.put("priority", "high")
-                                message.put("notification", notification)
-                                message.put("android", android)
-                                message.put("token", otherUserFcmToken)
-                                root.put("message", message)
-
-//                                val FCM_OAuth_Access_Token = googleCredential.accessToken
-                                val FCM_OAuth_Access_Token = "ya29.a0AcM612xzwwSqQoWYnpsOKei9POGhL-KCa69l7-6Bn7hZvxkLLPAPI7YgMFLtdc4mRjLo7GT3wpAGnV96ck1NbrtgoKtmKgJ-ItwDWzyAFtiFxV-fcTy41zlx-xhxY9gkluDyWfM5rsC90uG0pqEbJWUl7AgWgPEF5ZvLCJc6aCgYKAVoSARASFQHGX2MiFN5bHhbDJhaJY5EOrGDBFw0175"
-
-                                val requestBody = root.toString()
-                                    .toRequestBody("application/json; charset=utf-8".toMediaType())
-                                val request = Request.Builder().post(requestBody)
-                                    .url("https://fcm.googleapis.com/v1/projects/card-93c5d/messages:send")
-                                    .header("Authorization", "Bearer $FCM_OAuth_Access_Token")
-                                    .build()
-                                client.newCall(request).enqueue(object : Callback {
-                                    override fun onFailure(call: okhttp3.Call, e: IOException) {
-                                        // 요청 실패 시 처리
-                                        Log.e("FCM", "Failed to send message: ${e.message}")
-                                    }
-
-                                    override fun onResponse(
-                                        call: okhttp3.Call,
-                                        response: okhttp3.Response
-                                    ) {
-                                        // 요청 성공 시 처리
-                                        if (response.isSuccessful) {
-                                            Log.d("FCM", "Message sent successfully")
-                                        } else {
-                                            Log.e("FCM", "Failed to send message: ${response.code}")
-                                        }
-                                    }
-                                })
+                                // FCM 푸시 메시지 전송 로직
+                                sendFcmNotification(otherUserFcmToken, messageText.text.toString())
 
                                 messageText.text = null
-
-
                             }, 1000L)
                         }
                 } else {
                     fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
                         .push().setValue(comment)
 
-//                    // 상대방의 FCM 토큰을 가져오기 위한 코드 추가
-//                    val otherUserRef =
-//                        fireDatabase.child("users").child(destinationUid!!).child("fcmToken")
-//                    otherUserRef.get().addOnSuccessListener { dataSnapshot ->
-//                        otherUserFcmToken = dataSnapshot.getValue(String::class.java)
-//                    }
-//                    Log.e("otherUserFcmToken", "otherUserFcmToken: $otherUserFcmToken")
+                    // FCM 푸시 메시지 전송 로직
+                    sendFcmNotification(otherUserFcmToken, messageText.text.toString())
 
+                    messageText.text = null
+                    Log.d("chatUidNotNull dest", "$destinationUid")
+                }
+            } else {
+                Log.e("FCM", "FCM 토큰이 null 상태입니다. 메시지를 전송할 수 없습니다.")
+            }
+        }
+        checkChatRoom()
+    }
+
+    private fun sendFcmNotification(token: String?, messageBody: String) {
+        if (token == null) {
+            Log.e("FCM", "토큰이 null 상태입니다. FCM 메시지를 전송할 수 없습니다.")
+            return
+        }
+
+        val uid = Firebase.auth.currentUser?.uid  // 현재 로그인된 사용자의 UID 가져오기
+        var username: String = "Unknown User"  // 기본값을 'Unknown User'로 설정
+
+        if (uid != null) {
+            val firestore = FirebaseFirestore.getInstance()
+            firestore.collection("id_list").document(uid).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        username = document.getString("name").toString()
+                        Log.d("Firestore", "User name: $username")
+                    } else {
+                        Log.d("Firestore", "No such document, using default name: $username")
+                    }
 
                     val client = OkHttpClient()
-
                     val root = JSONObject()
                     val message = JSONObject()
-                    val notification = JSONObject()
-                    val android = JSONObject()
-                    notification.put("title", getString(R.string.app_name))
-                    notification.put("body", messageText.text.toString())
-                    android.put("priority", "high")
+                    val data = JSONObject()
 
-                    message.put("notification", notification)
-                    message.put("android", android)
-                    message.put("token", otherUserFcmToken)
-
+                    // 알림 메시지 대신 데이터 메시지로 보냄 (포그라운드 및 백그라운드에서 동일 처리)
+                    data.put("title", username)  // 전송자의 이름을 타이틀로 설정
+                    data.put("body", messageBody)  // 메시지 내용
+                    message.put("data", data)
+                    message.put("token", token)
                     root.put("message", message)
 
-//                    val FCM_OAuth_Access_Token = googleCredential.accessToken
-                    val FCM_OAuth_Access_Token = "ya29.a0AcM612xzwwSqQoWYnpsOKei9POGhL-KCa69l7-6Bn7hZvxkLLPAPI7YgMFLtdc4mRjLo7GT3wpAGnV96ck1NbrtgoKtmKgJ-ItwDWzyAFtiFxV-fcTy41zlx-xhxY9gkluDyWfM5rsC90uG0pqEbJWUl7AgWgPEF5ZvLCJc6aCgYKAVoSARASFQHGX2MiFN5bHhbDJhaJY5EOrGDBFw0175"
+                    // 실제 사용할 OAuth Access Token 갱신 필요
+                    val FCM_OAuth_Access_Token = "ya29.a0AcM612xg-10MVjZJaTSGvw7mjw8Q587FfihviKOeSKMpWNDMdPYfIdY4LhVBmILDt_frVXGnZCxmBPJa7i7rXd-9B-SL_0GXmyn_KQojFdrbwozBVRhuASowvY1tjGzpuUa9pwBLR038R2K9wIqlUHLmiymWAsiHXSomM1QsaCgYKAYQSARASFQHGX2MiMV013o9U3n7sQUi2f9qKnQ0175"
 
-
-                    val requestBody = root.toString()
-                        .toRequestBody("application/json; charset=utf-8".toMediaType())
-                    val request = Request.Builder().post(requestBody)
+                    val requestBody = root.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
+                    val request = Request.Builder()
+                        .post(requestBody)
                         .url("https://fcm.googleapis.com/v1/projects/card-93c5d/messages:send")
                         .header("Authorization", "Bearer $FCM_OAuth_Access_Token")
                         .build()
+
                     client.newCall(request).enqueue(object : Callback {
                         override fun onFailure(call: okhttp3.Call, e: IOException) {
-                            // 요청 실패 시 처리
                             Log.e("FCM", "Failed to send message: ${e.message}")
                         }
 
-                        override fun onResponse(
-                            call: okhttp3.Call,
-                            response: okhttp3.Response
-                        ) {
-                            // 요청 성공 시 처리
+                        override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                             if (response.isSuccessful) {
                                 Log.d("FCM", "Message sent successfully")
                             } else {
@@ -239,15 +178,11 @@ class MessageActivity : AppCompatActivity() {
                             }
                         }
                     })
-
-                    messageText.text = null
-                    Log.d("chatUidNotNull dest", "$destinationUid")
                 }
-            }
+                .addOnFailureListener { exception ->
+                    Log.d("Firestore", "Error getting documents, using default name: $username", exception)
+                }
         }
-        checkChatRoom()
-
-
     }
 
     private fun checkChatRoom() {
@@ -276,9 +211,7 @@ class MessageActivity : AppCompatActivity() {
         private val comments = ArrayList<Comment>()
         private var friend: Friend? = null
 
-
         init {
-
             firestore.collection("id_list").document(destinationUid.toString()).get()
                 .addOnSuccessListener { document ->
                     friend = Friend(
@@ -291,7 +224,6 @@ class MessageActivity : AppCompatActivity() {
                     binding.messageScreenTop.text = document["name"].toString()
                     getMessageList()
                 }.addOnFailureListener { Log.d(ContentValues.TAG, "querysnapshot 실패") }
-
         }
 
         private fun getMessageList() {
@@ -305,44 +237,40 @@ class MessageActivity : AppCompatActivity() {
 
                         override fun onDataChange(snapshot: DataSnapshot) {
                             comments.clear()
-                            var readUsersMap: HashMap<String, Any> = HashMap()
+                            val readUsersMap: HashMap<String, Any> = HashMap()
                             for (data in snapshot.children) {
-                                var key = data.key
-                                var commentOrigin = data.getValue<Comment>()!!
-                                var commentModify = data.getValue<Comment>()!!
+                                val key = data.key
+                                val commentOrigin = data.getValue<Comment>()!!
+                                val commentModify = data.getValue<Comment>()!!
                                 commentModify.readUsers?.put(uid.toString(), true)
-                                readUsersMap.put(key.toString(), commentModify)
+                                readUsersMap[key.toString()] = commentModify
                                 comments.add(commentOrigin)
                             }
 
-                            if (comments.size > 0 && sharedPreferences.getString("userState", "")
-                                    .toString() == "Login"
-                            ) {
+                            if (comments.size > 0 && sharedPreferences.getString("userState", "").toString() == "Login") {
                                 Log.v("마지막", "!!!!")
-                                if (!comments.get(comments.size - 1).readUsers!!.containsKey(uid)) {
+                                if (!comments[comments.size - 1].readUsers!!.containsKey(uid)) {
                                     fireDatabase.child("chatrooms").child(chatRoomUid.toString())
                                         .child("comments").updateChildren(readUsersMap)
                                         .addOnCompleteListener { task ->
                                             if (task.isSuccessful) {
-                                                notifyDataSetChanged() //메시지 갱신
-                                                recyclerView?.scrollToPosition(comments.size - 1)     //메세지를 보낼 시 화면을 맨 밑으로 내림
+                                                notifyDataSetChanged()
+                                                recyclerView?.scrollToPosition(comments.size - 1)
                                             }
                                         }
                                 } else {
-                                    notifyDataSetChanged() //메시지 갱신
+                                    notifyDataSetChanged()
                                     recyclerView?.scrollToPosition(comments.size - 1)
                                 }
                             }
                         }
                     })
             }
-
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
             val view: View =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_message, parent, false)
-
             return MessageViewHolder(view)
         }
 
@@ -375,15 +303,11 @@ class MessageActivity : AppCompatActivity() {
                 holder.chatDate.textSize = 0f
             }
 
-
-
-            if (comments[position].uid.equals(uid)) // 내 채팅
-            {
+            if (comments[position].uid.equals(uid)) {
                 holder.messageRightContent.textSize = 11.8F
                 holder.messageRightContent.text = comments[position].message
                 holder.messageRightContent.setTextColor(Color.parseColor("#FFFFFFFF"))
                 holder.messageRightContent.setBackgroundResource(R.drawable.message_right_chat)
-
                 setReadCounter(position, holder.messageReadCountRight)
 
                 if (comments.size - 1 > position) {
@@ -399,13 +323,12 @@ class MessageActivity : AppCompatActivity() {
                     } else
                         holder.messageRightArriveTime.text =
                             comments[position].time.toString().substring(9)
-                } else { //마지막 대화인 경우
+                } else {
                     holder.messageRightArriveTime.text =
                         comments[position].time.toString().substring(9)
                 }
 
-            } else// 상대방 채팅
-            {
+            } else {
                 holder.messageLeftContent.textSize = 11.8F
                 holder.messageLeftContent.text = comments[position].message
                 holder.messageLeftContent.setTextColor(Color.parseColor("#FF545F71"))
@@ -434,7 +357,7 @@ class MessageActivity : AppCompatActivity() {
                         holder.messageLeftArriveTime.text =
                             comments[position].time.toString().substring(9)
                     }
-                } else { //마지막 대화인 경우
+                } else {
                     if (comments[position - 1].uid.equals(uid) || (comments[position].time.toString() != comments[position - 1].time.toString())) {
                         holder.userName.text = friend?.friendName
                         holder.userImage.visibility = View.VISIBLE
@@ -449,8 +372,6 @@ class MessageActivity : AppCompatActivity() {
                 }
 
             }
-
-
         }
 
         inner class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -480,7 +401,7 @@ class MessageActivity : AppCompatActivity() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val users = snapshot.value as Map<String, Boolean>
                             peopleCount = users.size
-                            var count = peopleCount - comments[position].readUsers!!.size
+                            val count = peopleCount - comments[position].readUsers!!.size
                             if (count > 0) {
                                 textView.visibility = View.VISIBLE
                                 textView.text = count.toString()
@@ -489,21 +410,18 @@ class MessageActivity : AppCompatActivity() {
                         }
                     })
             } else {
-                var count = peopleCount - comments[position].readUsers!!.size
+                val count = peopleCount - comments[position].readUsers!!.size
                 if (count > 0) {
                     textView.visibility = View.VISIBLE
                     textView.text = count.toString()
                 } else
                     textView.visibility = View.INVISIBLE
             }
-
-
         }
 
         override fun getItemCount(): Int {
             return comments.size
         }
-
     }
 
     override fun onBackPressed() {
@@ -512,8 +430,5 @@ class MessageActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putString("userState", "back")
         editor.apply()
-
-
     }
-
 }
