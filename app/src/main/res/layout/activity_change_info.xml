@@ -43,8 +43,8 @@
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="pwopw"
+                android:layout_height="30dp"
+                android:text=""
                 android:textSize="20dp" />
         </LinearLayout>
 
@@ -65,7 +65,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="010 1234 5678"
+                android:text=""
                 android:textSize="20dp" />
         </LinearLayout>
 
