@@ -23,10 +23,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="내 명함 목록"
+            android:text="Wallet"
             android:textSize="30dp"
             android:padding="16dp"
-            android:textColor="@color/black"
+            android:textColor="#66539C"
+            android:layout_marginStart="15dp"
             android:textStyle="bold" />
 
         <ScrollView

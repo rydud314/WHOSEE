@@ -7,11 +7,12 @@
     android:gravity="center|top"
     android:background="@drawable/bachground_share"
     android:orientation="vertical">
+
     <TextView
         layout="@layout/toolbar_share"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="공유"
+        android:text="Share"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="30dp"
@@ -23,15 +24,22 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="center"
-
         android:background="@drawable/card_face"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이름"
+        android:textColor="#66539C"
+        android:layout_marginTop="20dp"
+        android:textSize="30dp"/>
 
     <ImageView
         android:id="@+id/show_qr"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="50dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

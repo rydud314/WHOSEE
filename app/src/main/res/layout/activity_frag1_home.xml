@@ -132,7 +132,9 @@
                         android:layout_height="wrap_content"
                         android:textSize="18dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:id="@+id/btn_gotocalendar"
+                        android:background="@drawable/btn_add_schedule"
                         android:text="버튼"
                         ></Button>
                 </LinearLayout>
