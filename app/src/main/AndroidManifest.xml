@@ -160,7 +160,7 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".Calender"
+            android:name=".Calendar"
             android:exported="false">
         </activity>
         <activity

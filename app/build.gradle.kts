@@ -29,6 +29,7 @@ android {
         }
     }
 
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -52,6 +53,7 @@ android {
             excludes += "META-INF/NOTICE.txt"
             excludes += "META-INF/notice.txt"
             excludes += "META-INF/ASL2.0"
+            //excludes += "META-INF/INDEX.LIST"
         }
     }
 }
@@ -80,9 +82,11 @@ dependencies {
     implementation("com.google.firebase:firebase-dynamic-links-ktx")
 
     // Google Calendar API 관련 라이브러리
-    implementation ("com.google.api-client:google-api-client:2.0.0")
+    //implementation ("com.google.api-client:google-api-client:2.7.0")
+    implementation("com.google.api-client:google-api-client-android:2.2.0")
     implementation ("com.google.oauth-client:google-oauth-client-jetty:1.34.1")
     implementation ("com.google.apis:google-api-services-calendar:v3-rev20220715-2.0.0")
+    implementation ("com.google.android.gms:play-services-auth:21.2.0")
 
     // 기타 라이브러리
     implementation("com.google.zxing:core:3.3.0")

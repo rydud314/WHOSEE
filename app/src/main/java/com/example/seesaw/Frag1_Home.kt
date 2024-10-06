@@ -186,7 +186,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
         btn_calender.setOnClickListener{
             Log.d(TAG, "홈 = 캘린더 버튼 클릭 이벤트")
 
-            val intent = Intent(requireContext(), Calender::class.java)
+            val intent = Intent(requireContext(), Calendar::class.java)
             Log.d(TAG, "홈 = intent 생성")
             startActivity(intent)
         }
