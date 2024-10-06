@@ -7,22 +7,16 @@
     android:padding="16dp"
     android:gravity="bottom">
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Fragment 1!!"-->
-<!--        android:textSize="24sp" />-->
 
     <ImageView
         android:layout_width="300dp"
         android:layout_gravity="center"
-        android:layout_height="500dp"
-        android:background="@drawable/onboarding_1"
+        android:layout_height="530dp"
+        android:background="@drawable/onboarding1"
+        android:layout_marginBottom="30dp"
         android:layout_marginTop="0dp"/>
 
     <Button
-        android:layout_marginTop="60dp"
         android:id="@+id/btnNext1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

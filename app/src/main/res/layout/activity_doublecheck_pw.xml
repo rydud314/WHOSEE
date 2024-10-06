@@ -3,27 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
+
     android:layout_height="match_parent">
     <include
         layout="@layout/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="70dp"/>
-    <TextView
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:textColor="#545F71"
-        android:textStyle="bold"
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="본인 인증하기"
-        android:textSize="30dp"
-       />
 
     <TextView
-        android:layout_marginTop="30dp"
-        android:textColor="#545F71"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="본인인증"
+        android:textSize="20dp"
+        android:textColor="#967BE4"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginBottom="20dp"
+        android:paddingTop="10dp"
+        android:background="@drawable/textview_border"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:paddingEnd="0dp"
+        android:orientation="vertical">
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="#66539C"
         android:textSize="20sp"
         android:textStyle="bold"
         android:id="@+id/password"
@@ -57,6 +65,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="확인"
+            android:layout_marginStart="10dp"
             android:layout_marginEnd="0dp"/>
 
     </LinearLayout>
@@ -65,6 +74,8 @@
         android:id="@+id/confirm"
         android:layout_width="299dp"
         android:layout_height="wrap_content"
+        android:textColor="#9B82E4"
         android:textSize="20dp"
         android:text="인증되었습니다." />
+    </LinearLayout>
 </LinearLayout>

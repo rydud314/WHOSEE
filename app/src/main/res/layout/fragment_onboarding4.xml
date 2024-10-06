@@ -1,16 +1,17 @@
     <!-- fragment_onboarding4.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:padding="16dp"
-android:gravity="bottom">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="0dp"
+    android:padding="16dp"
+    android:gravity="bottom">
 
     <ImageView
         android:layout_width="300dp"
         android:layout_gravity="left"
         android:layout_height="500dp"
-        android:background="@drawable/onboarding_4"
+        android:background="@drawable/onboarding4"
         android:layout_marginTop="0dp"/>
 
     <Button

@@ -4,33 +4,34 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="30dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:gravity="center"
-            android:src="@drawable/img_logo"/>
-
+        <include
+            layout="@layout/toolbar_home"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:text="회원가입"
             android:textSize="20dp"
+            android:textColor="#967BE4"
             android:textStyle="bold"
-            android:textColor="@color/selected_color"
-            android:text="회원가입"/>
-
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:background="@drawable/textview_border"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="30dp"
+            android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -39,7 +40,7 @@
                 android:layout_height="40dp"
                 android:gravity="left|center"
                 android:text="아이디"
-                android:textColor="#545F71"
+                android:textColor="#66539C"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -84,7 +85,7 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:text="비밀번호"
-                android:textColor="#545F71"
+                android:textColor="#66539C"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -93,9 +94,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:hint="6자리 이상 숫자 혹은 문자"
+                android:textColorHint="#9B82E4"
                 android:textSize="15dp"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
+
                 android:inputType="textPassword" />
 
             <TextView
@@ -103,9 +106,8 @@
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:gravity="left|center"
-
                 android:text="이름"
-                android:textColor="#545F71"
+                android:textColor="#66539C"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -122,7 +124,7 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:text="전화번호"
-                android:textColor="#545F71"
+                android:textColor="#66539C"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -137,7 +139,7 @@
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:text=" 010    -"
-                    android:textColor="@color/selected_color"
+                    android:textColor="#66539C"
                     android:textSize="25sp" />
 
                 <EditText
@@ -176,6 +178,6 @@
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"/>
         </LinearLayout>
-
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<androidx.drawerlayout.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout_frag5_auction"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,44 +15,73 @@
         <include
             layout="@layout/toolbar_home"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="100dp"/>
+            android:layout_height="60dp" />
 
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_width="400dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:id="@+id/btn_logout"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:text="로그아웃"
-            android:background="#764AF4" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_change_info"
-            android:layout_marginTop="10dp"
-            android:layout_width="400dp"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:background="#764AF4"
-            android:layout_height="50dp"
-            android:text="정보변경" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:textSize="30dp"
+                android:textColor="#967BE4"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:layout_marginBottom="20dp"
+                android:paddingTop="10dp"
+                android:background="@drawable/textview_border"
+                />
 
-        <Button
-            android:id="@+id/btn_exit"
-            android:layout_marginTop="10dp"
-            android:background="#764AF4"
-            android:layout_width="400dp"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:layout_height="50dp"
-            android:text="탈퇴하기" />
+            <Button
+                android:layout_marginTop="10dp"
+                android:layout_width="360dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:id="@+id/btn_logout"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="23dp"
+                android:text="  로그아웃                                        >"
+                android:textAlignment="textStart"
+                android:background="@drawable/btn_top"
+                tools:ignore="RtlCompat" />
+
+            <Button
+                android:id="@+id/btn_change_info"
+                android:layout_width="360dp"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:background="#967BE4"
+                android:layout_height="50dp"
+                android:textAlignment="textStart"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="  정보변경                                        >"
+                tools:ignore="RtlCompat" />
+
+            <Button
+                android:id="@+id/btn_exit"
+                android:background="@drawable/btn_bottom"
+                android:layout_width="360dp"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textAlignment="textStart"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_height="50dp"
+                android:text="  탈퇴하기                                        >"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
