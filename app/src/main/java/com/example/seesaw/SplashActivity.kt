@@ -51,6 +51,7 @@ class SplashActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("uriExist", cardId)
                 startActivity(intent)
+                Toast.makeText(this, "명함이 저장되었습니다.", Toast.LENGTH_SHORT).show()
                 finish()
             }
             else{
