@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -164,7 +163,7 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
         }
 
-        val btn_edit_card: Button = view.findViewById(R.id.btn_edit_card)
+        val btn_edit_card: Button = view.findViewById(R.id.btn_chat)
         btn_edit_card.setOnClickListener {
             val intent = Intent(context, ChooseEditCard::class.java)
             intent.putExtra("myCardList", myCardList)
@@ -180,6 +179,15 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
         val btn_report: Button = view.findViewById(R.id.btn_open_report)
         btn_report.setOnClickListener {
             val intent = Intent(context, ChooseReport::class.java)
+            startActivity(intent)
+        }
+
+        val btn_calender : Button = view.findViewById(R.id.btn_gotocalendar)
+        btn_calender.setOnClickListener{
+            Log.d(TAG, "홈 = 캘린더 버튼 클릭 이벤트")
+
+            val intent = Intent(requireContext(), Calendar::class.java)
+            Log.d(TAG, "홈 = intent 생성")
             startActivity(intent)
         }
 

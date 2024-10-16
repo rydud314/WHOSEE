@@ -23,47 +23,69 @@
         android:layout_height="60dp" />
 
     <LinearLayout
-        android:paddingTop="100dp"
+        android:paddingTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textSize="30dp"
+            android:textColor="#967BE4"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginBottom="20dp"
+            android:paddingTop="10dp"
+            android:background="@drawable/textview_border"
+            />
+
         <Button
             android:layout_marginTop="10dp"
-            android:layout_width="400dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_width="360dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:id="@+id/btn_logout"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="25dp"
-            android:text="로그아웃"
-            android:background="#764AF4"
-            tools:ignore="MissingConstraints" />
+            android:textSize="23dp"
+            android:text="  로그아웃                                        >"
+            android:textAlignment="textStart"
+            android:background="@drawable/btn_top"
+            tools:ignore="MissingConstraints,RtlCompat" />
 
         <Button
             android:id="@+id/btn_change_info"
-            android:layout_marginTop="10dp"
-            android:layout_width="400dp"
+            android:layout_width="360dp"
             android:textStyle="bold"
-            android:textSize="25dp"
+            android:textSize="23dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:background="#764AF4"
+            android:background="#967BE4"
             android:layout_height="50dp"
-            android:text="정보변경" />
+            android:textAlignment="textStart"
+            android:text="  정보변경                                        >"
+            tools:ignore="RtlCompat" />
 
         <Button
             android:id="@+id/btn_exit"
-            android:layout_marginTop="10dp"
-            android:background="#764AF4"
-            android:layout_width="400dp"
+            android:background="@drawable/btn_bottom"
+            android:layout_width="360dp"
             android:textStyle="bold"
-            android:textSize="25dp"
+            android:textSize="23dp"
             android:layout_gravity="center"
             android:textColor="@color/white"
+            android:textAlignment="textStart"
             android:layout_height="50dp"
-            android:text="탈퇴하기" />
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="  탈퇴하기                                        >"
+            tools:ignore="RtlCompat" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

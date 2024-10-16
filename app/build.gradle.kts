@@ -28,10 +28,13 @@ android {
             )
         }
     }
+
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -39,13 +42,55 @@ android {
     viewBinding {
         enable = true
     }
+
+    packaging {
+        resources {
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/license.txt"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+            excludes += "META-INF/notice.txt"
+            excludes += "META-INF/ASL2.0"
+            //excludes += "META-INF/INDEX.LIST"
+        }
+    }
 }
 
 dependencies {
+    // Google HTTP Client Library for Jackson2
+    implementation("com.google.http-client:google-http-client-jackson2:1.42.3")
 
-    implementation ("com.google.zxing:core:3.3.0")
-    implementation ("com.journeyapps:zxing-android-embedded:3.6.0")
+    // Google API Client 라이브러리 및 Auth 라이브러리
+    implementation("com.google.api-client:google-api-client:1.32.1")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.17.0")
 
+    // OkHttp 라이브러리
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
+    // JSON 처리 라이브러리
+    implementation("org.json:json:20210307")
+
+    // Firebase 관련 라이브러리
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-dynamic-links-ktx")
+
+    // Google Calendar API 관련 라이브러리
+    //implementation ("com.google.api-client:google-api-client:2.7.0")
+    implementation("com.google.api-client:google-api-client-android:2.2.0")
+    implementation ("com.google.oauth-client:google-oauth-client-jetty:1.34.1")
+    implementation ("com.google.apis:google-api-services-calendar:v3-rev20220715-2.0.0")
+    implementation ("com.google.android.gms:play-services-auth:21.2.0")
+
+    // 기타 라이브러리
+    implementation("com.google.zxing:core:3.3.0")
+    implementation("com.journeyapps:zxing-android-embedded:3.6.0")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
@@ -61,20 +106,11 @@ dependencies {
     implementation(libs.androidx.junit.ktx)
     testImplementation("junit:junit:4.12")
     androidTestImplementation("junit:junit:4.12")
-    //implementation(project(mapOf("path" to ":camera_text_recognition")))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("com.google.android.material:material:1.8.0")
 
-    implementation ("com.google.android.material:material:1.8.0") // Check for the latest version
-
-    // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.firebase:firebase-database-ktx")
-
-    //cameraX
+    // cameraX
     val camerax_version = "1.1.0-beta01"
     implementation("androidx.camera:camera-core:$camerax_version")
     implementation("androidx.camera:camera-camera2:$camerax_version")

@@ -85,6 +85,17 @@ android:padding="16dp">
             android:text="명함 저장하기"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_save_card_image"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#B6B6EA"
+            android:text="갤러리에 명함 저장하기"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>
 </LinearLayout>

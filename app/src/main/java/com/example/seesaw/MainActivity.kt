@@ -202,6 +202,7 @@ package com.example.seesaw
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
@@ -212,6 +213,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.seesaw.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData
+import com.google.firebase.dynamiclinks.dynamicLinks
 
 class MainActivity : AppCompatActivity() {
 
@@ -280,6 +284,7 @@ class MainActivity : AppCompatActivity() {
             switchToShareFragment()
         }
 
+        //// 위 버튼 밑 버튼 다른 점이 무엇이지용,,? 합쳐도 되는 거면 정리해주세오~~~~~ -교영
 
         // qr코드 생성버튼 리스너 설정
         binding.makeQrBtn.setOnClickListener {
@@ -291,6 +296,31 @@ class MainActivity : AppCompatActivity() {
             switchToShareFragment()
         }
 
+        //딥링크 확인 코드
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData: PendingDynamicLinkData? ->
+                // 다이나믹 팬딩된 링크 있음
+                var deepLink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                    Log.d(TAG, "Main : deeplink = $deepLink")
+                }
+                if(deepLink != null){
+                    var cardId = deepLink.getQueryParameter("cardId")
+                    Log.d(TAG, "Main : cardId = $cardId")
+                    if (cardId != null) {
+                        val intent = Intent(this, ShareCardDetail::class.java)
+                        intent.putExtra("uriExist", cardId)
+                        //setResult(1, intent)
+                        startActivityForResult(intent, 1)
+                    }
+                }
+
+            }
+            .addOnFailureListener(this) { e -> Log.w(TAG, "Main : getDynamicLink:onFailure", e) }
+
+        /*
         val cardId = intent?.getSerializableExtra("uriExist").toString()
         if(cardId != "null"){
             Log.d(TAG, "main cardId = $cardId")
@@ -298,7 +328,26 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("uriExist", cardId)
             startActivity(intent)
         }
+        */
     }
+
+    /*
+    // 딥링크가 처리되었음을 기록하는 메소드
+    private fun markDeepLinkHandled(pendingCheck: Boolean) : Boolean {
+        if(pendingCheck){}
+    }
+
+    // 딥링크가 이미 처리되었는지 확인하는 메소드
+    private fun isDeepLinkHandled(pendingCheck : Boolean) : Boolean {
+        //딥링크가 작동한 적 없을 때
+        if(!pendingCheck){
+            return true
+        }else{
+            return false
+        }
+    }
+    */
+
 
     fun getMyCardList(homeCardList: ArrayList<Card>){
        myCardList = homeCardList

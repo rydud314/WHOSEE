@@ -61,7 +61,7 @@
                     android:layout_gravity="center" />
 
                 <TableLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center">
@@ -70,18 +70,19 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+
                             android:orientation="horizontal">
 
                             <Button
-                                android:id="@+id/btn_edit_card"
-                                android:layout_width="170dp"
+                                android:id="@+id/btn_chat"
+                                android:layout_width="180dp"
                                 android:layout_height="150dp"
                                 android:background="@drawable/btn_edit_card" />
 
                             <Button
                                 android:id="@+id/btn_make_card"
                                 android:layout_marginStart="15dp"
-                                android:layout_width="170dp"
+                                android:layout_width="180dp"
                                 android:layout_height="150dp"
                                 android:background="@drawable/btn_make_card" />
                         </LinearLayout>
@@ -95,7 +96,7 @@
 
                             <Button
                                 android:id="@+id/btn_open_report"
-                                android:layout_width="170dp"
+                                android:layout_width="180dp"
                                 android:layout_height="150dp"
                                 android:layout_marginTop="20dp"
                                 android:background="@drawable/btn_open_report" />
@@ -103,15 +104,18 @@
                             <Button
                                 android:id="@+id/btn_camera_scan"
                                 android:layout_marginStart="15dp"
-                                android:layout_width="170dp"
+                                android:layout_width="180dp"
                                 android:layout_height="150dp"
                                 android:layout_marginTop="20dp"
                                 android:background="@drawable/btn_camera_scan" />
                         </LinearLayout>
                     </TableRow>
                 </TableLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
 
-                <TextView
+                    <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
@@ -120,12 +124,26 @@
                     android:textStyle="bold"
                     android:padding="5dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="220dp"
                     android:layout_marginStart="10dp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:id="@+id/btn_gotocalendar"
+                        android:background="@drawable/btn_add_schedule"
+                        android:text="버튼"
+                        ></Button>
+                </LinearLayout>
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="@drawable/btn_calendar"
+                    android:id="@+id/btn_calendar"
                     android:text="다음 회의 일정은 12월 13일입니다!\n----------------------------------------\nD-2 [팀장] 디자이너 사장"
                     android:textColor="@color/white"
                     android:textSize="16dp"
@@ -133,32 +151,32 @@
                     android:padding="10dp" />
 
                 <!-- Add more views to make content larger than the screen height -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:text="Additional Content"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
-                    android:layout_marginTop="20dp" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textSize="18dp"-->
+<!--                    android:text="Additional Content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:layout_marginTop="20dp" />-->
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/btn_calendar"
-                    android:text="더 많은 컨텐츠"
-                    android:textColor="@color/white"
-                    android:textSize="16dp"
-                    android:padding="10dp" />
+<!--                <Button-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:background="@drawable/btn_calendar"-->
+<!--                    android:text="더 많은 컨텐츠"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="16dp"-->
+<!--                    android:padding="10dp" />-->
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/btn_calendar"
-                    android:text="추가된 컨텐츠"
-                    android:textColor="@color/white"
-                    android:textSize="16dp"
-                    android:padding="10dp" />
+<!--                <Button-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:background="@drawable/btn_calendar"-->
+<!--                    android:text="추가된 컨텐츠"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="16dp"-->
+<!--                    android:padding="10dp" />-->
 
             </LinearLayout>
         </ScrollView>
