@@ -47,10 +47,13 @@ class Calendar : AppCompatActivity() {
             .requestScopes(Scope("https://www.googleapis.com/auth/calendar")) // Calendar API에 필요한 스코프 요청
             .build()
 
+
+
         Log.d(ContentValues.TAG, "캘린더 = 1")
 
         // GoogleSignInClient 생성
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         Log.d(ContentValues.TAG, "캘린더 = 1-2")
 
 
