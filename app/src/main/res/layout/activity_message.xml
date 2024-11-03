@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#DAD5F1">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textColor="#FF545F71"
+            android:textColor="#875EFD"
             android:textSize="24sp"
             android:textStyle="bold" />
         <TextView
@@ -80,9 +80,10 @@
 
         <ImageView
             android:id="@+id/sendBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/send2"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

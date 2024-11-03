@@ -1,55 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginBottom="20dp"
-        tools:ignore="MissingConstraints">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="Calendar"
-            android:textColor="#967BE4"
-            android:textStyle="bold"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="180dp"
-            android:layout_marginStart="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="20dp"
+            tools:ignore="MissingConstraints">
 
-        <Button
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="180dp"
+                android:padding="5dp"
+                android:text="Calendar"
+                android:textColor="#967BE4"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_add_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/btn_add_schedule"
+                android:padding="10dp"
+                android:text="일정 추가 +"
+                android:textColor="#815BF1"
+                android:textSize="18sp"></Button>
+
+        </LinearLayout>
+
+        <CalendarView
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginTop="5dp"
-            android:padding="10dp"
-            android:id="@+id/btn_add_schedule"
-            android:textColor="#815BF1"
-            android:background="@drawable/btn_add_schedule"
-            android:text="일정 추가  +"
-            ></Button>
+            tools:ignore="MissingConstraints" />
+
+        <ListView
+            android:id="@+id/calendarListView"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="1dp"
+            android:padding="16dp" />
+
     </LinearLayout>
-
-    <CalendarView
-        android:id="@+id/calendar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="25dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="50dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="424dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
