@@ -74,8 +74,14 @@
         </activity>
         <activity
             android:name=".CameraActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".PreviewActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".CameraScan_2"
             android:exported="false">
