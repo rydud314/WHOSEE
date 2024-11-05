@@ -24,10 +24,10 @@
             android:text="다시 찍기" />
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnDetect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="갤러리에 저장" />
+            android:text="내용 추출" />
     </LinearLayout>
 
 </FrameLayout>

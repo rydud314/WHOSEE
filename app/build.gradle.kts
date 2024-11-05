@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.seesaw"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.seesaw"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -53,6 +53,7 @@ android {
             excludes += "META-INF/NOTICE.txt"
             excludes += "META-INF/notice.txt"
             excludes += "META-INF/ASL2.0"
+            excludes += "META-INF/LGPL2.1"
             //excludes += "META-INF/INDEX.LIST"
         }
     }
@@ -124,4 +125,24 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation("androidx.cardview:cardview:1.0.0")
+
+
+    // ML Kit for Text Recognition To recognize Latin script
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+    // To recongnize Korean script
+    implementation("com.google.mlkit:text-recognition-korean:16.0.1")
+
+
+//    // Google Vision API 및 gRPC 관련 의존성
+//    implementation("io.grpc:grpc-okhttp:1.54.0")
+//    implementation("com.google.api:gax-grpc:2.0.0")
+//
+//    implementation("com.google.auth:google-auth-library-oauth2-http:1.4.0")
+//    implementation("io.grpc:grpc-auth:1.42.0")
+//    implementation("com.google.cloud:google-cloud-vision:1.100.0")
+//
+//    // 추가된 필요 의존성
+//    implementation("io.grpc:grpc-core:1.42.0")
+//    implementation("io.grpc:grpc-stub:1.42.0")
+//    implementation("com.google.protobuf:protobuf-java:3.17.3")
 }
