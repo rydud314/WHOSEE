@@ -64,7 +64,10 @@ class Calendar : AppCompatActivity() {
         btn_add_schedule.setOnClickListener {
             Log.d(ContentValues.TAG, "캘린더 = 일정추가버튼")
 
+            val account = GoogleSignIn.getLastSignedInAccount(this)
+            Log.d(ContentValues.TAG, "캘린더 account = ${account}")
             val intent = Intent(this, AddSchedule::class.java)
+            intent.putExtra("calendarAccount", account)
             startActivity(intent)
         }
     }
