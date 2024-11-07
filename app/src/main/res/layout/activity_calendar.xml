@@ -13,7 +13,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginBottom="20dp"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -33,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:background="@drawable/btn_add_schedule"
                 android:padding="10dp"
                 android:text="일정 추가 +"
@@ -47,15 +47,54 @@
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints" />
 
-        <ListView
-            android:id="@+id/calendarListView"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:dividerHeight="1dp"
-            android:padding="16dp" />
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:paddingStart="30dp"
+                    android:id="@+id/text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" [선택한 날짜의 일정]"
+                    android:textColor="#967BE4" />
+
+                <ListView
+                    android:id="@+id/selectedDateListView"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:padding="16dp"
+                    tools:listitem="@layout/listitem_event"/>
+
+                <TextView
+                    android:paddingStart="30dp"
+                    android:id="@+id/text2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" [다가오는 일정]"
+                    android:textColor="#967BE4" />
+
+                <ListView
+                    android:id="@+id/calendarListView"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:dividerHeight="1dp"
+                    android:padding="16dp"
+                    tools:listitem="@layout/listitem_event"/>
+
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
 

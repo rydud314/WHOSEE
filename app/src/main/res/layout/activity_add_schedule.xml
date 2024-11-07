@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="20dp"
+
             android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +57,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="text"
-                android:textColor="#967BE4"
+                android:textColorHint="#967BE4"
                 android:hint="Name" />
         </LinearLayout>
 
@@ -81,7 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#967BE4"
+                android:textColorHint="#967BE4"
+                android:textSize="16dp"
                 android:hint="시작 날짜(8자리)"
                 android:ems="10"
                 android:inputType="date" />
@@ -90,11 +92,11 @@
                 android:id="@+id/et_startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#967BE4"
+                android:textColorHint="#967BE4"
                 android:hint="시작 시간(HH:MM)"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="17dp"
+                android:textSize="16dp"
                 android:inputType="time" />
         </LinearLayout>
 
@@ -115,8 +117,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="16dp"
                 android:hint="종료 날짜(8자리)"
-                android:textColor="#967BE4"
+                android:textColorHint="#967BE4"
                 android:ems="10"
                 android:inputType="date" />
 
@@ -125,8 +128,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="종료 시간(HH:MM)"
-                android:textSize="17dp"
-                android:textColor="#967BE4"
+                android:textSize="16dp"
+                android:textColorHint="#967BE4"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="time" />
@@ -143,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#66539C"
-                    android:text="참여자"
+                    android:text="참여자\n(option)"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
@@ -155,7 +158,7 @@
                     android:ems="10"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    android:textColor="#967BE4" />
+                    android:textColorHint="#967BE4"/>
 
                 <Spinner
                     android:id="@+id/spinner_email_domains"
@@ -190,7 +193,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
@@ -199,7 +202,7 @@
                 android:layout_width="41dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="세부사항"
+                android:text="세부사항\n(option)"
                 android:textColor="#66539C"
                 android:textSize="15dp"
                 android:textStyle="bold" />
@@ -210,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textColor="#967BE4"
+                android:textColorHint="#967BE4"
                 android:inputType="text"
                 android:hint="Detail" />
         </LinearLayout>

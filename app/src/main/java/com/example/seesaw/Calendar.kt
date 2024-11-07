@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.CalendarView
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -22,13 +23,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import android.widget.ArrayAdapter
-
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.Calendar as UtilCalendar
 
 class Calendar : AppCompatActivity() {
 
     private lateinit var btn_add_schedule : Button
     private lateinit var listView: ListView
+    private lateinit var selectedDateListView: ListView
+    private lateinit var calendar: CalendarView
+    private lateinit var googleCalendarEvents: List<com.google.api.services.calendar.model.Event>
 
     private val RC_SIGN_IN = 100  // 요청 코드 정의
 
@@ -39,6 +45,8 @@ class Calendar : AppCompatActivity() {
 
         btn_add_schedule = findViewById(R.id.btn_add_schedule)
         listView = findViewById(R.id.calendarListView)
+        selectedDateListView=findViewById(R.id.selectedDateListView)
+        calendar=findViewById(R.id.calendar)
 
         // GoogleSignInOptions 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -61,6 +69,7 @@ class Calendar : AppCompatActivity() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
 
+
         btn_add_schedule.setOnClickListener {
             Log.d(ContentValues.TAG, "캘린더 = 일정추가버튼")
 
@@ -70,7 +79,36 @@ class Calendar : AppCompatActivity() {
             intent.putExtra("calendarAccount", account)
             startActivity(intent)
         }
-    }
+
+        calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            Log.d(ContentValues.TAG,"날짜 선택")
+
+             if (::googleCalendarEvents.isInitialized && googleCalendarEvents.isNotEmpty()) {
+                val selectedDate = UtilCalendar.getInstance().apply {
+                    set(year, month, dayOfMonth)
+                }.time
+
+                //선택한 날짜 일정 찾기
+                val filteredEvents = googleCalendarEvents.filter { event ->
+                    val startDate = event.start.dateTime ?: event.start.date
+                    val eventDate = Date(startDate.value)
+                    isSameDay(selectedDate, eventDate)
+                }
+
+                 if (filteredEvents.isEmpty()) {
+                     Log.d(ContentValues.TAG, "선택한 날짜에 일정 없음")
+                 } else {
+                     displaySelectedDateEvents(filteredEvents)
+                 }
+
+            }else{
+                Log.d(ContentValues.TAG,"캘린더 이벤트가 없음")
+            }
+
+
+        }
+
+     }
 
     // Google Sign-In 결과 처리
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -126,17 +164,19 @@ class Calendar : AppCompatActivity() {
                 Log.d(ContentValues.TAG, "캘린더 API 호출 성공 : ${events.items}")
 
                 val eventTitles = events.items.map { it.summary ?: "No Title" }
+                googleCalendarEvents=events.items //수상함
 
                 // UI 업데이트는 메인 스레드에서 수행해야 함
                 withContext(Dispatchers.Main) {
                     // 이벤트 처리
                     //Log.d(ContentValues.TAG, "캘린더 4-2 : ${events.items}")
-                    val eventList=events.items
+                    val eventList=googleCalendarEvents
                     if (eventList.isNullOrEmpty()) {
                         Log.d(ContentValues.TAG, "캘린더 이벤트 없음")
                     } else {
                         displayEvents(eventList)
                         Log.d(ContentValues.TAG, "캘린더 4-2 : ListView 업데이트 완료")
+                        displaySelectedDateEvents(eventList)
                     }
                 }
             } catch (e: Exception) {
@@ -150,17 +190,23 @@ class Calendar : AppCompatActivity() {
 
 
     private fun displayEvents(events: List<com.google.api.services.calendar.model.Event>) {
-        // 이벤트 제목을 가져와서 리스트로 변환
-        val eventTitles = events.map { it.summary ?: "No Title" }
-
-        // 리스트뷰 어댑터 설정
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, eventTitles)
-        val listView: ListView = findViewById(R.id.calendarListView)  // ListView를 XML에서 참조
-        listView.adapter = adapter
+        //리스트뷰 어댑터 연결
+        val eventAdapter =EventAdapter(this,events)
+        listView.adapter=eventAdapter
     }
 
+    private fun displaySelectedDateEvents(events: List<com.google.api.services.calendar.model.Event>) {
+        val selectedDateEventAdapter = EventAdapter(this, events)
+        selectedDateListView.adapter = selectedDateEventAdapter
+    }
 
+    private fun isSameDay(date1: Date, date2: Date): Boolean {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val fdate1= format.format(date1)
+        val fdate2=format.format(date2)
 
+        return fdate1==fdate2
+    }
 
     companion object {
         private const val CREDENTIALS_FILE_PATH = "credentials.json"
