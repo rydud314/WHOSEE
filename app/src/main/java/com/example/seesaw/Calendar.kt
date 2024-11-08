@@ -3,9 +3,11 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -35,6 +37,7 @@ class Calendar : AppCompatActivity() {
     private lateinit var selectedDateListView: ListView
     private lateinit var calendar: CalendarView
     private lateinit var googleCalendarEvents: List<com.google.api.services.calendar.model.Event>
+    private lateinit var noEventmsg: TextView
 
     private val RC_SIGN_IN = 100  // 요청 코드 정의
 
@@ -47,6 +50,7 @@ class Calendar : AppCompatActivity() {
         listView = findViewById(R.id.calendarListView)
         selectedDateListView=findViewById(R.id.selectedDateListView)
         calendar=findViewById(R.id.calendar)
+        noEventmsg= findViewById(R.id.noEventMsg)
 
         // GoogleSignInOptions 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -94,12 +98,13 @@ class Calendar : AppCompatActivity() {
                     val eventDate = Date(startDate.value)
                     isSameDay(selectedDate, eventDate)
                 }
+                 displaySelectedDateEvents(filteredEvents)
 
-                 if (filteredEvents.isEmpty()) {
-                     Log.d(ContentValues.TAG, "선택한 날짜에 일정 없음")
-                 } else {
-                     displaySelectedDateEvents(filteredEvents)
-                 }
+//                 if (filteredEvents.isEmpty()) {
+//                     Log.d(ContentValues.TAG, "선택한 날짜에 일정 없음")
+//                 } else {
+//                     displaySelectedDateEvents(filteredEvents)
+//                 }
 
             }else{
                 Log.d(ContentValues.TAG,"캘린더 이벤트가 없음")
@@ -196,8 +201,16 @@ class Calendar : AppCompatActivity() {
     }
 
     private fun displaySelectedDateEvents(events: List<com.google.api.services.calendar.model.Event>) {
-        val selectedDateEventAdapter = EventAdapter(this, events)
-        selectedDateListView.adapter = selectedDateEventAdapter
+        if (events.isEmpty()) {
+            noEventmsg.visibility = View.VISIBLE
+            selectedDateListView.visibility = View.GONE
+        } else {
+            noEventmsg.visibility = View.GONE
+            selectedDateListView.visibility = View.VISIBLE
+
+            val selectedDateEventAdapter = EventAdapter(this, events)
+            selectedDateListView.adapter = selectedDateEventAdapter
+        }
     }
 
     private fun isSameDay(date1: Date, date2: Date): Boolean {
