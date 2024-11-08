@@ -1,9 +1,12 @@
 package com.example.seesaw.model
 
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -13,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seesaw.R
-import com.example.seesaw.model.ChatMsg
-import java.util.ArrayList
+import android.view.View  // Add this import
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ShowReport : AppCompatActivity() {
 
@@ -47,16 +52,22 @@ class ShowReport : AppCompatActivity() {
 
         // 메시지 전송버튼 클릭 리스너 설정
         btnSend.setOnClickListener {
-            // etMsg에 쓰여있는 텍스트를 가져옵니다.
             val msg = etMsg.text.toString()
             if (msg.isNotEmpty()) {
                 // 새로운 ChatMsg 객체를 생성하여 어댑터에 추가합니다.
-                adapter.addChatMsg(ChatMsg(ChatMsg.ROLE_USER, msg))
-                // etMsg의 텍스트를 초기화합니다.
-                etMsg.setText(null)
-                // 키보드를 내립니다.
+                val userMessage = ChatMsg(ChatMsg.ROLE_USER, msg)
+                adapter.addChatMsg(userMessage)
+                etMsg.setText(null) // 입력창 초기화
+
+                // 키보드 숨기기
                 val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 manager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+
+                // 로딩 바 보이기
+                progressBar.visibility = ProgressBar.VISIBLE
+
+                // API 요청 보내기
+                sendMsgToChatGPT()
             } else {
                 Toast.makeText(this, "메시지를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -69,19 +80,49 @@ class ShowReport : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                // 입력창에 메시지가 입력되었을 때만 버튼이 클릭 가능하도록 설정
                 btnSend.isEnabled = s?.length ?: 0 > 0
             }
         })
     }
 
+    private fun sendMsgToChatGPT() {
+        // Retrofit 객체 초기화
+        val api = ApiClient.getChatGPTApi()
+
+        // ChatGPTRequest 객체 생성 (기존 메시지 리스트 전달)
+        val request = ChatGPTRequest(
+            "gpt-4o-mini", // 모델
+            chatMsgList
+        )
+
+        // API 호출
+        api.getChatResponse(request)?.enqueue(object : Callback<ChatGPTResponse?> {
+            override fun onResponse(call: Call<ChatGPTResponse?>, response: Response<ChatGPTResponse?>) {
+                // 응답을 성공적으로 받은 경우
+                if (response.isSuccessful && response.body() != null) {
+                    val chatResponse = response.body()?.choices?.get(0)?.message?.content
+                    // 리사이클러뷰에 답변 추가하기
+                    if (chatResponse != null) {
+                        adapter.addChatMsg(ChatMsg(ChatMsg.ROLE_ASSISTANT, chatResponse))
+                    }
+                    // 로딩바 숨기기
+                    progressBar.visibility = View.INVISIBLE  // GONE 대신 INVISIBLE로 변경
+
+                    // 화면 터치 차단 해제
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                } else {
+                    Log.e("getChatResponse", "Error: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ChatGPTResponse?>, t: Throwable) {
+                Log.e("getChatResponse", "onFailure: ", t)
+            }
+        })
+
+    }
+
     override fun onStart() {
         super.onStart()
-
-        // 테스트를 위한 더미 데이터 생성
-        // i가 짝수일 경우 내 메시지, 홀수일 경우 챗봇의 메시지로 생성되도록 10개의 채팅 메시지 객체를 만들어 리스트에 넣습니다.
-        for (i in 0 until 10) {
-            chatMsgList.add(ChatMsg(if (i % 2 == 0) ChatMsg.ROLE_USER else ChatMsg.ROLE_ASSISTANT, "메시지 $i"))
-        }
     }
 }

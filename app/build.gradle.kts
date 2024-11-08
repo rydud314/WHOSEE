@@ -137,6 +137,11 @@ dependencies {
     // To recongnize Korean script
     implementation("com.google.mlkit:text-recognition-korean:16.0.1")
 
+    // Retrofit 라이브러리
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    // Gson 변환기 라이브러리
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
 
 //    // Google Vision API 및 gRPC 관련 의존성
 //    implementation("io.grpc:grpc-okhttp:1.54.0")

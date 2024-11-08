@@ -42,11 +42,13 @@
 
         <Button
             android:id="@+id/btn_send"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
+            android:backgroundTint="@color/purple"
             android:enabled="false"
+            android:text="send"
+            android:textStyle="bold"
             app:icon="@drawable/ic_send" />
     </LinearLayout>
 
