@@ -22,17 +22,16 @@
             android:textColor="#967BE4"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:layout_marginBottom="20dp"
             android:paddingTop="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/textview_border"
             />
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp"
-
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,21 +82,29 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColorHint="#967BE4"
+                android:focusable="false"
                 android:textSize="16dp"
-                android:hint="시작 날짜(8자리)"
-                android:ems="10"
-                android:inputType="date" />
+                android:hint="시작 날짜"/>
+<!--                android:ems="10"-->
+<!--                android:inputType="date" -->
+<!--                -->
 
-            <EditText
-                android:id="@+id/et_startTime"
+<!--            <EditText-->
+<!--                android:id="@+id/et_startTime"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColorHint="#967BE4"-->
+<!--                android:hint="시작 시간(HH:MM)"-->
+<!--                android:layout_weight="1"-->
+<!--                android:ems="10"-->
+<!--                android:textSize="16dp"-->
+<!--                android:inputType="time" />-->
+            <Spinner
+                android:id="@+id/spinner_startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorHint="#967BE4"
-                android:hint="시작 시간(HH:MM)"
-                android:layout_weight="1"
-                android:ems="10"
-                android:textSize="16dp"
-                android:inputType="time" />
+                android:spinnerMode="dropdown"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -118,21 +125,27 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="16dp"
-                android:hint="종료 날짜(8자리)"
-                android:textColorHint="#967BE4"
-                android:ems="10"
-                android:inputType="date" />
+                android:hint="종료 날짜"
+                android:focusable="false"
+                android:textColorHint="#967BE4"/>
+<!--                android:ems="10"-->
+<!--                android:inputType="date" -->
 
-            <EditText
-                android:id="@+id/et_endTime"
+<!--            <EditText-->
+<!--                android:id="@+id/et_endTime"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="종료 시간(HH:MM)"-->
+<!--                android:textSize="16dp"-->
+<!--                android:textColorHint="#967BE4"-->
+<!--                android:layout_weight="1"-->
+<!--                android:ems="10"-->
+<!--                android:inputType="time" />-->
+            <Spinner
+                android:id="@+id/spinner_endTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="종료 시간(HH:MM)"
-                android:textSize="16dp"
-                android:textColorHint="#967BE4"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="time" />
+                android:spinnerMode="dropdown"/>
         </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
