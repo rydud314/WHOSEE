@@ -2,54 +2,67 @@ package com.example.seesaw;
 
 import android.content.Context;
 import android.content.Intent
+import android.os.Bundle
+import android.service.controls.ControlsProviderService.TAG
+import android.util.Log
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView
 import android.widget.TextView;
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.api.services.calendar.model.Event;
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-public class EventAdapter(private val context: Context, private val events: List<Event>) : BaseAdapter() {
+public class EventAdapter(private val events: List<Event>,
+                          private val context: Context) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
-
-    override fun getCount(): Int {
-        return events.size
+    class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val eventTitle: TextView = itemView.findViewById(R.id.eventTitle)
+        val eventDate: TextView = itemView.findViewById(R.id.eventTime)
     }
 
-    override fun getItem(position: Int): Any {
-        return events[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.listitem_event, parent, false)
+        return EventViewHolder(view)
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.listitem_event, parent, false)
-
-        val eventTitle = view.findViewById<TextView>(R.id.eventTitle)
-        val eventStart = view.findViewById<TextView>(R.id.eventTime)
-
-
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA)
+    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
 
         val event = events[position]
         val startTime = event.start.dateTime ?: event.start.date
         val endTime = event.end.dateTime ?: event.end.date
 
-        eventTitle.text = event.summary ?: "No Title"
-        eventStart.text = "${dateFormat.format(startTime.value)} ~ ${dateFormat.format(endTime.value)}"
+        holder.eventTitle.text = event.summary ?: "No Title"
+        holder. eventDate.text = "${dateFormat.format(startTime.value)} ~ ${dateFormat.format(endTime.value)}"
 
-        return view
+        holder.itemView.setOnClickListener {
+            Log.d(TAG, "캘린더 리사뷰 인텐드 객= ${event.summary}")
+
+            /*
+            val sd = event.start.date ?: event.start.dateTime?.toString() ?: "No Start Date"
+            val st = event.start.dateTime?.toString() ?: ""
+
+            val ed = event.end.date ?: event.end.dateTime?.toString() ?: "No End Date"
+            val et = event.end.dateTime?.toString() ?: ""
+             */
+
+            val eventBundle = Bundle()
+                eventBundle.putString("eventTitle", event.summary?.toString() ?: "No title")
+                //putString("eventStartDate", sd.toString())
+                eventBundle.putString("eventStartTime", dateFormat.format(startTime.value))
+                //putString("eventEndDate", ed.toString())
+                eventBundle.putString("eventEndTime", dateFormat.format(endTime.value))
+                eventBundle.putString("eventDescription", event.description?.toString() ?: "")
+
+            val intent = Intent(context, EventDetail::class.java)
+            intent.putExtra("eventBundle", eventBundle)
+            context.startActivity(intent)
+        }
     }
 
-
-
-
+    override fun getItemCount() = events.size
 
 }
+

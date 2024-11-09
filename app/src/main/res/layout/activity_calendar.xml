@@ -66,14 +66,15 @@
                     android:text=" [선택한 날짜의 일정]"
                     android:textColor="#967BE4" />
 
-                <ListView
-                    android:id="@+id/selectedDateListView"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/selectedDateRecyclerView"
                     android:paddingStart="30dp"
                     android:paddingEnd="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:padding="16dp"
-                    tools:listitem="@layout/listitem_event"/>
+                    tools:listitem="@layout/listitem_event" />
 
                 <TextView
                     android:id="@+id/noEventMsg"
@@ -93,15 +94,15 @@
                     android:text=" [다가오는 일정]"
                     android:textColor="#967BE4" />
 
-                <ListView
-                    android:id="@+id/calendarListView"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/calendarRecyclerView"
                     android:paddingStart="30dp"
                     android:paddingEnd="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:dividerHeight="1dp"
                     android:padding="16dp"
-                    tools:listitem="@layout/listitem_event"/>
+                    tools:listitem="@layout/listitem_event" />
 
             </LinearLayout>
         </ScrollView>

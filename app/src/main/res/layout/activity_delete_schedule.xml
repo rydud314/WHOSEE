@@ -37,14 +37,15 @@
                 android:text="이벤트 이름" />
 
             <TextView
-                android:id="@+id/eventname"
+                android:id="@+id/tv_eventName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="15dp"
                 android:textColor="#66539C"
                 android:textStyle="bold"
-                android:text="중간고사" />
+                android:hint="일정 제목
+" />
             <TextView
                 android:id="@+id/empty"
                 android:layout_width="wrap_content"
@@ -70,23 +71,23 @@
 
 
             <TextView
-                android:id="@+id/txt_start_date"
+                android:id="@+id/tv_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="#967BE4"
                 android:layout_marginStart="10dp"
-                android:text="시작 날짜"
+                android:hint="시작 날짜"
                 android:textSize="15dp"
                 android:ems="10"
                 />
 
             <TextView
-                android:id="@+id/txt_start_time"
+                android:id="@+id/tv_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#967BE4"
-                android:text="시작 시간"
+                android:hint="시작 시간"
                 android:textSize="15dp"
                 android:layout_weight="1"
                 android:ems="10"
@@ -106,21 +107,21 @@
 
 
             <TextView
-                android:id="@+id/txt_end_date"
+                android:id="@+id/tv_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="종료 날짜"
+                android:hint="종료 날짜"
                 android:layout_marginStart="10dp"
                 android:textSize="15dp"
                 android:textColor="#967BE4"
                 android:ems="10" />
 
             <TextView
-                android:id="@+id/txt_end_time"
+                android:id="@+id/tv_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="종료 시간"
+                android:hint="종료 시간"
                 android:textSize="15dp"
                 android:textColor="#967BE4"
                 android:layout_weight="1"
@@ -166,16 +167,16 @@
                 android:textSize="15dp"
                 android:textColor="#66539C"
                 android:textStyle="bold"
-                android:text="참여자" />
+                android:text="세부사항" />
 
             <TextView
-                android:id="@+id/participants"
+                android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="15dp"
                 android:textColor="#66539C"
-                android:text="참여자" />
+                android:hint="세부사항" />
 
             <TextView
                 android:id="@+id/empty2"

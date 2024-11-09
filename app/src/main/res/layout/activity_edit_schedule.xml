@@ -57,7 +57,7 @@
                 android:ems="10"
                 android:inputType="text"
                 android:textColor="#967BE4"
-                android:text="Name" />
+                android:hint="이벤트 이름" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="#967BE4"
-                android:text="시작 날짜"
+                android:hint="시작 날짜"
                 android:ems="10"
                 android:inputType="date" />
 
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#967BE4"
-                android:text="시작 시간"
+                android:hint="시작 시간"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="time" />
@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="종료 날짜"
+                android:hint="종료 날짜"
                 android:textColor="#967BE4"
                 android:ems="10"
                 android:inputType="date" />
@@ -123,7 +123,7 @@
                 android:id="@+id/end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="종료 시간"
+                android:hint="종료 시간"
                 android:textColor="#967BE4"
                 android:layout_weight="1"
                 android:ems="10"
@@ -169,7 +169,7 @@
                 android:textSize="15dp"
                 android:textColor="#66539C"
                 android:textStyle="bold"
-                android:text="참여자" />
+                android:text="세부사항" />
 
             <EditText
                 android:id="@+id/editTextText3"
@@ -179,7 +179,7 @@
                 android:ems="10"
                 android:textColor="#967BE4"
                 android:inputType="text"
-                android:text="Name" />
+                android:hint="세부사항" />
         </LinearLayout>
 
         <Button

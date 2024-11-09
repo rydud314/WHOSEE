@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.gms.google-services")
     id("kotlin-kapt")  // 추가된 부분
+    id("kotlin-parcelize")
 }
 
 android {

@@ -10,6 +10,10 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.seesaw.databinding.ActivityCalendarBinding
+import com.example.seesaw.databinding.ActivityDeleteScheduleBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -33,25 +37,19 @@ import java.util.Calendar as UtilCalendar
 
 class Calendar : AppCompatActivity() {
 
-    private lateinit var btn_add_schedule : Button
-    private lateinit var listView: ListView
-    private lateinit var selectedDateListView: ListView
-    private lateinit var calendar: CalendarView
+    private lateinit var binding: ActivityCalendarBinding
     private lateinit var googleCalendarEvents: List<com.google.api.services.calendar.model.Event>
-    private lateinit var noEventmsg: TextView
 
     private val RC_SIGN_IN = 100  // 요청 코드 정의
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calendar)
+        binding = ActivityCalendarBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         Log.d(ContentValues.TAG, "캘린더 = 입장")
 
-        btn_add_schedule = findViewById(R.id.btn_add_schedule)
-        listView = findViewById(R.id.calendarListView)
-        selectedDateListView=findViewById(R.id.selectedDateListView)
-        calendar=findViewById(R.id.calendar)
-        noEventmsg= findViewById(R.id.noEventMsg)
+        binding.calendarRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.selectedDateRecyclerView.layoutManager = LinearLayoutManager(this)
 
         // GoogleSignInOptions 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -59,8 +57,6 @@ class Calendar : AppCompatActivity() {
             .requestScopes(Scope(CalendarScopes.CALENDAR))
             .requestScopes(Scope("https://www.googleapis.com/auth/calendar")) // Calendar API에 필요한 스코프 요청
             .build()
-
-
 
         Log.d(ContentValues.TAG, "캘린더 = 1")
 
@@ -75,7 +71,7 @@ class Calendar : AppCompatActivity() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
 
 
-        btn_add_schedule.setOnClickListener {
+        binding.btnAddSchedule.setOnClickListener {
             Log.d(ContentValues.TAG, "캘린더 = 일정추가버튼")
 
             val account = GoogleSignIn.getLastSignedInAccount(this)
@@ -85,7 +81,7 @@ class Calendar : AppCompatActivity() {
             startActivity(intent)
         }
 
-        calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
+        binding.calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
             Log.d(ContentValues.TAG,"날짜 선택")
 
              if (::googleCalendarEvents.isInitialized && googleCalendarEvents.isNotEmpty()) {
@@ -197,25 +193,23 @@ class Calendar : AppCompatActivity() {
 
     private fun displayEvents(events: List<com.google.api.services.calendar.model.Event>) {
         //리스트뷰 어댑터 연결
-        val eventAdapter =EventAdapter(this,events)
-        listView.adapter=eventAdapter
+        val eventAdapter =EventAdapter(events,this)
+        val selectedEventAdapter =EventAdapter(events,this)
+        binding.selectedDateRecyclerView.adapter= selectedEventAdapter
+        binding.calendarRecyclerView.adapter = eventAdapter
 
-        listView.setOnItemClickListener { parent, view, position, id ->
-            val selectedItem = event
-            Toast.makeText(this, "$selectedItem clicked", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun displaySelectedDateEvents(events: List<com.google.api.services.calendar.model.Event>) {
         if (events.isEmpty()) {
-            noEventmsg.visibility = View.VISIBLE
-            selectedDateListView.visibility = View.GONE
+            binding.noEventMsg.visibility = View.VISIBLE
+            binding.selectedDateRecyclerView.visibility = View.GONE
         } else {
-            noEventmsg.visibility = View.GONE
-            selectedDateListView.visibility = View.VISIBLE
+            binding.noEventMsg.visibility = View.GONE
+            binding.selectedDateRecyclerView.visibility = View.VISIBLE
 
-            val selectedDateEventAdapter = EventAdapter(this, events)
-            selectedDateListView.adapter = selectedDateEventAdapter
+            val selectedDateEventAdapter = EventAdapter(events, this)
+            binding.selectedDateRecyclerView.adapter = selectedDateEventAdapter
         }
     }
 
