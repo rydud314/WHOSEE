@@ -161,7 +161,7 @@ class Calendar : AppCompatActivity() {
             try {
                 Log.d(ContentValues.TAG, "캘린더 API 요청 시작")
                 val events: Events = service.events().list("primary")
-                    .setMaxResults(10)
+                    .setMaxResults(100)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)

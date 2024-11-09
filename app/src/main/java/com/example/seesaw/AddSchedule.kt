@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -25,30 +26,47 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.Calendar as Calendar2
+import android.app.DatePickerDialog
 
 class AddSchedule : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddScheduleBinding
-
+    private val dateFormat=SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddScheduleBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d(ContentValues.TAG, "캘린더 스케줄 추가 = 입장")
 
-
-
         var scheduleMap = mutableMapOf<String, String>()
 
         var account = intent.getParcelableExtra<GoogleSignInAccount>("calendarAccount")
+        binding.etStartDate.setOnClickListener{
+            showDatePicker{date->binding.etStartDate.setText(date)}
+        }
+        binding.etEndDate.setOnClickListener{
+            showDatePicker{date->binding.etEndDate.setText(date)}
+        }
+
+        val timeoptions=(0..23).flatMap { hour->
+            listOf(String.format("%02d:00",hour),String.format("%02d:30",hour))
+        }
+        val adapter=ArrayAdapter(this,android.R.layout.simple_spinner_item,timeoptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerStartTime.adapter=adapter
+        binding.spinnerEndTime.adapter=adapter
 
         binding.btnAddSchedule.setOnClickListener{
             Log.d(TAG, "캘린더(일정추가) = add버튼 클릭")
 
             var title = binding.etEventTitle.text.toString()
-            var startDate = binding.etStartDate.text.toString().trim()
-            var endDate = binding.etEndDate.text.toString().trim()
+            var startDate = binding.etStartDate.text.toString()
+            var endDate = binding.etEndDate.text.toString()
+            var startTime= binding.spinnerStartTime.selectedItem.toString()
+            var endTime=binding.spinnerEndTime.selectedItem.toString()
 
 
             if (title != "" && startDate != "" && endDate != ""){
@@ -56,11 +74,12 @@ class AddSchedule : AppCompatActivity() {
                 endDate = "${endDate.substring(0, 4)}-${endDate.substring(4, 6)}-${endDate.substring(6, 8)}"
 
                 scheduleMap["eventTitle"] = title
-                scheduleMap["startTime"] = binding.etStartTime.text.toString().trim()
+                scheduleMap["startTime"] =startTime
                 scheduleMap["startDate"] = startDate
                 scheduleMap["endDate"] = endDate
-                scheduleMap["endTime"] = binding.etEndTime.text.toString().trim()
+                scheduleMap["endTime"] = endTime
                 scheduleMap["description"] = binding.etDescription.text.toString()
+
                 val email = binding.etParticipant.text.toString().trim()
                 if(email != ""){
                     val emailDomain = binding.spinnerEmailDomains.selectedItem.toString()
@@ -79,6 +98,21 @@ class AddSchedule : AppCompatActivity() {
 
 
     }
+
+    private fun showDatePicker(onDateSelected: (String) -> Unit) {
+        val calendar = Calendar2.getInstance()
+        val year = calendar.get(Calendar2.YEAR)
+        val month = calendar.get(Calendar2.MONTH)
+        val day = calendar.get(Calendar2.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = String.format("%04d%02d%02d", selectedYear, selectedMonth + 1, selectedDay)
+            onDateSelected(selectedDate)
+        }, year, month, day)
+
+        datePickerDialog.show()
+    }
+
     private fun handleSignInResult(account: GoogleSignInAccount?, map: MutableMap<String, String>) {
         if (account != null) {
             // GoogleSignInAccount 객체를 사용해 API 요청에 필요한 자격 증명을 생성
@@ -135,24 +169,35 @@ class AddSchedule : AppCompatActivity() {
 
         //들어가야하는 형식 : "2024-11-10T10:00:00+09:00"
 
-        var startDate = scheduleMap["startDate"]
-        var startTime = scheduleMap["startTime"]
+        val startDate = scheduleMap["startDate"]
+        var startTime =scheduleMap["startTime"]
         val endDate = scheduleMap["endDate"]
         var endTime = scheduleMap["endTime"]
 
 
         if (startTime == "" && endTime==""){
-            var sDate = DateTime(startDate)
+            val sDate = DateTime("$startDate + T + 00:00:00+09:00")
             val start = EventDateTime()
-                .setDate(sDate)
+                .setDateTime(sDate)
                 .setTimeZone("Asia/Seoul")
             event.start = start
-
-            var eDate = DateTime(endDate)
+            val eDate = DateTime("$endDate+T+23:59:00+09:00")
             val end = EventDateTime()
-                .setDate(eDate)
+                .setDateTime(eDate)
                 .setTimeZone("Asia/Seoul")
             event.end = end
+
+//            var sDate = DateTime(startDate)
+//            val start = EventDateTime()
+//                .setDate(sDate)
+//                .setTimeZone("Asia/Seoul")
+//            event.start = start
+//
+//            var eDate = DateTime(endDate)
+//            val end = EventDateTime()
+//                .setDate(eDate)
+//                .setTimeZone("Asia/Seoul")
+//            event.end = end
         }
         else{
             if(startTime == "") {startTime = "00:00"}
@@ -204,7 +249,6 @@ class AddSchedule : AppCompatActivity() {
         }
 
     }
-
     companion object {
         private val JSON_FACTORY = JacksonFactory.getDefaultInstance()
         private val HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
