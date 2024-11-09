@@ -1,16 +1,21 @@
 package com.example.seesaw;
 
 import android.content.Context;
+import android.content.Intent
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView
 import android.widget.TextView;
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.google.api.services.calendar.model.Event;
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 public class EventAdapter(private val context: Context, private val events: List<Event>) : BaseAdapter() {
+
 
     override fun getCount(): Int {
         return events.size
@@ -31,7 +36,7 @@ public class EventAdapter(private val context: Context, private val events: List
         val eventStart = view.findViewById<TextView>(R.id.eventTime)
 
 
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA)
 
         val event = events[position]
         val startTime = event.start.dateTime ?: event.start.date
@@ -42,4 +47,9 @@ public class EventAdapter(private val context: Context, private val events: List
 
         return view
     }
+
+
+
+
+
 }

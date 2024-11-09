@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -126,7 +127,7 @@ class Calendar : AppCompatActivity() {
                 Log.d(ContentValues.TAG, "캘린더 로그인: ${account?.email}")
                 handleSignInResult(account)  // 로그인 성공 시 처리
             } catch (e: ApiException) {
-                Log.e(ContentValues.TAG, "로그인 실패: ${e.statusCode} - ${e.message}")
+                Log.e(ContentValues.TAG, "캘린더 로그인 실패: ${e.statusCode} - ${e.message}")
                 e.printStackTrace()  // 로그인 실패 처리
             }
         }
@@ -161,7 +162,7 @@ class Calendar : AppCompatActivity() {
             try {
                 Log.d(ContentValues.TAG, "캘린더 API 요청 시작")
                 val events: Events = service.events().list("primary")
-                    .setMaxResults(10)
+                    .setMaxResults(100)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
@@ -198,6 +199,11 @@ class Calendar : AppCompatActivity() {
         //리스트뷰 어댑터 연결
         val eventAdapter =EventAdapter(this,events)
         listView.adapter=eventAdapter
+
+        listView.setOnItemClickListener { parent, view, position, id ->
+            val selectedItem = event
+            Toast.makeText(this, "$selectedItem clicked", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun displaySelectedDateEvents(events: List<com.google.api.services.calendar.model.Event>) {
