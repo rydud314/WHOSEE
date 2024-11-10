@@ -23,16 +23,28 @@
             android:id="@+id/reportDateRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date:Jan 1, 2023 - Dec 31, 2023 "
+            android:text="Date:Jan 1, 2024 - Dec 31, 2024 "
             android:textSize="16sp"
             android:layout_gravity="center"
             android:paddingBottom="16dp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:id="@+id/annual_card_use"
-            android:src="@drawable/report_annual_card_use"/>
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:id="@+id/annual_card_use"-->
+<!--            android:src="@drawable/report_annual_card_use"/>-->
+        <!-- res/layout/activity_main.xml -->
+        <!-- res/layout/activity_main.xml -->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/section1Title"
@@ -52,11 +64,32 @@
             android:textSize="16sp"
             android:paddingBottom="16dp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:id="@+id/annual_card_class"
-            android:src="@drawable/report_annual_card_class"/>
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:id="@+id/annual_card_class"-->
+<!--            android:src="@drawable/report_annual_card_class"/>-->
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/genderPieChart"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_weight="1"
+                android:layout_margin="8dp"/>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/jobPieChart"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_weight="1"
+                android:layout_margin="8dp"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/section2Title"
