@@ -28,8 +28,7 @@ class EventDetail : AppCompatActivity() {
         setContentView(binding.root)
 
         val eventBundle = intent.getBundleExtra("eventBundle")
-        //var account = intent.getParcelableExtra<GoogleSignInAccount>("calendarAccount")
-        
+
         //calendarService 받아오기
         val calendarService = Calendar.CalendarServiceSingleton.calendarService
         if (calendarService == null) {
@@ -90,6 +89,7 @@ class EventDetail : AppCompatActivity() {
                     Log.d(TAG, "캘린더(일정삭제) 삭제 성공")
                     Toast.makeText(this@EventDetail, "일정이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@EventDetail, com.example.seesaw.Calendar::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                     finish()
                 }
@@ -100,46 +100,4 @@ class EventDetail : AppCompatActivity() {
         }
     }
 
-    /*
-    private fun handleSignInResult(account: GoogleSignInAccount?, eventId: String) {
-        if (account != null) {
-            // GoogleSignInAccount 객체를 사용해 API 요청에 필요한 자격 증명을 생성
-            val credential = GoogleAccountCredential.usingOAuth2(
-                this, listOf("https://www.googleapis.com/auth/calendar")
-            )
-            credential.selectedAccount = account.account
-            Log.d(ContentValues.TAG, "캘린더(일정삭제)account = ${credential}")
-            // Google Calendar API 호출
-            accessGoogleCalendar(credential, eventId)
-        }
-        else{
-            Log.d(ContentValues.TAG, "캘린더(일정삭제) = account is null")
-        }
-    }
-
-    // Google Calendar API 호출
-    private fun accessGoogleCalendar(credential: GoogleAccountCredential, eventId: String) {
-        val service = com.google.api.services.calendar.Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-            .setApplicationName("Android WHOSEE Client")
-            .build()
-        Log.d(ContentValues.TAG, "캘린더(일정삭제)calendarService Build")
-
-        val now = DateTime(System.currentTimeMillis())
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                deleteEvent(service)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                // 오류 처리
-                Log.d(ContentValues.TAG, "캘린더(일정추가)calendarService : ${e.message}")
-            }
-        }
-    }
-    */
-
-    companion object {
-        private val JSON_FACTORY = JacksonFactory.getDefaultInstance()
-        private val HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
-    }
 }

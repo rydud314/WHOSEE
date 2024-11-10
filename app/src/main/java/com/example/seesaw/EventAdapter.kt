@@ -33,11 +33,20 @@ public class EventAdapter(private val events: List<Event>,
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
 
         val event = events[position]
-        val startTime = event.start.dateTime ?: event.start.date
-        val endTime = event.end.dateTime ?: event.end.date
+        var startTime = ""
+        var endTime = ""
+
+        if(event.start.dateTime != null && event.end.dateTime != null){
+            startTime = dateFormat.format(event.start.dateTime.value)
+            endTime = dateFormat.format(event.end.dateTime.value)
+        }
+        else{
+            startTime = event.start.date.value.toString()
+            endTime = event.end.date.value.toString()
+        }
 
         holder.eventTitle.text = event.summary ?: "No Title"
-        holder. eventDate.text = "${dateFormat.format(startTime.value)} ~ ${dateFormat.format(endTime.value)}"
+        holder.eventDate.text = "${startTime} ~ ${endTime}"
 
         holder.itemView.setOnClickListener {
             Log.d(TAG, "캘린더 리사뷰 인텐드 객= ${event.summary}")
@@ -53,8 +62,8 @@ public class EventAdapter(private val events: List<Event>,
             val eventBundle = Bundle()
             eventBundle.putString("eventId", event.id?.toString() ?: "No eventId")
             eventBundle.putString("eventTitle", event.summary?.toString() ?: "No title")
-            eventBundle.putString("eventStartTime", dateFormat.format(startTime.value))
-            eventBundle.putString("eventEndTime", dateFormat.format(endTime.value))
+            eventBundle.putString("eventStartTime", startTime)
+            eventBundle.putString("eventEndTime", endTime)
             eventBundle.putString("eventDescription", event.description?.toString() ?: "")
 
             //putString("eventStartDate", sd.toString())

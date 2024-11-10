@@ -74,11 +74,9 @@ class Calendar : AppCompatActivity() {
         binding.btnAddSchedule.setOnClickListener {
             Log.d(ContentValues.TAG, "캘린더 = 일정추가버튼")
 
-            val account = GoogleSignIn.getLastSignedInAccount(this)
-            Log.d(ContentValues.TAG, "캘린더 account = ${account}")
             val intent = Intent(this, AddSchedule::class.java)
-            intent.putExtra("calendarAccount", account)
             startActivity(intent)
+            finish()
         }
 
         binding.calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->

@@ -33,6 +33,7 @@
             android:layout_height="match_parent"
             android:padding="20dp"
             android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,14 +51,14 @@
                 android:text="이벤트 이름" />
 
             <EditText
-                android:id="@+id/editTextText"
+                android:id="@+id/et_event_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="text"
                 android:textColor="#967BE4"
-                android:hint="이벤트 이름" />
+                android:hint="Name" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,24 +78,19 @@
 
 
             <EditText
-                android:id="@+id/start_date"
+                android:id="@+id/et_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="#967BE4"
                 android:hint="시작 날짜"
-                android:ems="10"
                 android:inputType="date" />
 
-            <EditText
-                android:id="@+id/start_time"
+            <Spinner
+                android:id="@+id/spinner_startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#967BE4"
-                android:hint="시작 시간"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="time" />
+                android:spinnerMode="dropdown" />
         </LinearLayout>
 
         <LinearLayout
@@ -110,26 +106,54 @@
 
 
             <EditText
-                android:id="@+id/end_date"
+                android:id="@+id/et_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="종료 날짜"
                 android:textColor="#967BE4"
-                android:ems="10"
                 android:inputType="date" />
 
-            <EditText
-                android:id="@+id/end_time"
+            <Spinner
+                android:id="@+id/spinner_endTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="종료 시간"
-                android:textColor="#967BE4"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="time" />
+                android:spinnerMode="dropdown" />
         </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView_extra"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#66539C"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/tv_blank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:textSize="16dp" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_event_all_day"
+                    android:layout_width="118dp"
+                    android:layout_height="wrap_content"
+                    android:text="종일"
+                    android:textColor="#66539C"
+                    android:textStyle="bold"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
 
 <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->
@@ -172,7 +196,7 @@
                 android:text="세부사항" />
 
             <EditText
-                android:id="@+id/editTextText3"
+                android:id="@+id/et_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

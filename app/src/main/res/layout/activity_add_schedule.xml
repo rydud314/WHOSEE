@@ -30,123 +30,159 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:paddingEnd="20dp">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="15dp"
-                android:textColor="#66539C"
-                android:textStyle="bold"
-                android:text="이벤트 이름" />
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/et_eventTitle"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="이벤트 이름"
+                    android:textColor="#66539C"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_eventTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Name"
+                    android:inputType="text"
+                    android:textColorHint="#967BE4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="text"
-                android:textColorHint="#967BE4"
-                android:hint="Name" />
-        </LinearLayout>
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이벤트 시간"
+                    android:textColor="#66539C"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
+
+                <EditText
+                    android:id="@+id/et_startDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:hint="시작 날짜"
+                    android:textColorHint="#967BE4"
+                    android:textSize="16dp" />
+                <!--                android:ems="10"-->
+                <!--                android:inputType="date" -->
+                <!--                -->
+
+                <!--            <EditText-->
+                <!--                android:id="@+id/et_startTime"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:textColorHint="#967BE4"-->
+                <!--                android:hint="시작 시간(HH:MM)"-->
+                <!--                android:layout_weight="1"-->
+                <!--                android:ems="10"-->
+                <!--                android:textSize="16dp"-->
+                <!--                android:inputType="time" />-->
+                <Spinner
+                    android:id="@+id/spinner_startTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#66539C"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:text="이벤트 시간" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:text="" />
 
 
-            <EditText
-                android:id="@+id/et_startDate"
-                android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/et_endDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:hint="종료 날짜"
+                    android:textColorHint="#967BE4"
+                    android:textSize="16dp" />
+                <!--                android:ems="10"-->
+                <!--                android:inputType="date" -->
+
+                <!--            <EditText-->
+                <!--                android:id="@+id/et_endTime"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:hint="종료 시간(HH:MM)"-->
+                <!--                android:textSize="16dp"-->
+                <!--                android:textColorHint="#967BE4"-->
+                <!--                android:layout_weight="1"-->
+                <!--                android:ems="10"-->
+                <!--                android:inputType="time" />-->
+                <Spinner
+                    android:id="@+id/spinner_endTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColorHint="#967BE4"
-                android:focusable="false"
-                android:textSize="16dp"
-                android:hint="시작 날짜"/>
-<!--                android:ems="10"-->
-<!--                android:inputType="date" -->
-<!--                -->
+                android:orientation="horizontal">
 
-<!--            <EditText-->
-<!--                android:id="@+id/et_startTime"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColorHint="#967BE4"-->
-<!--                android:hint="시작 시간(HH:MM)"-->
-<!--                android:layout_weight="1"-->
-<!--                android:ems="10"-->
-<!--                android:textSize="16dp"-->
-<!--                android:inputType="time" />-->
-            <Spinner
-                android:id="@+id/spinner_startTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dropdown"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="72dp"
-                android:layout_height="wrap_content"
-                android:text="" />
+                <TextView
+                    android:id="@+id/textView_extra"
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#66539C"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
 
-            <EditText
-                android:id="@+id/et_endDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16dp"
-                android:hint="종료 날짜"
-                android:focusable="false"
-                android:textColorHint="#967BE4"/>
-<!--                android:ems="10"-->
-<!--                android:inputType="date" -->
+                <TextView
+                    android:id="@+id/tv_blank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:textSize="16dp" />
 
-<!--            <EditText-->
-<!--                android:id="@+id/et_endTime"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="종료 시간(HH:MM)"-->
-<!--                android:textSize="16dp"-->
-<!--                android:textColorHint="#967BE4"-->
-<!--                android:layout_weight="1"-->
-<!--                android:ems="10"-->
-<!--                android:inputType="time" />-->
-            <Spinner
-                android:id="@+id/spinner_endTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dropdown"/>
-        </LinearLayout>
+                <CheckBox
+                    android:id="@+id/checkBox_event_all_day"
+                    android:layout_width="118dp"
+                    android:layout_height="wrap_content"
+                    android:text="종일"
+                    android:textColor="#66539C"
+                    android:textStyle="bold"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,8 +194,8 @@
                     android:layout_width="41dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#66539C"
                     android:text="참여자\n(option)"
+                    android:textColor="#66539C"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
@@ -171,7 +207,7 @@
                     android:ems="10"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    android:textColorHint="#967BE4"/>
+                    android:textColorHint="#967BE4" />
 
                 <Spinner
                     android:id="@+id/spinner_email_domains"
@@ -180,68 +216,69 @@
                     android:entries="@array/email_domains" />
             </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:orientation="horizontal">-->
+            <!--        <LinearLayout-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginTop="10dp"-->
+            <!--            android:orientation="horizontal">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/textView12"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:textColor="#66539C"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="15dp"-->
-<!--                android:text="ALL-DAY" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView12"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:textColor="#66539C"-->
+            <!--                android:textStyle="bold"-->
+            <!--                android:textSize="15dp"-->
+            <!--                android:text="ALL-DAY" />-->
 
-<!--            <com.google.android.material.chip.Chip-->
-<!--                android:id="@+id/chip"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="#967BE4"-->
-<!--                android:layout_weight="1"/>-->
-<!--        </LinearLayout>-->
+            <!--            <com.google.android.material.chip.Chip-->
+            <!--                android:id="@+id/chip"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:textColor="#967BE4"-->
+            <!--                android:layout_weight="1"/>-->
+            <!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="41dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="세부사항\n(option)"
-                android:textColor="#66539C"
-                android:textSize="15dp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="41dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="세부사항\n(option)"
+                    android:textColor="#66539C"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/et_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:textColorHint="#967BE4"
-                android:inputType="text"
-                android:hint="Detail" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/et_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Detail"
+                    android:inputType="text"
+                    android:textColorHint="#967BE4" />
+            </LinearLayout>
 
-        <Button
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="#875FFD"
-            android:textColor="@color/white"
-            android:text="Add"
-            android:id="@+id/btn_add_schedule">
+            <Button
+                android:id="@+id/btn_add_schedule"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="#875FFD"
+                android:text="Add"
+                android:textColor="@color/white">
 
-        </Button>
+            </Button>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
