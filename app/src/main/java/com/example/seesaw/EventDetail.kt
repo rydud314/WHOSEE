@@ -57,7 +57,7 @@ class EventDetail : AppCompatActivity() {
 
 
             val dialog = AlertDialog.Builder(this)
-                .setTitle("일정을 삭제하시겠습니까?")
+                .setTitle("일정 삭제")
                 .setView(dialogView)
                 .setPositiveButton("확인") { _, _ ->
                     if (eventId != null) {
