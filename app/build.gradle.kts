@@ -78,6 +78,9 @@ dependencies {
     // JSON 처리 라이브러리
     implementation("org.json:json:20210307")
 
+    //material3 스타일
+    implementation ("com.google.android.material:material:1.6.0")
+
     // Firebase 관련 라이브러리
     implementation("com.google.firebase:firebase-messaging-ktx")
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
@@ -111,6 +114,7 @@ dependencies {
     implementation(libs.firebase.storage.ktx)
     implementation(libs.androidx.monitor)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.activity)
     testImplementation("junit:junit:4.12")
     androidTestImplementation("junit:junit:4.12")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -137,6 +141,11 @@ dependencies {
     implementation("com.google.mlkit:text-recognition:16.0.0")
     // To recongnize Korean script
     implementation("com.google.mlkit:text-recognition-korean:16.0.1")
+
+    // Retrofit 라이브러리
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    // Gson 변환기 라이브러리
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
 
 //    // Google Vision API 및 gRPC 관련 의존성
