@@ -10,14 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.api.services.calendar.model.Event;
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 public class EventAdapter(private val events: List<Event>,
-                          private val context: Context, private val account: GoogleSignInAccount) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+                          private val context: Context) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val eventTitle: TextView = itemView.findViewById(R.id.eventTitle)
@@ -41,15 +39,15 @@ public class EventAdapter(private val events: List<Event>,
             endTime = dateFormat.format(event.end.dateTime.value)
         }
         else{
-            startTime = event.start.date.value.toString()
-            endTime = event.end.date.value.toString()
+            startTime = event.start.date.toString() + " 00:00"
+            endTime = event.end.date.toString() + " 23:59"
         }
 
         holder.eventTitle.text = event.summary ?: "No Title"
         holder.eventDate.text = "${startTime} ~ ${endTime}"
 
         holder.itemView.setOnClickListener {
-            Log.d(TAG, "캘린더 리사뷰 인텐드 객= ${event.summary}")
+            Log.d(TAG, "캘린더 리사뷰 인텐드 객체= ${event.summary}")
 
             /*
             val sd = event.start.date ?: event.start.dateTime?.toString() ?: "No Start Date"
@@ -62,18 +60,16 @@ public class EventAdapter(private val events: List<Event>,
             val eventBundle = Bundle()
             eventBundle.putString("eventId", event.id?.toString() ?: "No eventId")
             eventBundle.putString("eventTitle", event.summary?.toString() ?: "No title")
-            eventBundle.putString("eventStartTime", startTime)
+            eventBundle.putString("eventStartTime", startTime) //"yyyy-MM-dd HH:mm"
             eventBundle.putString("eventEndTime", endTime)
             eventBundle.putString("eventDescription", event.description?.toString() ?: "")
 
             //putString("eventStartDate", sd.toString())
             //putString("eventEndDate", ed.toString())
 
-            val account = account //calendar 구글 로그인 계정
-            
+
             val intent = Intent(context, EventDetail::class.java)
             intent.putExtra("eventBundle", eventBundle)
-            intent.putExtra("calendarAccount", account)
             context.startActivity(intent)
         }
     }

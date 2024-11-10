@@ -194,8 +194,8 @@ class Calendar : AppCompatActivity() {
     private fun displayEvents(events: List<com.google.api.services.calendar.model.Event>) {
         //리스트뷰 어댑터 연결
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        val eventAdapter = account?.let { EventAdapter(events,this, it) }
-        val selectedEventAdapter = account?.let { EventAdapter(events,this, it) }
+        val eventAdapter = account?.let { EventAdapter(events,this) }
+        val selectedEventAdapter = account?.let { EventAdapter(events,this) }
         binding.selectedDateRecyclerView.adapter= selectedEventAdapter
         binding.calendarRecyclerView.adapter = eventAdapter
 
@@ -211,7 +211,7 @@ class Calendar : AppCompatActivity() {
 
             val account = GoogleSignIn.getLastSignedInAccount(this)
 
-            val selectedDateEventAdapter = account?.let { EventAdapter(events, this, it) }
+            val selectedDateEventAdapter = account?.let { EventAdapter(events, this) }
             binding.selectedDateRecyclerView.adapter = selectedDateEventAdapter
         }
     }

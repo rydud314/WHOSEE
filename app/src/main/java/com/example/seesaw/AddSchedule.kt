@@ -137,50 +137,24 @@ class AddSchedule : AppCompatActivity() {
         var endTime = scheduleMap["endTime"]
         var allDay = scheduleMap["allDay"]
 
-
-        if (startTime == "" && endTime==""){
-            val sDate = DateTime("$startDate + T + 00:00:00+09:00")
-            val start = EventDateTime()
-                .setDateTime(sDate)
-                .setTimeZone("Asia/Seoul")
-            event.start = start
-            val eDate = DateTime("$endDate+T+23:59:00+09:00")
-            val end = EventDateTime()
-                .setDateTime(eDate)
-                .setTimeZone("Asia/Seoul")
-            event.end = end
-
-//            var sDate = DateTime(startDate)
-//            val start = EventDateTime()
-//                .setDate(sDate)
-//                .setTimeZone("Asia/Seoul")
-//            event.start = start
-//
-//            var eDate = DateTime(endDate)
-//            val end = EventDateTime()
-//                .setDate(eDate)
-//                .setTimeZone("Asia/Seoul")
-//            event.end = end
+        if(allDay == "true") {
+            startTime = "00:00"
+            endTime = "23:59"
         }
-        else{
-            if(allDay == "true") {
-                startTime = "00:00"
-                endTime = "23:59"
-            }
 
-            val startDateTime = DateTime(startDate + "T" + startTime + ":00+09:00")
-            val start = EventDateTime()
-                .setDateTime(startDateTime)
-                .setTimeZone("Asia/Seoul")
-            event.start = start
+        val startDateTime = DateTime(startDate + "T" + startTime + ":00+09:00")
+        val start = EventDateTime()
+            .setDateTime(startDateTime)
+            .setTimeZone("Asia/Seoul")
+        event.start = start
 
-            val endDateTime = DateTime(endDate + "T" + endTime + ":00+09:00")
+        val endDateTime = DateTime(endDate + "T" + endTime + ":00+09:00")
 
-            val end = EventDateTime()
-                .setDateTime(endDateTime)
-                .setTimeZone("Asia/Seoul")
-            event.end = end
-        }
+        val end = EventDateTime()
+            .setDateTime(endDateTime)
+            .setTimeZone("Asia/Seoul")
+        event.end = end
+
         /*
         // 참여자 추가 (이메일 포맷 확인하는 조건문 필요)
         val attendee = scheduleMap["participant"]
@@ -190,7 +164,6 @@ class AddSchedule : AppCompatActivity() {
             )
             event.attendees = attendees
         }
-
          */
 
         CoroutineScope(Dispatchers.IO).launch {
