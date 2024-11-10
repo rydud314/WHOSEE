@@ -49,9 +49,10 @@
         <!-- 입력 받는 부분 묶음 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
+            android:layout_gravity="center"
             android:padding="20dp">
 
             <Button
@@ -79,6 +80,12 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btn_chat_bot"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="chat_bot"
+            android:layout_gravity="center" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.seesaw.model.ShowReport
 
 class ChooseReport : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +22,13 @@ class ChooseReport : AppCompatActivity(){
         val btn_monthly: Button = findViewById(R.id.btn_open_monthly_report)
         btn_monthly.setOnClickListener {
             val intent = Intent(this, Report_Monthly::class.java)
+            startActivity(intent)
+        }
+
+        // chat_bot 버튼 설정
+        val btn_chat_bot: Button = findViewById(R.id.btn_chat_bot)
+        btn_chat_bot.setOnClickListener {
+            val intent = Intent(this, ShowReport::class.java)
             startActivity(intent)
         }
     }

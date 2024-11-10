@@ -179,7 +179,8 @@ class Frag1_Home : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
         val btn_report: Button = view.findViewById(R.id.btn_open_report)
         btn_report.setOnClickListener {
-            val intent = Intent(context, ShowReport::class.java)
+            //val intent = Intent(context, ShowReport::class.java)
+            val intent = Intent(context, ChooseReport::class.java)
             startActivity(intent)
         }
 
