@@ -61,6 +61,10 @@ android {
 }
 
 dependencies {
+
+    //mp차트 라이브러리
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     // Google HTTP Client Library for Jackson2
     implementation("com.google.http-client:google-http-client-jackson2:1.42.3")
 
