@@ -152,6 +152,8 @@ class Calendar : AppCompatActivity() {
             .build()
         Log.d(ContentValues.TAG, "캘린더 4")
 
+        CalendarServiceSingleton.calendarService = service
+
         val now = DateTime(System.currentTimeMillis())
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -193,8 +195,9 @@ class Calendar : AppCompatActivity() {
 
     private fun displayEvents(events: List<com.google.api.services.calendar.model.Event>) {
         //리스트뷰 어댑터 연결
-        val eventAdapter =EventAdapter(events,this)
-        val selectedEventAdapter =EventAdapter(events,this)
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        val eventAdapter = account?.let { EventAdapter(events,this, it) }
+        val selectedEventAdapter = account?.let { EventAdapter(events,this, it) }
         binding.selectedDateRecyclerView.adapter= selectedEventAdapter
         binding.calendarRecyclerView.adapter = eventAdapter
 
@@ -208,7 +211,9 @@ class Calendar : AppCompatActivity() {
             binding.noEventMsg.visibility = View.GONE
             binding.selectedDateRecyclerView.visibility = View.VISIBLE
 
-            val selectedDateEventAdapter = EventAdapter(events, this)
+            val account = GoogleSignIn.getLastSignedInAccount(this)
+
+            val selectedDateEventAdapter = account?.let { EventAdapter(events, this, it) }
             binding.selectedDateRecyclerView.adapter = selectedDateEventAdapter
         }
     }
@@ -228,5 +233,9 @@ class Calendar : AppCompatActivity() {
         private const val APPLICATION_NAME = "Google Calendar API Example"
         private val JSON_FACTORY = JacksonFactory.getDefaultInstance()
         private val HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
+    }
+
+    object CalendarServiceSingleton {
+        var calendarService: Calendar? = null
     }
 }

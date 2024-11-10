@@ -44,6 +44,7 @@ class AddSchedule : AppCompatActivity() {
         var scheduleMap = mutableMapOf<String, String>()
 
         var account = intent.getParcelableExtra<GoogleSignInAccount>("calendarAccount")
+
         binding.etStartDate.setOnClickListener{
             showDatePicker{date->binding.etStartDate.setText(date)}
         }
