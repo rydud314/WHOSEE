@@ -104,15 +104,14 @@
 <!--                android:layout_height="wrap_content"-->
 <!--                android:text="" />-->
 
-            <CheckBox
-                android:id="@+id/checkBox_event_all_day"
+            <TextView
+                android:id="@+id/textView_extra1"
                 android:layout_width="72dp"
                 android:layout_height="wrap_content"
-                android:text="종일"
+                android:text=""
                 android:textColor="#66539C"
-                android:textStyle="bold"
-                android:textSize="15dp"/>
-
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_end_date"
@@ -153,9 +152,8 @@
 <!--                    android:focusable="false"-->
 <!--                    android:textSize="16dp" />-->
 
-<!--                종료날짜 밑 위치로 바꾸고 싶으면 id에서 2만 삭제하고 위에 중복되는 아이디 지우깅-->
                 <CheckBox
-                    android:id="@+id/checkBox_event_all_day2"
+                    android:id="@+id/checkBox_event_all_day"
                     android:layout_width="118dp"
                     android:layout_height="wrap_content"
                     android:text="종일"
