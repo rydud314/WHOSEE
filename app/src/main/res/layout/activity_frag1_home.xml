@@ -113,40 +113,41 @@
                 </TableLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:text="캘린더"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:padding="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="220dp"
-                    android:layout_marginStart="10dp" />
+<!--                    <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textSize="18dp"-->
+<!--                    android:text="캘린더"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:layout_marginEnd="220dp"-->
+<!--                    android:layout_marginStart="10dp" />-->
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:id="@+id/btn_gotocalendar"
-                        android:background="@drawable/btn_add_schedule"
-                        android:text="버튼"
-                        ></Button>
+<!--                    <Button-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textSize="18dp"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:id="@+id/btn_gotocalendar"-->
+<!--                        android:background="@drawable/btn_add_schedule"-->
+<!--                        android:text="버튼"-->
+<!--                        ></Button>-->
                 </LinearLayout>
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="@drawable/btn_calendar"
-                    android:id="@+id/btn_calendar"
-                    android:text="다음 회의 일정은 12월 13일입니다!\n----------------------------------------\nD-2 [팀장] 디자이너 사장"
+                    android:id="@+id/btn_gotocalendar"
+                    android:text="Calendar \n----------------------------\n일정 확인하러 가기 ▶"
                     android:textColor="@color/white"
-                    android:textSize="16dp"
+                    android:textSize="19dp"
+                    android:textStyle="bold"
                     android:drawableEnd="@drawable/ic_calendar"
                     android:padding="10dp" />
 
