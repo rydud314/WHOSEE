@@ -94,23 +94,23 @@
                     android:textColor="@color/black"
                     android:visibility="gone"/>
 
-                <TextView
-                    android:paddingStart="30dp"
-                    android:id="@+id/text2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=" [다가오는 일정]"
-                    android:textColor="#967BE4" />
+<!--                <TextView-->
+<!--                    android:paddingStart="30dp"-->
+<!--                    android:id="@+id/text2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text=" [다가오는 일정]"-->
+<!--                    android:textColor="#967BE4" />-->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/calendarRecyclerView"
-                    android:paddingStart="30dp"
-                    android:paddingEnd="30dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:dividerHeight="1dp"
-                    android:padding="16dp"
-                    tools:listitem="@layout/listitem_event" />
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/calendarRecyclerView"-->
+<!--                    android:paddingStart="30dp"-->
+<!--                    android:paddingEnd="30dp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="150dp"-->
+<!--                    android:dividerHeight="1dp"-->
+<!--                    android:padding="16dp"-->
+<!--                    tools:listitem="@layout/listitem_event" />-->
 
             </LinearLayout>
         </ScrollView>

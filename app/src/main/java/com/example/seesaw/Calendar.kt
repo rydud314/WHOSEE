@@ -54,7 +54,7 @@ class Calendar : AppCompatActivity() {
         setContentView(binding.root)
         Log.d(ContentValues.TAG, "캘린더 = 입장")
 
-        binding.calendarRecyclerView.layoutManager = LinearLayoutManager(this)
+        //binding.calendarRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.selectedDateRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.mcCalendar
 
@@ -110,28 +110,27 @@ class Calendar : AppCompatActivity() {
         }
 
         binding.mcCalendar.setOnMonthChangedListener { widget, date ->
+            widget.clearSelection()
+            // 클릭한 날짜를 Date 객체로 변환
+            val firstDayOfMonth = CalendarDay.from(date.year, date.month, 1)
+            val selectedDate = java.util.Calendar.getInstance().apply {
+                set(
+                    firstDayOfMonth.year,
+                    firstDayOfMonth.month - 1,
+                    firstDayOfMonth.day
+                ) // 연도, 월, 일 설정
+            }.time
+            widget.setDateSelected(firstDayOfMonth, true)
 
-            if (::googleCalendarEvents.isInitialized && googleCalendarEvents.isNotEmpty()) {
-                // 클릭한 날짜를 Date 객체로 변환
-                val firstDayOfMonth = CalendarDay.from(date.year, date.month, 1)
-                val selectedDate = java.util.Calendar.getInstance().apply {
-                    set(firstDayOfMonth.year, firstDayOfMonth.month-1, firstDayOfMonth.day) // 연도, 월, 일 설정
-                }.time
-                widget.setDateSelected(firstDayOfMonth, true)
-
-                //선택한 날짜 일정 찾기
-                val filteredEvents = googleCalendarEvents.filter { event ->
-                    val startDate = event.start.dateTime ?: event.start.date
-                    val eventsDate = Date(startDate.value)
-                    val endDate = event.end.dateTime ?: event.end.date
-                    val eventeDate = Date(endDate.value)
-                    isSameDay(selectedDate, eventsDate, eventeDate)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    loadEvents(selectedDate)
+                }catch (e : Exception){
+                    e.printStackTrace()
+                    // 오류 처리
+                    Log.d(ContentValues.TAG, "캘린더 loadEvent : ${e.message}")
                 }
-                displaySelectedDateEvents(filteredEvents)
-            }else{
-                Log.d(ContentValues.TAG,"캘린더 필터링된 이벤트가 없음")
             }
-
         }
 
      }
@@ -178,13 +177,14 @@ class Calendar : AppCompatActivity() {
 
         CalendarServiceSingleton.calendarService = service
 
-
-
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val now = DateTime(System.currentTimeMillis())
-                val firstDayOfMonth = getStartOfMonth()
-                val lastDayOfMonth = getEndOfMonth()
+                val now = Date(System.currentTimeMillis())
+                loadEvents(now)
+                /*
+                val now = Date(System.currentTimeMillis())
+                val firstDayOfMonth = getStartOfMonth(now)
+                val lastDayOfMonth = getEndOfMonth(now)
 
                 Log.d(ContentValues.TAG, "캘린더 API 요청 시작")
                 val events: Events = service.events().list("primary")
@@ -197,6 +197,7 @@ class Calendar : AppCompatActivity() {
                 Log.d(ContentValues.TAG, "캘린더 API 호출 성공 : ${events.items}")
 
                 val eventTitles = events.items.map { it.summary ?: "No Title" }
+                googleCalendarEvents
                 googleCalendarEvents=events.items //수상함
 
                 // UI 업데이트는 메인 스레드에서 수행해야 함
@@ -213,25 +214,24 @@ class Calendar : AppCompatActivity() {
                             val eventsDate = Date(startDate.value)
                             val endDate = event.end.dateTime ?: event.end.date
                             val eventeDate = Date(endDate.value)
-                            isSameDay(Date(now.value), eventsDate, eventeDate)
+                            isSameDay(now, eventsDate, eventeDate)
                         }
                         displayEvents(eventList)
                         Log.d(ContentValues.TAG, "캘린더 4-2 : ListView 업데이트 완료")
                         displaySelectedDateEvents(filteredEvents)
                     }
                 }
+                 */
             } catch (e: Exception) {
                 e.printStackTrace()
                 // 오류 처리
-                Log.d(ContentValues.TAG, "캘린더 4-3 : ${e.message}")
-
+                Log.d(ContentValues.TAG, "캘린더 loadEvent : ${e.message}")
             }
         }
     }
 
     private suspend fun loadEvents(calDate: Date){
 
-        val now = DateTime(calDate)
         val firstDayOfMonth = getStartOfMonth(calDate)
         val lastDayOfMonth = getEndOfMonth(calDate)
         val service = CalendarServiceSingleton.calendarService
@@ -248,7 +248,7 @@ class Calendar : AppCompatActivity() {
                 .execute()
             Log.d(ContentValues.TAG, "캘린더 API 호출 성공 : ${events.items}")
 
-            val eventTitles = events.items.map { it.summary ?: "No Title" }
+            googleCalendarEvents = emptyList()
             googleCalendarEvents=events.items //수상함
 
             // UI 업데이트는 메인 스레드에서 수행해야 함
@@ -265,9 +265,8 @@ class Calendar : AppCompatActivity() {
                         val eventsDate = Date(startDate.value)
                         val endDate = event.end.dateTime ?: event.end.date
                         val eventeDate = Date(endDate.value)
-                        isSameDay(Date(now.value), eventsDate, eventeDate)
+                        isSameDay(calDate, eventsDate, eventeDate)
                     }
-                    displayEvents(eventList)
                     Log.d(ContentValues.TAG, "캘린더 4-2 : ListView 업데이트 완료")
                     displaySelectedDateEvents(filteredEvents)
                 }
@@ -279,13 +278,14 @@ class Calendar : AppCompatActivity() {
 
     }
 
+    /*
     private fun displayEvents(events: List<com.google.api.services.calendar.model.Event>) {
         //리스트뷰 어댑터 연결
         val account = GoogleSignIn.getLastSignedInAccount(this)
         val eventAdapter = account?.let { EventAdapter(events,this) }
         binding.calendarRecyclerView.adapter = eventAdapter
 
-    }
+    }*/
 
     private fun displaySelectedDateEvents(events: List<com.google.api.services.calendar.model.Event>) {
         if (events.isEmpty()) {
