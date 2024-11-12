@@ -45,17 +45,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <CalendarView
-                android:id="@+id/calendar"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:ignore="MissingConstraints" />
+
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/mc_calendar"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="390dp"
                 app:mcv_selectionMode="single"
-                app:mcv_showOtherDates="all"/>
+                />
         </LinearLayout>
 
 

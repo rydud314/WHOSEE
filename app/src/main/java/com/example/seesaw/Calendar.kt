@@ -2,6 +2,7 @@ package com.example.seesaw
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -88,14 +89,35 @@ class Calendar : AppCompatActivity() {
         val today = CalendarDay.today()
         binding.mcCalendar.addDecorator(TodayDecorator(this, today))
 
-        //기존 캘린더
-        binding.calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            Log.d(ContentValues.TAG,"날짜 선택")
-
-             if (::googleCalendarEvents.isInitialized && googleCalendarEvents.isNotEmpty()) {
-                val selectedDate = UtilCalendar.getInstance().apply {
-                    set(year, month, dayOfMonth)
+        binding.mcCalendar.setOnDateChangedListener { widget, date, selected ->
+            if (::googleCalendarEvents.isInitialized && googleCalendarEvents.isNotEmpty()) {
+                // 클릭한 날짜를 Date 객체로 변환
+                val selectedDate = java.util.Calendar.getInstance().apply {
+                    set(date.year, date.month-1, date.day) // 연도, 월, 일 설정
                 }.time
+                //선택한 날짜 일정 찾기
+                val filteredEvents = googleCalendarEvents.filter { event ->
+                    val startDate = event.start.dateTime ?: event.start.date
+                    val eventsDate = Date(startDate.value)
+                    val endDate = event.end.dateTime ?: event.end.date
+                    val eventeDate = Date(endDate.value)
+                    isSameDay(selectedDate, eventsDate, eventeDate)
+                }
+                displaySelectedDateEvents(filteredEvents)
+            }else{
+                Log.d(ContentValues.TAG,"캘린더 필터링된 이벤트가 없음")
+            }
+        }
+
+        binding.mcCalendar.setOnMonthChangedListener { widget, date ->
+
+            if (::googleCalendarEvents.isInitialized && googleCalendarEvents.isNotEmpty()) {
+                // 클릭한 날짜를 Date 객체로 변환
+                val firstDayOfMonth = CalendarDay.from(date.year, date.month, 1)
+                val selectedDate = java.util.Calendar.getInstance().apply {
+                    set(firstDayOfMonth.year, firstDayOfMonth.month-1, firstDayOfMonth.day) // 연도, 월, 일 설정
+                }.time
+                widget.setDateSelected(firstDayOfMonth, true)
 
                 //선택한 날짜 일정 찾기
                 val filteredEvents = googleCalendarEvents.filter { event ->
@@ -105,18 +127,10 @@ class Calendar : AppCompatActivity() {
                     val eventeDate = Date(endDate.value)
                     isSameDay(selectedDate, eventsDate, eventeDate)
                 }
-                 displaySelectedDateEvents(filteredEvents)
-
-//                 if (filteredEvents.isEmpty()) {
-//                     Log.d(ContentValues.TAG, "선택한 날짜에 일정 없음")
-//                 } else {
-//                     displaySelectedDateEvents(filteredEvents)
-//                 }
-
+                displaySelectedDateEvents(filteredEvents)
             }else{
-                Log.d(ContentValues.TAG,"캘린더 이벤트가 없음")
+                Log.d(ContentValues.TAG,"캘린더 필터링된 이벤트가 없음")
             }
-
 
         }
 
@@ -164,12 +178,14 @@ class Calendar : AppCompatActivity() {
 
         CalendarServiceSingleton.calendarService = service
 
-        val now = DateTime(System.currentTimeMillis())
-        val firstDayOfMonth = getStartOfMonth()
-        val lastDayOfMonth = getEndOfMonth()
+
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                val now = DateTime(System.currentTimeMillis())
+                val firstDayOfMonth = getStartOfMonth()
+                val lastDayOfMonth = getEndOfMonth()
+
                 Log.d(ContentValues.TAG, "캘린더 API 요청 시작")
                 val events: Events = service.events().list("primary")
                     .setMaxResults(100)
@@ -213,6 +229,55 @@ class Calendar : AppCompatActivity() {
         }
     }
 
+    private suspend fun loadEvents(calDate: Date){
+
+        val now = DateTime(calDate)
+        val firstDayOfMonth = getStartOfMonth(calDate)
+        val lastDayOfMonth = getEndOfMonth(calDate)
+        val service = CalendarServiceSingleton.calendarService
+
+        Log.d(ContentValues.TAG, "캘린더 API 요청 시작")
+
+        service?.let {
+            val events: Events = service.events().list("primary")
+                .setMaxResults(100)
+                .setTimeMin(firstDayOfMonth)
+                .setTimeMax(lastDayOfMonth)
+                .setOrderBy("startTime")
+                .setSingleEvents(true)
+                .execute()
+            Log.d(ContentValues.TAG, "캘린더 API 호출 성공 : ${events.items}")
+
+            val eventTitles = events.items.map { it.summary ?: "No Title" }
+            googleCalendarEvents=events.items //수상함
+
+            // UI 업데이트는 메인 스레드에서 수행해야 함
+            withContext(Dispatchers.Main) {
+                // 이벤트 처리
+                //Log.d(ContentValues.TAG, "캘린더 4-2 : ${events.items}")
+                val eventList=googleCalendarEvents
+                if (eventList.isNullOrEmpty()) {
+                    Log.d(ContentValues.TAG, "캘린더 이벤트 없음")
+                } else {
+                    //선택한 날짜 일정 찾기
+                    val filteredEvents = googleCalendarEvents.filter { event ->
+                        val startDate = event.start.dateTime ?: event.start.date
+                        val eventsDate = Date(startDate.value)
+                        val endDate = event.end.dateTime ?: event.end.date
+                        val eventeDate = Date(endDate.value)
+                        isSameDay(Date(now.value), eventsDate, eventeDate)
+                    }
+                    displayEvents(eventList)
+                    Log.d(ContentValues.TAG, "캘린더 4-2 : ListView 업데이트 완료")
+                    displaySelectedDateEvents(filteredEvents)
+                }
+            }
+        } ?: run {
+            // calendarService가 null일 경우 이 블록이 실행됩니다.
+            Log.d(TAG, "캘린더 service null")
+        }
+
+    }
 
     private fun displayEvents(events: List<com.google.api.services.calendar.model.Event>) {
         //리스트뷰 어댑터 연결
@@ -246,8 +311,9 @@ class Calendar : AppCompatActivity() {
         // 날짜가 시작일과 끝일 사이에 포함되는지 확인
         return formattedDateToCheck >= formattedStartDate && formattedDateToCheck <= formattedEndDate
     }
-    fun getStartOfMonth(): DateTime {
+    fun getStartOfMonth(calDate :Date): DateTime {
         val calendar =  java.util.Calendar.getInstance() // 현재 날짜와 시간으로 Calendar 객체 생성
+        calendar.time = calDate
         calendar.set(java.util.Calendar.DAY_OF_MONTH, 1) // 해당 달의 첫 번째 날짜로 설정
         calendar.set(java.util.Calendar.HOUR_OF_DAY, 0)
         calendar.set(java.util.Calendar.MINUTE, 0)
@@ -256,8 +322,10 @@ class Calendar : AppCompatActivity() {
 
         return DateTime(calendar.time) // Calendar의 Date 객체로 DateTime 생성
     }
-    fun getEndOfMonth(): DateTime {
+    fun getEndOfMonth(calDate: Date): DateTime {
         val calendar = java.util.Calendar.getInstance()
+        calendar.time = calDate
+
         val lastDay = calendar.getActualMaximum(java.util.Calendar.DAY_OF_MONTH)
 
         calendar.set(java.util.Calendar.DAY_OF_MONTH, lastDay) // 해당 달의 첫 번째 날짜로 설정
