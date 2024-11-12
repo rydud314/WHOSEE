@@ -1,26 +1,27 @@
 package com.example.seesaw
+
 import android.app.Activity
 import android.graphics.drawable.Drawable
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 
-class TodayDecorator(context: Activity?, today: CalendarDay): DayViewDecorator {
+class EventDecorator(context: Activity?,  eventList: List<CalendarDay>):
+    DayViewDecorator {
     private val drawable : Drawable?
-    var myDay = today
+    val eventList = eventList
 
     override fun shouldDecorate(day: CalendarDay): Boolean {
-        return day == myDay
+        return eventList.contains(day)
     }
 
     override fun decorate(view: DayViewFacade) {
-        view.setSelectionDrawable(drawable!!)
+        view.setBackgroundDrawable(drawable!!)
     }
 
     init {
-        drawable = ContextCompat.getDrawable(context!!, R.drawable.cal_background_purple)
+        drawable = ContextCompat.getDrawable(context!!, R.drawable.cal)
 
     }
 }

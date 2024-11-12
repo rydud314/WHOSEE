@@ -19,6 +19,7 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
+import com.google.api.services.calendar.model.Event
 import com.google.api.services.calendar.model.Events
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.CoroutineScope
@@ -75,6 +76,8 @@ class Calendar : AppCompatActivity() {
 
         val today = CalendarDay.today()
         binding.mcCalendar.addDecorator(TodayDecorator(this, today))
+
+        binding.mcCalendar.setSelectedDate(today)
 
         binding.mcCalendar.setOnDateChangedListener { widget, date, selected ->
             if (::googleCalendarEvents.isInitialized && googleCalendarEvents.isNotEmpty()) {
@@ -210,6 +213,7 @@ class Calendar : AppCompatActivity() {
             googleCalendarEvents = emptyList()
             googleCalendarEvents=events.items //수상함
 
+
             // UI 업데이트는 메인 스레드에서 수행해야 함
             withContext(Dispatchers.Main) {
                 // 이벤트 처리
@@ -219,6 +223,8 @@ class Calendar : AppCompatActivity() {
                     Log.d(ContentValues.TAG, "캘린더 이벤트 없음")
                     displaySelectedDateEvents(eventList)
                 } else {
+                    val calendarDayList = getEventDates(eventList)
+                    binding.mcCalendar.addDecorator(EventDecorator(this@Calendar, calendarDayList))
 
                     val filteredEvents = googleCalendarEvents.filter { event ->
                         val startDate = event.start.dateTime ?: event.start.date
@@ -299,6 +305,40 @@ class Calendar : AppCompatActivity() {
         return DateTime(calendar.time)
     }
 
+    fun getEventDates(eventList: List<Event>): List<CalendarDay> {
+        var eventDates = mutableListOf<CalendarDay>()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        // Event 리스트에서 날짜를 추출하여 CalendarDay 리스트로 변환
+        for (event in eventList) {
+            val startDate = event.start.dateTime ?: event.start.date
+            val eventsDate = Date(startDate.value)
+            var endDate = event.end.dateTime ?: event.end.date
+
+            if(event.end.dateTime == null){
+                //date형 변수일 때 일자가 하루씩 늘어나는 현상을 줄이는 코드
+                val c = java.util.Calendar.getInstance()
+                c.time = Date(endDate.value)
+                c.add(java.util.Calendar.DAY_OF_MONTH, -1)
+                endDate = DateTime(c.time)
+            }else{
+                //endDate = event.end.dateTime
+            }
+            val eventeDate = Date(endDate.value)
+            val calendar = java.util.Calendar.getInstance()
+            var pick = eventsDate
+
+            while (isSameDay(pick, eventsDate, eventeDate)){
+                calendar.time = pick
+                eventDates.add(CalendarDay.from(calendar.get(java.util.Calendar.YEAR), calendar.get(java.util.Calendar.MONTH)+1, calendar.get(java.util.Calendar.DAY_OF_MONTH)))
+
+                calendar.add(java.util.Calendar.DAY_OF_YEAR, 1)  // 하루를 더함
+                pick = calendar.time
+            }
+
+        }
+        return eventDates
+    }
     companion object {
         private const val CREDENTIALS_FILE_PATH = "credentials.json"
         private const val TOKENS_DIRECTORY_PATH = "tokens"
