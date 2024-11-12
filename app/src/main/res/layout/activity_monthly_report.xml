@@ -29,12 +29,15 @@
             android:layout_gravity="center"
             android:paddingBottom="16dp" />
 
-        <ImageView
-            android:id="@+id/monthly_card_use"
-            android:src="@drawable/report_monthly_card_use"
+        <com.github.mikephil.charting.charts.RadarChart
+            android:id="@+id/rader_chart"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
-        </ImageView>
+            android:layout_height="300dp"/>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/stacked_bar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
 
         <TextView
             android:id="@+id/section1Title"
@@ -69,12 +72,6 @@
             android:textColor="@color/white"
             android:text="명함 살펴보기"/>
 
-        <ImageView
-            android:id="@+id/monthly_fav_people"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:src="@drawable/report_monthly_fav_people"/>
-
         <TextView
             android:id="@+id/section2Title"
             android:layout_width="wrap_content"
@@ -92,11 +89,10 @@
             android:textSize="16sp"
             android:paddingTop="16dp" />
 
-        <ImageView
-            android:id="@+id/monthly_activity"
-            android:src="@drawable/report_monthly_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="450dp" />
+        <com.github.mikephil.charting.charts.BubbleChart
+            android:id="@+id/top5_interaction_chart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
 
         <TextView
             android:id="@+id/section3Title"
@@ -115,6 +111,7 @@
             android:text="이번달은 명함 교환이 가장 활발했던 달이였으며 2개의 프로젝트에 참여하고 프로젝트와 관련된 명함들간의 소통이 계속해서 이루어졌던 기간이였습니다. 다른 활동에 비해 업데이트 및 관리에 약간 소홀한 모습을 보였으며 다음달에는 증가할 것으로 예상됩니다. "
             android:textSize="16sp"
             android:paddingBottom="16dp" />
+
 
     </LinearLayout>
 </ScrollView>
