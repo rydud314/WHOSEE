@@ -19,6 +19,6 @@ class TodayDecorator(context: Activity?, today: CalendarDay): DayViewDecorator {
     }
 
     init {
-        drawable = ContextCompat.getDrawable(context!!, R.drawable.baseline_circle_24)
+        drawable = ContextCompat.getDrawable(context!!, R.drawable.ic_circle_small)
     }
 }
