@@ -25,136 +25,83 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 class Report_Annual : AppCompatActivity() {
     private var isZoomedIn = false // 줌 상태를 추적하는 변수
 
-    // 데이터 클래스를 정의합니다.
+    // 명함 데이터 클래스
     data class CardData(
         val cardId: String,
         val gender: String,
         val job: String,
         val name: String,
         val position: String,
-        val workplace: String
+        val workplace: String,
+        val month: Int, // 명함 주고받은 달 (1~12)
+        val type: String // "given" 또는 "received"로 명함이 주어진 유형
     )
 
-    // cardDataSet을 정의합니다.
+    // 연간 리포트 데이터 클래스
+    data class AnnualData(
+        val month: Int,
+        var givenCards: Int = 0,
+        var receivedCards: Int = 0
+    )
+
+    // cardDataSet (명함 데이터셋)
     private val cardDataSet = listOf(
-        CardData(
-            cardId = "first1",
-            gender = "여",
-            job = "개발자",
-            name = "김하영",
-            position = "백엔드 개발자",
-            workplace = "테크월드"
+        CardData("first1", "여", "개발자", "김하영", "백엔드 개발자", "테크월드", 7, "received"),
+        CardData("first2", "남", "마케터", "박소영", "디지털 마케터", "마케팅코리아", 7, "given"),
+        CardData("first3", "남", "데이터 분석가", "최민수", "데이터 분석가", "데이터랩", 7, "received"),
+        CardData("first4", "여", "영업 전문가", "정수민", "영업 전문가", "영업솔루션", 8, "given"),
+        CardData("first5", "남", "개발자", "홍길동", "시니어 개발자 팀장", "테크월드", 10, "received"),
+        CardData("first6", "여", "영업 전문가", "윤서연", "영업 팀장", "세일즈매니지먼트", 7, "given"),
+        CardData("first7", "남", "마케터", "권민호", "디지털 마케터", "마케팅코리아", 7, "received"),
+        CardData("first8", "여", "디자이너", "김민지", "제품 디자이너 실장", "콘텐츠 하우스", 8, "given"),
+        CardData("first9", "남", "데이터 분석가", "이지훈", "데이터 엔지니어", "인사이트 코어", 9, "received"),
+        CardData("first10", "여", "마케터", "박서현", "마케팅 전문가 대리", "마케팅코리아", 10, "given"),
+        CardData("first11", "남", "개발자", "오준서", "주니어 개발자 사원", "데브 솔루션", 11, "received"),
+        CardData("first12", "남", "개발자", "오준남", "주니어 개발자 대리", "데브 솔루션", 11, "received"),
+        CardData("first13", "여", "디자이너", "김서영", "웹 디자이너 실장", "데브 솔루션", 8, "given"),
+        CardData("first14", "여", "마케터", "김서진", "웹 마케터 실장", "마케팅코리아", 8, "received"),
+        CardData("first15", "여", "마케터", "김서현", "웹 마케터 팀장", "마케팅코리아", 8, "received"),
+        CardData("first16", "여", "개발자", "김아영", "프론트엔드 개발자 사원", "테크월드", 7, "given"),
+        CardData("first17", "남", "개발자", "김아진", "프론트엔드 개발자 사원", "테크월드", 10, "received"),
+        CardData("first18", "남", "영업 전문가", "김다준", "영업 전문가 대리", "영업솔루션", 7, "received"),
+        CardData("first19", "여", "영업 전문가", "김다영", "영업 전문가 실장", "영업솔루션", 9, "received"),
+        CardData("first20", "여", "데이터 분석가", "김지영", "데이터 엔지니어 팀장", "인사이트 코어", 9, "received"),
+        // cardId email gender imgaeName introduction job name pofol position sns tel workplace
+        )
 
-        ),
-        CardData(
-            cardId = "first2",
-            gender = "남",
-            job = "마케터",
-            name = "박소영",
-            position = "디지털 마케터",
-            workplace = "마케팅코리아"
-        ),
-        CardData(
-            cardId = "first3",
-            gender = "남",
-            job = "데이터 분석가",
-            name = "최민수",
-            position = "데이터 분석가",
-            workplace = "데이터랩"
-        ),
-        CardData(
-            cardId = "first4",
-            gender = "여",
-            job = "영업 전문가",
-            name = "정수민",
-            position = "영업 전문가",
-            workplace = "영업솔루션"
-        ),
-        CardData(
-            cardId = "first5",
-            gender = "남",
-            job = "개발자",
-            name = "홍길동",
-            position = "시니어 개발자 팀장",
-            workplace = "테크월드"
-        ),
-        CardData(
-            cardId = "first6",
-            gender = "여",
-            job = "영업 전문가",
-            name = "윤서연",
-            position = "영업 팀장",
-            workplace = "세일즈매니지먼트"
-        ),
-        CardData(
-            cardId = "first7",
-            gender = "남",
-            job = "마케터",
-            name = "권민호",
-            position = "디지털 마케터",
-            workplace = "마케팅코리아"
-        ),
-        CardData(
-            cardId = "first8",
-            gender = "여",
-            job = "디자이너",
-            name = "김민지",
-            position = "제품 디자이너 실장",
-            workplace = "콘텐츠 하우스"
-        ),
-        CardData(
-            cardId = "first9",
-            gender = "남",
-            job = "데이터 분석가",
-            name = "이지훈",
-            position = "데이터 엔지니어",
-            workplace = "인사이트 코어"
-        ),
-        CardData(
-            cardId = "first10",
-            gender = "여",
-            job = "미케터",
-            name = "박서현",
-            position = "마케팅 전문가 대리",
-            workplace = "마케팅 코리아"
-        ),
-        CardData(
-            cardId = "first11",
-            gender = "남",
-            job = "개발자",
-            name = "오준서",
-            position = "주니어 개발자 사원",
-            workplace = "데브 솔루션"
-        ),
-    )
+    // AnnualDataSet (연간 리포트 데이터셋, 1월~12월 초기화)
+    private val annualDataSet = List(12) { month -> AnnualData(month + 1) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_annual_report)
 
-
         val barChart = findViewById<BarChart>(R.id.barChart)
+        val pieChart = findViewById<PieChart>(R.id.genderPieChart) // 성비 차트
+        val jobPieChart = findViewById<PieChart>(R.id.jobPieChart) // 직업군 차트
 
         //---------------------------------------------
         //barChart
         barChart.fitScreen()
 
-        // 하드코딩된 데이터 예제 (월별로 받은 명함과 준 명함)
-        val receivedCards = listOf(0, 0, 0, 0, 0, 0, 2, 3, 2, 1, 3, 0)
-        val givenCards = listOf(0, 0, 0, 0, 0, 1, 3, 7, 5, 2, 2, 0)
+        // 명함 데이터를 연간 리포트 데이터에 반영
+        cardDataSet.forEach { card ->
+            val monthIndex = card.month - 1
+            if (card.type == "given") {
+                annualDataSet[monthIndex].givenCards++
+            } else if (card.type == "received") {
+                annualDataSet[monthIndex].receivedCards++
+            }
+        }
 
-        // 데이터 준비
+        // 바 차트 데이터 준비
         val receivedEntries = ArrayList<BarEntry>()
         val givenEntries = ArrayList<BarEntry>()
 
-        for (i in receivedCards.indices) {
-            receivedEntries.add(BarEntry(i.toFloat(), receivedCards[i].toFloat())) // Int를 Float로 변환
-            givenEntries.add(BarEntry(i.toFloat(), givenCards[i].toFloat()))       // Int를 Float로 변환
+        annualDataSet.forEachIndexed { index, data ->
+            receivedEntries.add(BarEntry(index.toFloat(), data.receivedCards.toFloat()))
+            givenEntries.add(BarEntry(index.toFloat(), data.givenCards.toFloat()))
         }
-        //Color.rgb(128, 0, 128)
-        //Color.rgb(153, 50, 204)
-        //Color.rgb(186, 85, 211)
-        //Color.rgb(221, 160, 221)
 
         val receivedDataSet = BarDataSet(receivedEntries, "받은 명함").apply {
             color = Color.rgb(128, 0, 128) // 짙은 보라색
@@ -181,6 +128,10 @@ class Report_Annual : AppCompatActivity() {
         xAxis.granularity = 1f
         xAxis.setCenterAxisLabels(true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        // X축 최소값 및 최대값 설정 (1월부터 12월까지의 정확한 범위 설정)
+        barChart.xAxis.axisMinimum = 0f
+        barChart.xAxis.axisMaximum = 12f
+        xAxis.labelCount = 12        // 12개의 월 레이블 표시
 //        xAxis.labelRotationAngle = -45f // 레이블 회전
         // X축 레이블을 월별로 설정
         xAxis.valueFormatter = object : ValueFormatter() {
@@ -207,22 +158,7 @@ class Report_Annual : AppCompatActivity() {
             }
         })
         barChart.data = data
-        barChart.groupBars(0f, 0.4f, 0.1f)
-        barChart.invalidate()
-
-
-        // 확대 및 드래그 설정
-        barChart.setScaleEnabled(true)
-        barChart.setPinchZoom(true)
-        barChart.setDragEnabled(true)
-        barChart.viewPortHandler.setMaximumScaleX(2f) // X축 최대 확대 비율
-        barChart.viewPortHandler.setMaximumScaleY(1f) // Y축 최대 확대 비율
-        barChart.animateY(1000) // Y축 방향으로 1초 동안 애니메이션
-        barChart.animateX(1000) // X축 방향으로 1초 동안 애니메이션
-
-        // 그래프 데이터 적용
-        barChart.data = data
-        barChart.groupBars(0f, 0.4f, 0.1f) // 그룹 간격 설정
+        barChart.groupBars(0f, 0.3f, 0.05f)
         barChart.invalidate()
 
         // 커스텀 마커 설정
@@ -233,11 +169,24 @@ class Report_Annual : AppCompatActivity() {
         val legend = barChart.legend
         legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        legend.textSize = 12f
+
+        // 확대 및 드래그 설정
+        barChart.setScaleEnabled(true)
+        barChart.setPinchZoom(true)
+        barChart.setDragEnabled(true)
+        barChart.viewPortHandler.setMaximumScaleX(2f) // X축 최대 확대 비율
+        barChart.viewPortHandler.setMaximumScaleY(1f) // Y축 최대 확대 비율
+        barChart.animateY(1000) // Y축 방향으로 1초 동안 애니메이션
+        barChart.animateX(1000) // X축 방향으로 1초 동안 애니메이션
 
         // 인터랙티브 기능 설정
         barChart.setTouchEnabled(true)
         barChart.setPinchZoom(true) // 핀치 줌 가능
         barChart.isDoubleTapToZoomEnabled = true // 더블 탭 줌 활성화
+        barChart.apply {
+            description.isEnabled = false
+        }
         // 더블 탭 줌 인/줌 아웃 이벤트 설정
         barChart.setOnChartGestureListener(object : OnChartGestureListener {
             override fun onChartDoubleTapped(me: MotionEvent?) {
@@ -280,54 +229,44 @@ class Report_Annual : AppCompatActivity() {
         })
 
         //---------------------------------------------
-        // PieChart 데이터 설정
-        // 성비 카운트 계산
-        val pieChart = findViewById<PieChart>(R.id.genderPieChart) // 추가한 PieChart
-
+        // PieChart
+        // 성비 차트
         val maleCount = cardDataSet.count { it.gender == "남" }.toFloat()
         val femaleCount = cardDataSet.count { it.gender == "여" }.toFloat()
 
-
-        val genderEntries = ArrayList<PieEntry>()
-        genderEntries.add(PieEntry(maleCount, "남자"))
-        genderEntries.add(PieEntry(femaleCount, "여자"))
-
+        val genderEntries = listOf(PieEntry(maleCount, "남자"), PieEntry(femaleCount, "여자"))
         val genderDataSet = PieDataSet(genderEntries, "성비").apply {
-            colors = listOf(Color.rgb(186, 85, 211), Color.rgb(221, 160, 221)) // 보라색 계열 색상
-            sliceSpace = 3f // 각 조각 간의 간격
+            colors = listOf(Color.rgb(186, 85, 211), Color.rgb(221, 160, 221))
+            sliceSpace = 3f
         }
-
-        val pieData = PieData(genderDataSet).apply {
+        val genderPieData = PieData(genderDataSet).apply {
             setValueTextSize(12f)
             setValueTextColor(Color.WHITE)
-
-            // 값 포맷터 설정
             setValueFormatter(object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    return "${value.toInt()}개" // "개" 단위를 붙여서 정수로 표시
+                    return "${value.toInt()}개"
                 }
             })
         }
+//        pieChart.setExtraOffsets(0f, 0f, 0f, -50f) // 차트 아래쪽 여백 줄이기
 
         pieChart.apply {
-            pieChart.data = pieData
-            description.isEnabled = false // 설명 비활성화
-            isDrawHoleEnabled = true // 도넛 모양으로 설정
-            holeRadius = 60f // 가운데 구멍의 크기 설정
-            setEntryLabelColor(Color.BLACK) // 항목 레이블 색상
-            setEntryLabelTextSize(12f) // 항목 레이블 크기
-            animateY(1000) // 애니메이션 효과
-            legend.isEnabled = true // 범례 활성화
+            pieChart.data = genderPieData
+            description.isEnabled = false
+            isDrawHoleEnabled = true
+            holeRadius = 60f
+            setEntryLabelColor(Color.BLACK)
+            setEntryLabelTextSize(12f)
+            animateY(1000)
+            legend.isEnabled = true
             legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
             legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
             legend.textSize = 12f
         }
 
         //---------------------------------------------
-        // PieChart 데이터 설정
-        // 직업군 분포도 계산
-        val jobPieChart = findViewById<PieChart>(R.id.jobPieChart)
-
+        // jobPieChart
+        // 직업군 차트
         val jobCounts = cardDataSet.groupingBy { it.job }.eachCount()
         val jobEntries = jobCounts.map { PieEntry(it.value.toFloat(), it.key) }
         val jobDataSet = PieDataSet(jobEntries, "직업군에 따른 명함 분포도").apply {
@@ -349,18 +288,24 @@ class Report_Annual : AppCompatActivity() {
                 }
             })
         }
+//        jobPieChart.setExtraOffsets(0f, 0f, 0f, -50f) // 차트 아래쪽 여백 줄이기
 
         jobPieChart.apply {
             jobPieChart.data = jobPieData
             description.isEnabled = false
             isDrawHoleEnabled = false
-            setEntryLabelColor(Color.BLACK)
             setEntryLabelTextSize(12f)
+            setEntryLabelColor(Color.BLACK)
             animateY(1000)
+
+            // 범례 설정
             legend.isEnabled = true
             legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
             legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            legend.orientation = Legend.LegendOrientation.HORIZONTAL
+            legend.isWordWrapEnabled = true
             legend.textSize = 12f
         }
+
     }
 }

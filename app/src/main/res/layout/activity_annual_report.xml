@@ -70,7 +70,7 @@
 <!--            android:id="@+id/annual_card_class"-->
 <!--            android:src="@drawable/report_annual_card_class"/>-->
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -78,16 +78,16 @@
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/genderPieChart"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:layout_weight="1"
-                android:layout_margin="8dp"/>
+                android:layout_height="250dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/jobPieChart"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:layout_weight="1"
-                android:layout_margin="8dp"/>
+                android:layout_height="250dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
