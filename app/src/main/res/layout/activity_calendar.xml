@@ -46,6 +46,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints" />
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/mc_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:mcv_selectionMode="single"
+            app:mcv_showOtherDates="all"/>
 
         <ScrollView
             android:layout_width="match_parent"

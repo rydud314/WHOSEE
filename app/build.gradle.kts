@@ -97,6 +97,7 @@ dependencies {
     implementation ("com.google.apis:google-api-services-calendar:v3-rev20220715-2.0.0")
     implementation ("com.google.android.gms:play-services-auth:21.2.0")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation ("com.github.prolificinteractive:material-calendarview:2.0.1")
 
     // 기타 라이브러리
     implementation("com.google.zxing:core:3.3.0")

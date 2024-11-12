@@ -26,10 +26,12 @@ import com.google.api.client.util.DateTime
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
 import com.google.api.services.calendar.model.Events
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.reflect.Array.set
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -50,6 +52,7 @@ class Calendar : AppCompatActivity() {
 
         binding.calendarRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.selectedDateRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.mcCalendar
 
         // GoogleSignInOptions 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -79,6 +82,9 @@ class Calendar : AppCompatActivity() {
             finish()
         }
 
+        val today = CalendarDay.today()
+        binding.mcCalendar.addDecorator(TodayDecorator(this, today))
+        //기존 캘린더
         binding.calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
             Log.d(ContentValues.TAG,"날짜 선택")
 
