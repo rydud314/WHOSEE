@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView
+import com.google.api.client.util.DateTime
 import com.google.api.services.calendar.model.Event;
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 public class EventAdapter(private val events: List<Event>,
@@ -29,18 +31,31 @@ public class EventAdapter(private val events: List<Event>,
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA)
+        val onlyDateFormat = SimpleDateFormat("yyyy-MM-dd",Locale.KOREA)
 
         val event = events[position]
         var startTime = ""
         var endTime = ""
+
 
         if(event.start.dateTime != null && event.end.dateTime != null){
             startTime = dateFormat.format(event.start.dateTime.value)
             endTime = dateFormat.format(event.end.dateTime.value)
         }
         else{
+            var endDate = event.end.date
+            if(event.end.date.isDateOnly){
+                //date형 변수일 때 일자가 하루씩 늘어나는 현상을 줄이는 코드
+                val c = java.util.Calendar.getInstance()
+                c.time = Date(endDate.value)
+                c.add(java.util.Calendar.DAY_OF_MONTH, -1)
+                endDate = DateTime(c.time)
+                endTime = onlyDateFormat.format(endDate.value)
+            }else{
+                //endDate = event.end.dateTime
+            }
             startTime = event.start.date.toString() + " 00:00"
-            endTime = event.end.date.toString() + " 23:59"
+            endTime = "$endTime 23:59"
         }
 
         holder.eventTitle.text = event.summary ?: "No Title"

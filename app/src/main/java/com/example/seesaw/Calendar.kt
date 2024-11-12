@@ -26,6 +26,7 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
+import com.google.api.services.calendar.model.EventDateTime
 import com.google.api.services.calendar.model.Events
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.CoroutineScope
@@ -54,7 +55,6 @@ class Calendar : AppCompatActivity() {
         setContentView(binding.root)
         Log.d(ContentValues.TAG, "캘린더 = 입장")
 
-        //binding.calendarRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.selectedDateRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.mcCalendar
 
@@ -99,7 +99,18 @@ class Calendar : AppCompatActivity() {
                 val filteredEvents = googleCalendarEvents.filter { event ->
                     val startDate = event.start.dateTime ?: event.start.date
                     val eventsDate = Date(startDate.value)
-                    val endDate = event.end.dateTime ?: event.end.date
+                    var endDate = event.end.dateTime ?: event.end.date
+
+                    if(event.end.dateTime == null){
+                        //date형 변수일 때 일자가 하루씩 늘어나는 현상을 줄이는 코드
+                        val c = java.util.Calendar.getInstance()
+                        c.time = Date(endDate.value)
+                        c.add(java.util.Calendar.DAY_OF_MONTH, -1)
+                        endDate = DateTime(c.time)
+
+                    }else{
+                        //endDate = event.end.dateTime
+                    }
                     val eventeDate = Date(endDate.value)
                     isSameDay(selectedDate, eventsDate, eventeDate)
                 }
@@ -181,47 +192,6 @@ class Calendar : AppCompatActivity() {
             try {
                 val now = Date(System.currentTimeMillis())
                 loadEvents(now)
-                /*
-                val now = Date(System.currentTimeMillis())
-                val firstDayOfMonth = getStartOfMonth(now)
-                val lastDayOfMonth = getEndOfMonth(now)
-
-                Log.d(ContentValues.TAG, "캘린더 API 요청 시작")
-                val events: Events = service.events().list("primary")
-                    .setMaxResults(100)
-                    .setTimeMin(firstDayOfMonth)
-                    .setTimeMax(lastDayOfMonth)
-                    .setOrderBy("startTime")
-                    .setSingleEvents(true)
-                    .execute()
-                Log.d(ContentValues.TAG, "캘린더 API 호출 성공 : ${events.items}")
-
-                val eventTitles = events.items.map { it.summary ?: "No Title" }
-                googleCalendarEvents
-                googleCalendarEvents=events.items //수상함
-
-                // UI 업데이트는 메인 스레드에서 수행해야 함
-                withContext(Dispatchers.Main) {
-                    // 이벤트 처리
-                    //Log.d(ContentValues.TAG, "캘린더 4-2 : ${events.items}")
-                    val eventList=googleCalendarEvents
-                    if (eventList.isNullOrEmpty()) {
-                        Log.d(ContentValues.TAG, "캘린더 이벤트 없음")
-                    } else {
-                        //선택한 날짜 일정 찾기
-                        val filteredEvents = googleCalendarEvents.filter { event ->
-                            val startDate = event.start.dateTime ?: event.start.date
-                            val eventsDate = Date(startDate.value)
-                            val endDate = event.end.dateTime ?: event.end.date
-                            val eventeDate = Date(endDate.value)
-                            isSameDay(now, eventsDate, eventeDate)
-                        }
-                        displayEvents(eventList)
-                        Log.d(ContentValues.TAG, "캘린더 4-2 : ListView 업데이트 완료")
-                        displaySelectedDateEvents(filteredEvents)
-                    }
-                }
-                 */
             } catch (e: Exception) {
                 e.printStackTrace()
                 // 오류 처리
@@ -243,6 +213,7 @@ class Calendar : AppCompatActivity() {
                 .setMaxResults(100)
                 .setTimeMin(firstDayOfMonth)
                 .setTimeMax(lastDayOfMonth)
+                .setTimeZone("Asia/Seoul")
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
                 .execute()
@@ -259,11 +230,22 @@ class Calendar : AppCompatActivity() {
                 if (eventList.isNullOrEmpty()) {
                     Log.d(ContentValues.TAG, "캘린더 이벤트 없음")
                 } else {
-                    //선택한 날짜 일정 찾기
+
                     val filteredEvents = googleCalendarEvents.filter { event ->
                         val startDate = event.start.dateTime ?: event.start.date
                         val eventsDate = Date(startDate.value)
-                        val endDate = event.end.dateTime ?: event.end.date
+                        var endDate = event.end.dateTime ?: event.end.date
+
+                        if(event.end.dateTime == null){
+                            //date형 변수일 때 일자가 하루씩 늘어나는 현상을 줄이는 코드
+                            val c = java.util.Calendar.getInstance()
+                            c.time = Date(endDate.value)
+                            c.add(java.util.Calendar.DAY_OF_MONTH, -1)
+                            endDate = DateTime(c.time)
+                        }else{
+                            //endDate = event.end.dateTime
+                        }
+
                         val eventeDate = Date(endDate.value)
                         isSameDay(calDate, eventsDate, eventeDate)
                     }
@@ -278,14 +260,6 @@ class Calendar : AppCompatActivity() {
 
     }
 
-    /*
-    private fun displayEvents(events: List<com.google.api.services.calendar.model.Event>) {
-        //리스트뷰 어댑터 연결
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        val eventAdapter = account?.let { EventAdapter(events,this) }
-        binding.calendarRecyclerView.adapter = eventAdapter
-
-    }*/
 
     private fun displaySelectedDateEvents(events: List<com.google.api.services.calendar.model.Event>) {
         if (events.isEmpty()) {
