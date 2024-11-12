@@ -28,7 +28,7 @@ public class EventAdapter(private val events: List<Event>,
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA)
 
         val event = events[position]
         var startTime = ""
