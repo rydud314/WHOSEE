@@ -5,16 +5,9 @@ import android.os.Bundle
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.CalendarView
-import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.seesaw.databinding.ActivityCalendarBinding
-import com.example.seesaw.databinding.ActivityDeleteScheduleBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -26,21 +19,15 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
-import com.google.api.services.calendar.model.EventDateTime
 import com.google.api.services.calendar.model.Events
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.reflect.Array.set
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
 import java.util.Date
 import java.util.Locale
-import java.util.Calendar as UtilCalendar
 
 class Calendar : AppCompatActivity() {
 
@@ -124,6 +111,7 @@ class Calendar : AppCompatActivity() {
             widget.clearSelection()
             // 클릭한 날짜를 Date 객체로 변환
             val firstDayOfMonth = CalendarDay.from(date.year, date.month, 1)
+
             val selectedDate = java.util.Calendar.getInstance().apply {
                 set(
                     firstDayOfMonth.year,
@@ -229,6 +217,7 @@ class Calendar : AppCompatActivity() {
                 val eventList=googleCalendarEvents
                 if (eventList.isNullOrEmpty()) {
                     Log.d(ContentValues.TAG, "캘린더 이벤트 없음")
+                    displaySelectedDateEvents(eventList)
                 } else {
 
                     val filteredEvents = googleCalendarEvents.filter { event ->
@@ -245,7 +234,6 @@ class Calendar : AppCompatActivity() {
                         }else{
                             //endDate = event.end.dateTime
                         }
-
                         val eventeDate = Date(endDate.value)
                         isSameDay(calDate, eventsDate, eventeDate)
                     }
