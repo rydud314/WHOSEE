@@ -52,6 +52,11 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Frag_Professional_Wallet"
+            android:exported="false"></activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"></activity>

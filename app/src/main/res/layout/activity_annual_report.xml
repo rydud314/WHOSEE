@@ -110,24 +110,28 @@
                 android:textSize="16sp" />
 
             <Button
+                android:id="@+id/btn_it_cards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="IT 직군 관련 명함"
                 android:textColor="@color/white"/>
 
             <Button
+                android:id="@+id/btn_design_cards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="디자인 직군 관련 명함"
                 android:textColor="@color/white"/>
 
             <Button
+                android:id="@+id/btn_sales_cards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="영업 직군 관련 명함"
                 android:textColor="@color/white"/>
 
             <Button
+                android:id="@+id/btn_etc_cards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="기타 직군 관련 명함"
