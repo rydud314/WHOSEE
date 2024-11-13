@@ -3,8 +3,17 @@ package com.example.seesaw
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
+import android.util.Log
 import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
+import com.example.seesaw.model.ApiClient
+import com.example.seesaw.model.ChatGPTRequest
+import com.example.seesaw.model.ChatGPTResponse
+import com.example.seesaw.model.ChatMsg
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -21,9 +30,17 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Report_Annual : AppCompatActivity() {
     private var isZoomedIn = false // 줌 상태를 추적하는 변수
+    private val chatMsgList1: MutableList<ChatMsg> = mutableListOf()
+    private val chatMsgList2: MutableList<ChatMsg> = mutableListOf()
+
+    private var progressBar: ProgressBar? = null
+    private lateinit var contentLayout: View
 
     // 명함 데이터 클래스
     data class CardData(
@@ -36,14 +53,12 @@ class Report_Annual : AppCompatActivity() {
         val month: Int, // 명함 주고받은 달 (1~12)
         val type: String // "given" 또는 "received"로 명함이 주어진 유형
     )
-
     // 연간 리포트 데이터 클래스
     data class AnnualData(
         val month: Int,
         var givenCards: Int = 0,
         var receivedCards: Int = 0
     )
-
     // cardDataSet (명함 데이터셋)
     private val cardDataSet = listOf(
         CardData("first1", "여", "개발자", "김하영", "백엔드 개발자", "테크월드", 7, "received"),
@@ -65,9 +80,9 @@ class Report_Annual : AppCompatActivity() {
         CardData("first17", "남", "개발자", "김아진", "프론트엔드 개발자 사원", "테크월드", 10, "received"),
         CardData("first18", "남", "영업 전문가", "김다준", "영업 전문가 대리", "영업솔루션", 7, "received"),
         CardData("first19", "여", "영업 전문가", "김다영", "영업 전문가 실장", "영업솔루션", 9, "received"),
-        CardData("first20", "여", "데이터 분석가", "김지영", "데이터 엔지니어 팀장", "인사이트 코어", 9, "received"),
-        // cardId email gender imgaeName introduction job name pofol position sns tel workplace
+        CardData("first20", "여", "기자", "김지영", "연예부 팀장", "동아일보", 9, "received"),
         )
+    // cardId email gender imgaeName introduction job name pofol position sns tel workplace
 
     // AnnualDataSet (연간 리포트 데이터셋, 1월~12월 초기화)
     private val annualDataSet = List(12) { month -> AnnualData(month + 1) }
@@ -75,6 +90,47 @@ class Report_Annual : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_annual_report)
+        // progressBar 초기화
+        progressBar = findViewById(R.id.progressBar)
+        contentLayout = findViewById(R.id.contentLayout)
+
+        // section1Content와 section2Content 텍스트뷰를 가져옵니다.
+        val section1Content = findViewById<TextView>(R.id.section1Content)
+        val section2Content = findViewById<TextView>(R.id.section2Content)
+
+        // 초기에는 ProgressBar만 보이게 설정
+        progressBar?.visibility = View.VISIBLE
+        contentLayout.visibility = View.GONE
+
+        // cardDataSet을 문자열로 변환하여 데이터 분석 요청 메시지 생성
+        val cardDataSetText = cardDataSet.joinToString(separator = "\n") { card ->
+            "ID: ${card.cardId}, 성별: ${card.gender}, 직업: ${card.job}, 이름: ${card.name}, 직급: ${card.position}, 회사: ${card.workplace}, 월: ${card.month}, 유형: ${card.type}"
+        }
+        // 첫 번째 메세지-분석
+        val analysisRequestMessage = ChatMsg(
+            ChatMsg.ROLE_USER,
+            "{$cardDataSetText} 이 사용자 명함 데이터를 가지고 연간 명함 사용량 및 어떤 분야의 직군과 가장 많이 공유했는지, " +
+                    "저장된 명함의 gender 속성을 보고 남여 성비를 판단하고, 저장된 명함의 직군 분포에 대한 분석은 꼭 포함해줘. " +
+                    "그리고 부가적으로 사용자의 명함 데이터를 보고 더 설명해주고 싶은 것을 구체적으로 분석해줘. " +
+                    "꼭 너의 다른 말 없이 소제목도 없이 분석 내용만 크게 (명함 사용량에 대한 내용/명함 분포도에 대한 내용) 2문단으로만 " +
+                    "\"\\n\\n\"으로 스플릿 할 수 있도록 답변해줘. " +
+                    "그리고 시간이 걸리더라도 남여 성비는 gender 속성을 보고 꼭 정확하게 잘 세어줘. 갯수 틀리면 안돼. " +
+                    "공손히 '습니다'체로 말해줘. "
+        )
+        chatMsgList1.add(analysisRequestMessage)
+        // 두 번째 메시지-분류
+        val classificationRequestMessage = ChatMsg(
+            ChatMsg.ROLE_USER,
+            "{$cardDataSetText} 이 데이터셋을 보고 'IT 관련 직군', '디자인 관련 직군', '영업 관련 직군', 그 외는 '기타 직군' 4그룹으로 분류해줘. " +
+                    "꼭 너의 다른 말 없이 소제목도 없이 분류된 데이터셋을 직군마다 \"\\n\\n\"으로 스플릿 할 수 있도록 답변해줘. " +
+                    "분류된 각각 데이터는 \"\\n\"로 구분해주고 " +
+                    "분류된 각각 데이터의 모든 칼럼 사이에는 \",\"로 구분해줘. " +
+                    "같은 직군이면 같은 그룹으로 정확하게 분류되도록 해야 해. 중요해. "
+        )
+        chatMsgList2.add(classificationRequestMessage)
+
+
+        sendMsgToChatGPT(section1Content, section2Content)
 
         val barChart = findViewById<BarChart>(R.id.barChart)
         val pieChart = findViewById<PieChart>(R.id.genderPieChart) // 성비 차트
@@ -307,5 +363,73 @@ class Report_Annual : AppCompatActivity() {
             legend.textSize = 12f
         }
 
+    }
+    // sendMsgToChatGPT 함수에서 지피티에게 메시지를 보낼 때 프로그레스바 표시/숨기기
+    private fun sendMsgToChatGPT(section1Content: TextView, section2Content: TextView) {
+        val api = ApiClient.getChatGPTApi()
+        val request = ChatGPTRequest("gpt-4o-mini", chatMsgList1)
+        val classificationRequest = ChatGPTRequest("gpt-4o-mini", chatMsgList2)
+
+        // 로딩 시작 시 프로그레스바를 보이고 화면 터치를 비활성화
+        progressBar?.visibility = View.VISIBLE
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+
+        //분석
+        api.getChatResponse(request)?.enqueue(object : Callback<ChatGPTResponse?> {
+            override fun onResponse(call: Call<ChatGPTResponse?>, response: Response<ChatGPTResponse?>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val chatResponse = response.body()?.choices?.get(0)?.message?.content
+                    if (chatResponse != null) {
+                        Log.d("getChatResponse", "${chatResponse}")
+
+                        val responseParts = chatResponse.split("\n\n")
+                        section1Content.text = responseParts.getOrNull(0) ?: "데이터를 분석하는 데 실패했습니다."
+                        section2Content.text = responseParts.getOrNull(1) ?: "추가 분석 결과를 불러오지 못했습니다."
+                    }
+
+                    // 성공 시 화면 설정
+                    progressBar?.visibility = View.GONE
+                    contentLayout.visibility = View.VISIBLE
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                } else {
+                    Log.e("getChatResponse", "Error: ${response.message()}")
+                    progressBar?.visibility = View.GONE
+                    contentLayout.visibility = View.VISIBLE
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                    Toast.makeText(this@Report_Annual, "응답을 받지 못했습니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ChatGPTResponse?>, t: Throwable) {
+                Log.e("getChatResponse", "onFailure: ", t)
+                // 실패했을 때도 프로그레스바를 숨기고 화면 터치를 다시 활성화
+                progressBar?.visibility = View.GONE
+                contentLayout.visibility = View.VISIBLE // 실패 시 콘텐츠 보이도록 설정
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                Toast.makeText(this@Report_Annual, "응답을 받지 못했습니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        //분류
+        api.getChatResponse(classificationRequest)?.enqueue(object : Callback<ChatGPTResponse?> {
+            override fun onResponse(call: Call<ChatGPTResponse?>, response: Response<ChatGPTResponse?>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val classificationResponse = response.body()?.choices?.get(0)?.message?.content
+                    if (classificationResponse != null) {
+                        // 두 번째 응답을 로그캣에만 출력합니다.
+                        Log.d("ClassificationResponse", classificationResponse)
+                    }
+                } else {
+                    Log.e("ClassificationResponse", "Error: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ChatGPTResponse?>, t: Throwable) {
+                Log.e("ClassificationResponse", "onFailure: ", t)
+            }
+        })
     }
 }
