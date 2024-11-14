@@ -21,8 +21,19 @@
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-64dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:foregroundGravity="center"/>
+
+    <!-- 화면에 항상 고정된 테두리 -->
+    <!--국내 표준 명함 (대한민국): 90mm x 50mm (비율: 1.8:1)-->
+    <View
+        android:id="@+id/camera_border"
+        android:layout_width="630dp"
+        android:layout_height="350dp"
+        android:background="@drawable/camera_border"
+        app2:layout_constraintTop_toTopOf="parent"
+        app2:layout_constraintBottom_toBottomOf="parent"
+        app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/frameLayoutShutter"

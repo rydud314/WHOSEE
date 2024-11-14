@@ -56,6 +56,9 @@
         <activity
             android:name=".Frag_Professional_Wallet"
             android:exported="false"></activity>
+        <activity
+            android:name=".EditScanedCard"
+            android:exported="false"></activity>
 
         <activity
             android:name=".MainActivity"
