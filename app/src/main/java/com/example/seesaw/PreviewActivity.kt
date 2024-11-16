@@ -120,6 +120,7 @@ class PreviewActivity : AppCompatActivity() {
             putExtra("website", website)
         }
         startActivity(intent)
+        finish()
     }
 
     override fun onDestroy() {

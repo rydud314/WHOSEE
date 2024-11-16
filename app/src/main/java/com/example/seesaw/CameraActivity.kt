@@ -140,7 +140,7 @@ class CameraActivity : AppCompatActivity() {
         val contentValues = ContentValues().apply {
             put(
                 MediaStore.MediaColumns.DISPLAY_NAME,
-                SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis())
+                SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA).format(System.currentTimeMillis())
             )
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

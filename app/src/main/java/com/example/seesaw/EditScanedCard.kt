@@ -1,7 +1,10 @@
 package com.example.seesaw
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.service.controls.ControlsProviderService
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.EditText
 import android.widget.Toast
@@ -15,6 +18,8 @@ class EditScanedCard : AppCompatActivity() {
     private lateinit var binding: ActivityEditScanedCardBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private var cardId: String = ""
+
 
     // 초기 힌트값을 저장하는 변수들
     private var initialHints: Map<String, String> = mapOf()
@@ -35,8 +40,8 @@ class EditScanedCard : AppCompatActivity() {
         val name = intent.getStringExtra("name") ?: ""
         val mobileNumber = intent.getStringExtra("mobileNumber") ?: ""
         val email = intent.getStringExtra("email") ?: ""
-        val address = intent.getStringExtra("address") ?: ""
-        val companyPhoneNumber = intent.getStringExtra("companyPhoneNumber") ?: ""
+        //val address = intent.getStringExtra("address") ?: ""
+        //val companyPhoneNumber = intent.getStringExtra("companyPhoneNumber") ?: ""
         val website = intent.getStringExtra("website") ?: ""
 
         // 초기 힌트값 설정
@@ -46,8 +51,8 @@ class EditScanedCard : AppCompatActivity() {
             "name" to name,
             "mobileNumber" to mobileNumber,
             "email" to email,
-            "address" to address,
-            "companyPhoneNumber" to companyPhoneNumber,
+            //"address" to address,
+            //"companyPhoneNumber" to companyPhoneNumber,
             "website" to website
         )
 
@@ -57,8 +62,8 @@ class EditScanedCard : AppCompatActivity() {
         setHintAsText(binding.etName, name)
         setHintAsText(binding.etMobileNumber, mobileNumber)
         setHintAsText(binding.etEmail, email)
-        setHintAsText(binding.etAddress, address)
-        setHintAsText(binding.etCompanyPhone, companyPhoneNumber)
+        //setHintAsText(binding.etAddress, address)
+        //setHintAsText(binding.etCompanyPhone, companyPhoneNumber)
         setHintAsText(binding.etWebsite, website)
 
         // 수정 버튼 클릭 시 데이터 업데이트
@@ -110,8 +115,8 @@ class EditScanedCard : AppCompatActivity() {
         binding.etName.setText(initialHints["name"])
         binding.etMobileNumber.setText(initialHints["mobileNumber"])
         binding.etEmail.setText(initialHints["email"])
-        binding.etAddress.setText(initialHints["address"])
-        binding.etCompanyPhone.setText(initialHints["companyPhoneNumber"])
+        //binding.etAddress.setText(initialHints["address"])
+        //binding.etCompanyPhone.setText(initialHints["companyPhoneNumber"])
         binding.etWebsite.setText(initialHints["website"])
 
         Toast.makeText(this, "모든 필드가 초기화되었습니다.", Toast.LENGTH_SHORT).show()
@@ -124,8 +129,8 @@ class EditScanedCard : AppCompatActivity() {
         currentText["name"] = binding.etName.text.toString()
         currentText["mobileNumber"] = binding.etMobileNumber.text.toString()
         currentText["email"] = binding.etEmail.text.toString()
-        currentText["address"] = binding.etAddress.text.toString()
-        currentText["companyPhoneNumber"] = binding.etCompanyPhone.text.toString()
+        //currentText["address"] = binding.etAddress.text.toString()
+        //currentText["companyPhoneNumber"] = binding.etCompanyPhone.text.toString()
         currentText["website"] = binding.etWebsite.text.toString()
     }
 
@@ -136,8 +141,8 @@ class EditScanedCard : AppCompatActivity() {
         binding.etName.setText(initialHints["name"])
         binding.etMobileNumber.setText(initialHints["mobileNumber"])
         binding.etEmail.setText(initialHints["email"])
-        binding.etAddress.setText(initialHints["address"])
-        binding.etCompanyPhone.setText(initialHints["companyPhoneNumber"])
+        //binding.etAddress.setText(initialHints["address"])
+        //binding.etCompanyPhone.setText(initialHints["companyPhoneNumber"])
         binding.etWebsite.setText(initialHints["website"])
     }
 
@@ -145,35 +150,126 @@ class EditScanedCard : AppCompatActivity() {
         // 저장된 현재 텍스트 필드의 값으로 복원
         binding.etCompany.setText(currentText["company"])
         binding.etPosition.setText(currentText["position"])
+        binding.etJob.setText(currentText["job"])
         binding.etName.setText(currentText["name"])
         binding.etMobileNumber.setText(currentText["mobileNumber"])
         binding.etEmail.setText(currentText["email"])
-        binding.etAddress.setText(currentText["address"])
-        binding.etCompanyPhone.setText(currentText["companyPhoneNumber"])
+        //binding.etAddress.setText(currentText["address"])
+        //binding.etCompanyPhone.setText(currentText["companyPhoneNumber"])
         binding.etWebsite.setText(currentText["website"])
     }
 
     private fun updateCard() {
-        val updatedData = mapOf(
-            "company" to binding.etCompany.text.toString().trim(),
-            "position" to binding.etPosition.text.toString().trim(),
-            "name" to binding.etName.text.toString().trim(),
-            "mobileNumber" to binding.etMobileNumber.text.toString().trim(),
-            "email" to binding.etEmail.text.toString().trim(),
-            "address" to binding.etAddress.text.toString().trim(),
-            "companyPhoneNumber" to binding.etCompanyPhone.text.toString().trim(),
-            "website" to binding.etWebsite.text.toString().trim()
-        )
 
-        firestore.collection("all_card_list").document(updatedData["company"].toString())
-            .update(updatedData)
-            .addOnSuccessListener {
-                Toast.makeText(this, "명함 수정 완료", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+        val company = binding.etCompany.text.toString().trim()
+        val position = binding.etPosition.text.toString().trim()
+        val job = binding.etJob.text.toString().trim()
+        val name = binding.etName.text.toString().trim()
+        val mobileNumber = binding.etMobileNumber.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
+        //val address = binding.etAddress.text.toString().trim()
+        //val companyPhoneNumber = binding.etCompanyPhone.text.toString().trim()
+        val website = binding.etWebsite.text.toString().trim()
+
+
+        if (cardId == "") {
+            cardId = getRandomString(10)
+        }
+
+        Log.d(TAG, "cardId =  $cardId")
+
+        if (name.isNullOrEmpty()) {
+            // 이름이 비어있을 경우 경고 메시지 표시
+            Toast.makeText(this, "이름은 필수 입력사항입니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            val currentUser = auth.currentUser
+            val uid = currentUser?.uid
+
+            uid?.let { userId ->
+                val cardRef = firestore.collection("all_card_list").document(cardId)
+
+                val cardData = hashMapOf<String, Any>(
+                    "cardId" to cardId,
+                    "name" to name,
+                    "job" to job,
+                    "introduction" to "",
+                    "workplace" to company,
+                    "email" to email,
+                    "gender" to "",
+                    "position" to position,
+                    "tel" to mobileNumber,
+                    "sns" to "",
+                    "pofol" to website,
+                    "imageName" to ""
+                )
+
+                cardRef.set(cardData).addOnSuccessListener {
+                    Log.d(TAG, "명함이 생성되었습니다.")
+                    saveToMyCardList(userId, cardId)
+                }.addOnFailureListener {
+                    Log.d(TAG, "명함 생성 실패")
+                }
+
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "명함 수정 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveToMyCardList(userId: String, cardId: String) {
+
+        val myCardRef = firestore.collection("wallet_list").document(userId)
+        myCardRef.get().addOnSuccessListener { document ->
+            val cardData = hashMapOf<String, Any>(
+                "cardId" to cardId
+            )
+            if (document.exists()) {
+                // 문서가 존재하면
+                val existingArray =
+                    document.get("cards") as? ArrayList<HashMap<String, Any>>
+                if (existingArray != null) {
+                    // 배열이 이미 존재하면 새 데이터 추가
+
+                    // 이미 가지고 있는 명함인지 확인
+                    var isExisted = false
+                    for (i in existingArray) {
+                        if (i.containsValue(cardId)) {
+                            isExisted = true
+                            break
+                        }
+                    }
+                    if (!isExisted) {
+                        existingArray.add(cardData)
+                        myCardRef.update("cards", existingArray)
+                    } else {
+                        // 이미 가지고 있는 명함일 때
+                        Toast.makeText(this, "이미 존재하는 cardId", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                } else {
+                    // 배열이 존재하지 않으면 새로운 배열 생성 후 데이터 추가
+                    myCardRef.set(mapOf("cards" to arrayListOf(cardData)))
+                }
+            } else {
+                // 문서가 없으면 새 문서 생성 후 데이터 추가
+                myCardRef.set(mapOf("cards" to arrayListOf(cardData)))
             }
+            // 성공 메시지 표시 및 액티비티 종료
+            Log.d(ControlsProviderService.TAG, "명함이 저장되었습니다.")
+            Toast.makeText(this, "명함을 저장하였습니다.", Toast.LENGTH_SHORT).show()
+            finishCreation()
+        }.addOnFailureListener { e ->
+            Log.d(ControlsProviderService.TAG, "명함 저장 실패")
+        }
+
+    }
+
+    private fun finishCreation() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    fun getRandomString(length: Int): String {
+        val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        return (1..length).map { charset.random() }.joinToString("")
     }
 }
