@@ -53,6 +53,11 @@ class EditSchedule : AppCompatActivity(){
 
         if (bst == "00:00" && bet == "23:59"){
             binding.checkBoxEventAllDay.isChecked = true
+            binding.spinnerStartTime.isEnabled = false
+            binding.spinnerEndTime.isEnabled = false
+
+            binding.spinnerStartTime.alpha = 0.5f
+            binding.spinnerEndTime.alpha = 0.5f
         }
         else{
             binding.checkBoxEventAllDay.isChecked = false
@@ -80,10 +85,15 @@ class EditSchedule : AppCompatActivity(){
         }
 
         binding.checkBoxEventAllDay.setOnCheckedChangeListener { _, isChecked ->
+            binding.spinnerStartTime.isEnabled = !isChecked
+            binding.spinnerEndTime.isEnabled = !isChecked
+
+            binding.spinnerStartTime.alpha = if (isChecked) 0.5f else 1.0f // 비활성화 시 투명도 변경
+            binding.spinnerEndTime.alpha = if (isChecked) 0.5f else 1.0f
+
             if(isChecked){
                 binding.spinnerStartTime.setSelection(timeoptions.indexOf("00:00"))
-                binding.spinnerEndTime.setSelection(timeoptions.indexOf("23:59"))
-
+                binding.spinnerEndTime.setSelection(timeoptions.indexOf("00:00"))
             }
         }
 

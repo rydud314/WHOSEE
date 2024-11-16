@@ -51,6 +51,20 @@ class AddSchedule : AppCompatActivity() {
         val timeoptions=(0..23).flatMap { hour->
             listOf(String.format("%02d:00",hour),String.format("%02d:30",hour))
         }
+
+        binding.checkBoxEventAllDay.setOnCheckedChangeListener { _, isChecked ->
+            binding.spinnerStartTime.isEnabled = !isChecked
+            binding.spinnerEndTime.isEnabled = !isChecked
+
+            binding.spinnerStartTime.alpha = if (isChecked) 0.5f else 1.0f // 비활성화 시 투명도 변경
+            binding.spinnerEndTime.alpha = if (isChecked) 0.5f else 1.0f
+
+            if(isChecked){
+                binding.spinnerStartTime.setSelection(timeoptions.indexOf("00:00"))
+                binding.spinnerEndTime.setSelection(timeoptions.indexOf("00:00"))
+            }
+        }
+
         val adapter=ArrayAdapter(this,android.R.layout.simple_spinner_item,timeoptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerStartTime.adapter=adapter

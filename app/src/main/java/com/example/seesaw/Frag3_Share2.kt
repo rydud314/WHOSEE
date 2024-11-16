@@ -20,6 +20,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -46,6 +47,7 @@ class Frag3_Share2 : Fragment() {
     private lateinit var generateQrButton: Button
     private lateinit var btnSaveQr: ImageButton
     private lateinit var btnSaveImage : ImageButton
+    private lateinit var tvCardName : TextView
     lateinit var card : Card
 
     private var permissions = if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU){
@@ -105,12 +107,15 @@ class Frag3_Share2 : Fragment() {
         }
         Log.d(TAG, "프레그3 : card = ${card.cardId}")
 
+
         qrCodeImage = view.findViewById(R.id.show_qr)
         cardImage = view.findViewById(R.id.card_image)
         btnSaveQr = view.findViewById(R.id.save_qr)
         btnSaveImage = view.findViewById(R.id.save_image)
+        tvCardName = view.findViewById(R.id.tv_card_name)
 
         val cardId = card.cardId.toString()
+        tvCardName.text = card.name
 
         /* 예전 큐알 url 만드는 코드
         val qrCodeUrl = "https://whosee/Splash?cardId=$cardId"
