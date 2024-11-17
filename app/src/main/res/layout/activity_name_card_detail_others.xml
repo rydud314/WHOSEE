@@ -53,25 +53,31 @@
 
             <TextView
                 android:id="@+id/tv_tel"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="Tel"
+                android:textColor="@color/black"
+                android:background="@drawable/make_card_background_glass"
                 android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/tv_sns"
-                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:background="@drawable/make_card_background_glass"
                 android:text="SNS"
                 android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/tv_portfolio"
-                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:background="@drawable/make_card_background_glass"
                 android:text="Portfolio"
                 android:padding="10dp"/>
 
@@ -80,11 +86,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="10dp"
                 android:background="#875FFD"
                 android:text="1:1 채팅하기"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
