@@ -124,23 +124,29 @@
 
             <TextView
                 android:id="@+id/tv_tel"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@drawable/make_card_background_glass"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:textColor="@color/black"
                 android:text="Tel"
                 android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/tv_sns"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:textColor="@color/black"
+                android:background="@drawable/make_card_background_glass"
                 android:text="SNS"
                 android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/tv_portfolio"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:textColor="@color/black"
+                android:background="@drawable/make_card_background_glass"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="Portfolio"
@@ -150,7 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#875FFD"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="10dp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:id="@+id/btn_edit_card"

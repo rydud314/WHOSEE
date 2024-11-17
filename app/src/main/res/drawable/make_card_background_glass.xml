@@ -3,7 +3,7 @@
     <!-- 원하는 위치에 원을 배치하여 모양 조정 -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/white"/>
+            <solid android:color="#EBE5FD"/>
             <corners android:radius="30dp"/>
         </shape>
     </item>
