@@ -137,7 +137,7 @@
 
                     <TextView
                         android:id="@+id/tv_workplace"
-                        android:layout_width="wrap_content"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
@@ -162,7 +162,7 @@
 
                     <TextView
                         android:id="@+id/tv_gender"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
@@ -194,7 +194,7 @@
                         android:text="프리랜서"
                         android:textSize="15dp"
                         android:layout_marginStart="2dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
@@ -220,7 +220,7 @@
                         android:text="knk0208@naver.com"
                         android:textSize="15dp"
                         android:layout_marginStart="2dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
