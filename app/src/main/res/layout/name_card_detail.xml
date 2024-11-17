@@ -137,7 +137,7 @@
 
                     <TextView
                         android:id="@+id/tv_workplace"
-                        android:layout_width="120dp"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
@@ -194,7 +194,7 @@
                         android:text="프리랜서"
                         android:textSize="15dp"
                         android:layout_marginStart="2dp"
-                        android:layout_width="120dp"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"

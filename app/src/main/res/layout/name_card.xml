@@ -42,7 +42,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
         android:orientation="vertical">
@@ -100,7 +100,7 @@
 
                     <TextView
                         android:id="@+id/tv_workplace"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
@@ -111,7 +111,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginStart="2dp"
+                    android:layout_marginStart="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -125,7 +125,7 @@
 
                     <TextView
                         android:id="@+id/tv_gender"
-                        android:layout_width="wrap_content"
+                        android:layout_width="130dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
@@ -157,7 +157,7 @@
                         android:text="프리랜서"
                         android:textSize="13dp"
                         android:layout_marginStart="2dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
@@ -165,7 +165,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginStart="2dp"
+                    android:layout_marginStart="1dp"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -183,7 +183,7 @@
                         android:text="knk0208@naver.com"
                         android:textSize="13dp"
                         android:layout_marginStart="2dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="130dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
