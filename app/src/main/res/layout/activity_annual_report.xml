@@ -1,136 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- ProgressBar가 화면 중앙에 보이도록 설정 -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_gravity="center"
+        android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/reportTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Annual Report"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:paddingBottom="16dp" />
-
-        <TextView
-            android:id="@+id/reportDateRange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date:Jan 1, 2024 - Dec 31, 2024 "
-            android:textSize="16sp"
-            android:layout_gravity="center"
-            android:paddingBottom="16dp" />
-
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:id="@+id/annual_card_use"-->
-<!--            android:src="@drawable/report_annual_card_use"/>-->
-        <!-- res/layout/activity_main.xml -->
-        <!-- res/layout/activity_main.xml -->
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="300dp">
-
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barChart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/section1Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="명함 사용량"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
-
-        <TextView
-            android:id="@+id/section1Content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="오지윤 님의 명함 사용량은 6월이 가장 활발했으며, 이 달에만 받은 명함이 39개, 주는 명함이 42개에 달했습니다. 6월의 오지윤님이 참여한 프로젝트를 기반으로 분석하자면 여름 컨퍼런스와 UI/UX 업계 모임을 통해 명함을 자주 사용한 것으로 예상됩니다. 2024년 한 해 기준 받은 명함의 평균 계수는 26.5이고 준 명함의 평균 계수는 28.91이였습니다. "
-            android:textSize="16sp"
-            android:paddingBottom="16dp" />
-
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:id="@+id/annual_card_class"-->
-<!--            android:src="@drawable/report_annual_card_class"/>-->
+    <!-- ScrollView 콘텐츠를 포함한 레이아웃 -->
+    <ScrollView
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"> <!-- 초기에는 숨김 상태 -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/genderPieChart"
-                android:layout_width="0dp"
-                android:layout_height="250dp"
-                android:layout_margin="8dp"
-                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/reportTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Annual Report"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:paddingBottom="16dp" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/jobPieChart"
-                android:layout_width="0dp"
-                android:layout_height="250dp"
-                android:layout_margin="8dp"
-                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/reportDateRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date:Jan 1, 2024 - Dec 31, 2024 "
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:paddingBottom="16dp" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/section1Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="명함 사용량"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/section1Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:paddingBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/genderPieChart"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/jobPieChart"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/section2Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="명함 분포도"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/section2Content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_it_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="IT 직군 관련 명함"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/btn_design_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="디자인 직군 관련 명함"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/btn_sales_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="영업 직군 관련 명함"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/btn_etc_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="기타 직군 관련 명함"
+                android:textColor="@color/white"/>
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/section2Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="명함 분포도"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
-
-        <TextView
-            android:id="@+id/section2Content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="2024년 받은 모든 명함을 분석한 결과 IT 직군이 143개, 디자인 직군이 105개, 영업 직군이 38개, 기타 명함이 32개로 총 318개의 명함을 받으셨고 가장 많았던 직업군은 IT 직군이였습니다. 받은 명함 성비를 살펴보면 남성이 72% 여성이 28% 여성보다 남성의 비율이 2.5배가량 높았습니다. 아래 버튼을 누르시면 해당 직군 관련 이번년에 받은 모든 명함을 살펴보실 수 있습니다. "
-            android:textSize="16sp"
-            android:paddingBottom="16dp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="IT 직군 관련 명함"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="디자인 직군 관련 명함"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="영업 직군 관련 명함"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="기타 직군 관련 명함"
-            android:textColor="@color/white"/>
-    </LinearLayout>
-</ScrollView>
+</FrameLayout>

@@ -1,0 +1,295 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 배경 설정 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/make_card_background"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:alpha="0.8"
+        android:background="@drawable/make_card_background_glass" />
+
+    <!-- ScrollView 추가 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:orientation="vertical">
+
+            <!-- 타이틀 묶음 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_make_card"/>
+
+                <TextView
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="명함 정보 수정하기"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="30dp"/>
+            </LinearLayout>
+
+            <!-- 입력 필드 묶음 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="30dp">
+
+                <!-- 각 정보 필드 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="회사명 : "
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/et_company"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="회사명"
+                        android:padding="3dp"
+                        android:background="@drawable/box_shape"
+                        android:inputType="text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="직책 : "
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/et_position"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="직책"
+                        android:padding="3dp"
+                        android:background="@drawable/box_shape"
+                        android:inputType="text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="직업 : "
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/et_job"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:background="@drawable/box_shape"
+                        android:inputType="text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="이름 : "
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="이름"
+                        android:padding="3dp"
+                        android:background="@drawable/box_shape"
+                        android:inputType="text"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="휴대전화 : "
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/et_mobile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="010-1234-5678"
+                        android:padding="3dp"
+                        android:background="@drawable/box_shape"
+                        android:inputType="phone"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="이메일 : "
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="이메일"
+                        android:padding="3dp"
+                        android:background="@drawable/box_shape"
+                        android:inputType="textEmailAddress"/>
+                </LinearLayout>
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_marginBottom="10dp">-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="주소 : "-->
+<!--                        android:textSize="15dp"-->
+<!--                        android:textStyle="bold"/>-->
+<!--                    <EditText-->
+<!--                        android:id="@+id/et_address"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="주소"-->
+<!--                        android:padding="3dp"-->
+<!--                        android:background="@drawable/box_shape"-->
+<!--                        android:inputType="textPostalAddress"/>-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="회사 전화번호 : "-->
+<!--                        android:textSize="15dp"-->
+<!--                        android:textStyle="bold" />-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/et_company_phone"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="@drawable/box_shape"-->
+<!--                        android:hint="회사 전화번호"-->
+<!--                        android:inputType="phone"-->
+<!--                        android:padding="3dp" />-->
+<!--                </LinearLayout>-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="웹사이트 : "
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/et_website"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="웹사이트"
+                        android:padding="3dp"
+                        android:background="@drawable/box_shape"
+                        android:inputType="textUri"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <!-- 초기화 버튼 추가 -->
+                    <Button
+                        android:id="@+id/btn_reset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/rotated_background_card_1"
+                        android:textColor="@color/white"
+                        android:text="초기화"/>
+
+                    <Button
+                        android:id="@+id/btn_edit_card"
+                        android:background="@drawable/rotated_background_card_1"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="수정하기"/>
+
+                    <!-- XML 파일에서 초기 내용 보여주기 버튼 추가 -->
+                    <Button
+                        android:id="@+id/btn_show_initial"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/btn_reset"
+                        android:backgroundTint="@color/purple"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

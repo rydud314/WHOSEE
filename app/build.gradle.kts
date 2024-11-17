@@ -142,11 +142,20 @@ dependencies {
     implementation("com.google.mlkit:text-recognition:16.0.0")
     // To recongnize Korean script
     implementation("com.google.mlkit:text-recognition-korean:16.0.1")
+    // ML Kit Object Detection 의존성 추가
+    implementation("com.google.mlkit:object-detection:17.0.0") // 최신 버전 확인
+    implementation("com.google.mlkit:object-detection-custom:17.0.0") // 또는 object-detection-default 중 하나만 선택
+
+
+
+
+
 
     // Retrofit 라이브러리
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     // Gson 변환기 라이브러리
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
 
 
 //    // Google Vision API 및 gRPC 관련 의존성
