@@ -155,8 +155,8 @@ class MessageActivity : AppCompatActivity() {
                     message.put("token", token)
                     root.put("message", message)
 
-                    // 실제 사용할 OAuth Access Token 갱신 필요
-                    val FCM_OAuth_Access_Token = "ya29.a0AcM612xg-10MVjZJaTSGvw7mjw8Q587FfihviKOeSKMpWNDMdPYfIdY4LhVBmILDt_frVXGnZCxmBPJa7i7rXd-9B-SL_0GXmyn_KQojFdrbwozBVRhuASowvY1tjGzpuUa9pwBLR038R2K9wIqlUHLmiymWAsiHXSomM1QsaCgYKAYQSARASFQHGX2MiMV013o9U3n7sQUi2f9qKnQ0175"
+                    // 실제 사용할 OAuth Access Token 갱신 필요***
+                    val FCM_OAuth_Access_Token = "ya29.a0AeDClZA4O_cqvz6dFisr-WSuWofhuBtknUItP6ZEyY5xX1Ue1xNSHhwQr2Zb1cYujxEYPXDCa1H3X8YHQ-amfYP8MfI_Z6i6CSeVomAyjIln8B8pBs3USbT-1LZ6Z_kdmaDyEG9vsvpHOsdik83n9xitX0K-j2AhUuM7x5iRaCgYKAUISARASFQHGX2MiB3AHt0Q7HR_hEiYoyIU1Fw0175"
 
                     val requestBody = root.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
                     val request = Request.Builder()
