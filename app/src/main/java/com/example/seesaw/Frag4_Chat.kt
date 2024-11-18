@@ -165,6 +165,8 @@ class Frag4_Chat : Fragment() {
                 val editor = sharedPreferences.edit()
                 val intent = Intent(context, MessageActivity::class.java)
                 intent.putExtra("destinationUid", destinationUsers[position])
+                intent.putExtra("chatRoomUid", chatRoomUid)
+
                 editor.putString("userState","Login")
                 editor.apply()
                 context?.startActivity(intent)

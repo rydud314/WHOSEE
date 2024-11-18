@@ -64,17 +64,39 @@ class MessageActivity : AppCompatActivity() {
         val sendBtn = binding.sendBtn
         val messageText = binding.messageText
 
-        destinationUid = intent.getStringExtra("destinationUid")
+        // 인텐트로 전달된 데이터를 확인
+        val chatRoomUidFromNotification = intent.getStringExtra("chatRoomUid")
+        val destinationUidFromNotification = intent.getStringExtra("destinationUid")
+
+        if (chatRoomUidFromNotification == null || destinationUidFromNotification == null) {
+            Log.e("MessageActivity", "Missing data from FCM: chatRoomUid=$chatRoomUidFromNotification, destinationUid=$destinationUidFromNotification")
+            return
+        }
+
+        // 알림을 통해 들어온 경우, 데이터를 기반으로 초기화
+        if (chatRoomUidFromNotification != null && destinationUidFromNotification != null) {
+            chatRoomUid = chatRoomUidFromNotification
+            destinationUid = destinationUidFromNotification
+            openChatRoom()
+        } else {
+            chatRoomUid = intent.getStringExtra("chatRoomUid")
+            destinationUid = intent.getStringExtra("destinationUid")
+        }
+
+//        destinationUid = intent.getStringExtra("destinationUid")
         uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = binding.messageActivityRecyclerview
         Log.v("체크용2", uid.toString())
         Log.v("체크용3", Firebase.auth.currentUser.toString())
 
-        // 상대방의 FCM 토큰을 가져오기 위한 코드 추가
-        val otherUserRef =
-            fireDatabase.child("users").child(destinationUid!!).child("fcmToken")
-        otherUserRef.get().addOnSuccessListener { dataSnapshot ->
-            otherUserFcmToken = dataSnapshot.getValue(String::class.java)
+        fetchOtherUserFcmToken(destinationUid!!) { token ->
+            if (token == null) {
+                Log.e("FCM", "Failed to fetch FCM token. Cannot proceed.")
+            } else {
+                otherUserFcmToken = token
+                Log.d("FCM", "FCM token loaded: $otherUserFcmToken")
+                // 이후 작업 진행
+            }
         }
 
         Log.e("otherUserFcmToken", "otherUserFcmToken: $otherUserFcmToken")
@@ -123,6 +145,28 @@ class MessageActivity : AppCompatActivity() {
         checkChatRoom()
     }
 
+    // 채팅방 열기 로직 추가
+    private fun openChatRoom() {
+        recyclerView?.layoutManager = LinearLayoutManager(this)
+        recyclerView?.adapter = RecyclerViewAdapter(this)
+        binding.messageScreenTop.text = "채팅방에 입장했습니다." // 적절히 수정
+        Log.d("MessageActivity", "채팅방 입장 완료")
+
+    }
+    private fun fetchOtherUserFcmToken(destinationUid: String, onComplete: (String?) -> Unit) {
+        val otherUserRef = fireDatabase.child("users").child(destinationUid).child("fcmToken")
+        otherUserRef.get()
+            .addOnSuccessListener { dataSnapshot ->
+                val token = dataSnapshot.getValue(String::class.java)
+                Log.d("FCM", "Fetched FCM token: $token")
+                onComplete(token)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("FCM", "Failed to fetch FCM token", exception)
+                onComplete(null)
+            }
+    }
+
     private fun sendFcmNotification(token: String?, messageBody: String) {
         if (token == null) {
             Log.e("FCM", "토큰이 null 상태입니다. FCM 메시지를 전송할 수 없습니다.")
@@ -151,12 +195,16 @@ class MessageActivity : AppCompatActivity() {
                     // 알림 메시지 대신 데이터 메시지로 보냄 (포그라운드 및 백그라운드에서 동일 처리)
                     data.put("title", username)  // 전송자의 이름을 타이틀로 설정
                     data.put("body", messageBody)  // 메시지 내용
+                    data.put("click_action", "OPEN_CHAT")   //클릭 액션
+                    data.put("chatRoomUid", chatRoomUid)
+                    data.put("destinationUid", destinationUid)
+
                     message.put("data", data)
                     message.put("token", token)
                     root.put("message", message)
 
                     // 실제 사용할 OAuth Access Token 갱신 필요
-                    val FCM_OAuth_Access_Token = "ya29.a0AcM612xg-10MVjZJaTSGvw7mjw8Q587FfihviKOeSKMpWNDMdPYfIdY4LhVBmILDt_frVXGnZCxmBPJa7i7rXd-9B-SL_0GXmyn_KQojFdrbwozBVRhuASowvY1tjGzpuUa9pwBLR038R2K9wIqlUHLmiymWAsiHXSomM1QsaCgYKAYQSARASFQHGX2MiMV013o9U3n7sQUi2f9qKnQ0175"
+                    val FCM_OAuth_Access_Token = "ya29.a0AeDClZD8xXV1YIL9bu7V508sA9wTEUj98ZK6qvbavZhan-Y2ROSxdk6ddUl-pUOo1MQ3CqsJdUrN0aEv_VFULdDQrf8hANAqNrfwGLJoGDGI3vZdDsaQHMun6lyz3vjlbDIYD5oTV70XxZDEftzdnZ_ONi2Pjq4Do5jEBRwpaCgYKAdkSARASFQHGX2MiN9gkGVkkvdHa1zwul-_syQ0175"
 
                     val requestBody = root.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
                     val request = Request.Builder()
