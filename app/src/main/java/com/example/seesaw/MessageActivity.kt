@@ -86,6 +86,9 @@ class MessageActivity : AppCompatActivity() {
 //        destinationUid = intent.getStringExtra("destinationUid")
         uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = binding.messageActivityRecyclerview
+        recyclerView?.layoutManager = LinearLayoutManager(this)
+        recyclerView?.adapter = RecyclerViewAdapter(this) // 어댑터 연결 필수
+
         Log.v("체크용2", uid.toString())
         Log.v("체크용3", Firebase.auth.currentUser.toString())
 
@@ -99,7 +102,7 @@ class MessageActivity : AppCompatActivity() {
             }
         }
 
-        Log.e("otherUserFcmToken", "otherUserFcmToken: $otherUserFcmToken")
+//        Log.e("otherUserFcmToken", "otherUserFcmToken: $otherUserFcmToken")
 
         sendBtn.setOnClickListener {
             if (messageText.text.isNotEmpty() && otherUserFcmToken != null) { // FCM 토큰 null 체크 추가
@@ -219,10 +222,12 @@ class MessageActivity : AppCompatActivity() {
                         }
 
                         override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                            if (response.isSuccessful) {
-                                Log.d("FCM", "Message sent successfully")
-                            } else {
-                                Log.e("FCM", "Failed to send message: ${response.code}")
+                            response.use {  // 응답 자동 닫기
+                                if (response.isSuccessful) {
+                                    Log.d("FCM", "Message sent successfully")
+                                } else {
+                                    Log.e("FCM", "Failed to send message: ${response.code}")
+                                }
                             }
                         }
                     })
@@ -237,6 +242,7 @@ class MessageActivity : AppCompatActivity() {
         fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "채팅방 확인 중 오류 발생: ${error.message}")
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -245,8 +251,34 @@ class MessageActivity : AppCompatActivity() {
                         if (chatModel?.users!!.containsKey(destinationUid)) {
                             chatRoomUid = item.key
                             binding.sendBtn.isEnabled = true
+
+                            // RecyclerView 초기화
                             recyclerView?.layoutManager = LinearLayoutManager(this@MessageActivity)
-                            recyclerView?.adapter = RecyclerViewAdapter(this@MessageActivity)
+                            val adapter = RecyclerViewAdapter(this@MessageActivity)
+                            recyclerView?.adapter = adapter
+
+                            // Firebase 데이터 로드
+                            fireDatabase.child("chatrooms").child(chatRoomUid!!)
+                                .child("comments")
+                                .addValueEventListener(object : ValueEventListener {
+                                    override fun onCancelled(error: DatabaseError) {
+                                        Log.e("Firebase", "데이터 로드 중 오류 발생: ${error.message}")
+                                    }
+
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        val comments = ArrayList<Comment>()
+                                        for (data in snapshot.children) {
+                                            val comment = data.getValue<Comment>()
+                                            if (comment != null) {
+                                                comments.add(comment)
+                                            }
+                                        }
+
+                                        // 데이터 갱신
+                                        adapter.updateComments(comments)
+                                        recyclerView?.scrollToPosition(comments.size - 1)
+                                    }
+                                })
                         }
                     }
                 }
@@ -274,6 +306,13 @@ class MessageActivity : AppCompatActivity() {
                 }.addOnFailureListener { Log.d(ContentValues.TAG, "querysnapshot 실패") }
         }
 
+        // 데이터 갱신 메서드 추가
+        fun updateComments(newComments: List<Comment>) {
+            comments.clear()
+            comments.addAll(newComments)
+            notifyDataSetChanged() // RecyclerView 갱신
+        }
+
         private fun getMessageList() {
             val sharedPreferences = context.getSharedPreferences("other", 0)
             val editor = sharedPreferences.edit()
@@ -281,6 +320,7 @@ class MessageActivity : AppCompatActivity() {
                 fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
                     .addValueEventListener(object : ValueEventListener {
                         override fun onCancelled(error: DatabaseError) {
+                            Log.e("Firebase", "데이터 로드 중 오류 발생: ${error.message}")
                         }
 
                         override fun onDataChange(snapshot: DataSnapshot) {
@@ -290,27 +330,37 @@ class MessageActivity : AppCompatActivity() {
                                 val key = data.key
                                 val commentOrigin = data.getValue<Comment>()!!
                                 val commentModify = data.getValue<Comment>()!!
+
+                                // 현재 사용자 읽음 상태 추가
                                 commentModify.readUsers?.put(uid.toString(), true)
                                 readUsersMap[key.toString()] = commentModify
                                 comments.add(commentOrigin)
                             }
 
-                            if (comments.size > 0 && sharedPreferences.getString("userState", "").toString() == "Login") {
-                                Log.v("마지막", "!!!!")
-                                if (!comments[comments.size - 1].readUsers!!.containsKey(uid)) {
-                                    fireDatabase.child("chatrooms").child(chatRoomUid.toString())
-                                        .child("comments").updateChildren(readUsersMap)
-                                        .addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-                                                notifyDataSetChanged()
-                                                recyclerView?.scrollToPosition(comments.size - 1)
-                                            }
-                                        }
-                                } else {
-                                    notifyDataSetChanged()
-                                    recyclerView?.scrollToPosition(comments.size - 1)
-                                }
-                            }
+                            // 읽음 상태 업데이트
+                            fireDatabase.child("chatrooms").child(chatRoomUid.toString())
+                                .child("comments").updateChildren(readUsersMap)
+
+                            // RecyclerView 갱신
+                            notifyDataSetChanged()
+                            recyclerView?.scrollToPosition(comments.size - 1) // 마지막 메시지로 이동
+
+//                            if (comments.size > 0 && sharedPreferences.getString("userState", "").toString() == "Login") {
+//                                Log.v("마지막", "!!!!")
+//                                if (!comments[comments.size - 1].readUsers!!.containsKey(uid)) {
+//                                    fireDatabase.child("chatrooms").child(chatRoomUid.toString())
+//                                        .child("comments").updateChildren(readUsersMap)
+//                                        .addOnCompleteListener { task ->
+//                                            if (task.isSuccessful) {
+//                                                notifyDataSetChanged()
+//                                                recyclerView?.scrollToPosition(comments.size - 1)
+//                                            }
+//                                        }
+//                                } else {
+//                                    notifyDataSetChanged()
+//                                    recyclerView?.scrollToPosition(comments.size - 1)
+//                                }
+//                            }
                         }
                     })
             }
