@@ -68,9 +68,8 @@ class MessageActivity : AppCompatActivity() {
         val chatRoomUidFromNotification = intent.getStringExtra("chatRoomUid")
         val destinationUidFromNotification = intent.getStringExtra("destinationUid")
 
-        if (chatRoomUidFromNotification == null || destinationUidFromNotification == null) {
+        if (chatRoomUidFromNotification == null && destinationUidFromNotification == null) {
             Log.e("MessageActivity", "Missing data from FCM: chatRoomUid=$chatRoomUidFromNotification, destinationUid=$destinationUidFromNotification")
-            return
         }
 
         // 알림을 통해 들어온 경우, 데이터를 기반으로 초기화
