@@ -18,20 +18,20 @@ android:padding="16dp">
     android:text="Name"
     android:padding="10dp"/>
 
-<androidx.cardview.widget.CardView
-    android:layout_marginTop="20dp"
-    android:id="@+id/shared_name_card_detail_container"
-    android:layout_width="350dp"
-    android:layout_height="300dp"
-    android:layout_gravity="center"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/shared_name_card_detail_container"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp">
 
-    <include layout="@layout/name_card_detail" />
+        <include layout="@layout/name_card_detail" />
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-<ScrollView
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
@@ -53,23 +53,29 @@ android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_tel"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@drawable/make_card_background_glass"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:textColor="@color/black"
             android:text="Tel"
             android:padding="10dp"/>
 
         <TextView
             android:id="@+id/tv_sns"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:textColor="@color/black"
+            android:background="@drawable/make_card_background_glass"
             android:text="SNS"
             android:padding="10dp"/>
 
         <TextView
             android:id="@+id/tv_portfolio"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+            android:background="@drawable/make_card_background_glass"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="Portfolio"
@@ -80,7 +86,7 @@ android:padding="16dp">
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:background="#875FFD"
             android:text="명함 저장하기"
             android:textColor="#FFFFFF"

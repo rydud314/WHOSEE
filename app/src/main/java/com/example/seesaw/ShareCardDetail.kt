@@ -15,7 +15,6 @@ import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -37,7 +36,7 @@ class ShareCardDetail : AppCompatActivity() {
     private lateinit var frag3Share: Frag3_Share2
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-    private lateinit var cardId : String
+
 
     private var permissions = if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU){
         arrayOf(
@@ -74,28 +73,6 @@ class ShareCardDetail : AppCompatActivity() {
         }
     }
 
-    //인텐트 수신코드 결과
-    private val activityIntentResultLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){
-
-        // mainActivity Intent에서 결과를 받아옴
-        if(it.resultCode == 1){
-            val intent = it.data
-            cardId = intent!!.getStringExtra("uriExist").toString()
-            cardId = cardId!!.replace("[", "")
-            cardId = cardId!!.replace("]", "")
-            Log.d(TAG, "shareDetail : uriCardID = $cardId")
-        }
-
-        // shareCardDetail Intent에서 결과를 받아옴
-        else if(it.resultCode == 2){
-            val intent = it.data
-            cardId = intent!!.getStringExtra("saveCardImage").toString()
-            Log.d(TAG, "shareDetail : saveImageCardId = $cardId")
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShareCardDetailBinding.inflate(layoutInflater)
@@ -105,6 +82,7 @@ class ShareCardDetail : AppCompatActivity() {
 
         val currentUser = auth.currentUser
         val uid = currentUser?.uid
+
 
         //uid가 유효하지 않을 때
         if (uid == null) {
@@ -124,91 +102,86 @@ class ShareCardDetail : AppCompatActivity() {
             // 인텐트로부터 데이터 가져오기
             var uriCard = intent.getSerializableExtra("uriExist").toString()
             var saveImageCard = intent.getSerializableExtra("saveCardImage").toString()
+            var cardId = ""
 
-            uriCard?.let {
+
+            // 첫 번째 작업
+            if (uriCard != "null") {
                 cardId = uriCard
-                cardId = cardId!!.replace("[", "")
-                cardId = cardId!!.replace("]", "")
                 Log.d(TAG, "shareDetail : uriCardID = $cardId")
-            }
-            saveImageCard?.let {
+            } else if (saveImageCard != "null") {
                 cardId = saveImageCard
                 Log.d(TAG, "shareDetail : saveImageCardId = $cardId")
             }
 
-            // 자신의 카드 정보 가져오기
-            firestore.collection("all_card_list").whereEqualTo("cardId", cardId).get()
-                .addOnSuccessListener { querySnapshot ->
-                    val documents = querySnapshot.documents.toMutableList()
-                    Log.d(ContentValues.TAG, "querysnapshot complete")
+            Log.d(TAG, "shareDetail : inter CardId = $cardId")
 
-                    if (documents != null && documents.isNotEmpty()) {
-                        Log.d(ContentValues.TAG, "result.document is not null")
+            cardId?.let {
+                Log.d(TAG, "shareDetail : fireStore CardId = $cardId")
+                // 자신의 카드 정보 가져오기
+                firestore.collection("all_card_list").whereEqualTo("cardId", cardId).get()
+                    .addOnSuccessListener { querySnapshot ->
+                        val documents = querySnapshot.documents.toMutableList()
+                        Log.d(ContentValues.TAG, "querysnapshot complete")
 
-                        for (document in documents) {
-                            val cardId = document["cardId"].toString()
-                            val name = document["name"].toString()
-                            val workplace = document["workplace"].toString()
-                            val introduction = document["introduction"].toString()
-                            val email = document["email"].toString()
-                            val position = document["position"].toString()
-                            val gender = document["gender"].toString()
-                            val imageName = document["imageName"].toString()
-                            val job = document["job"].toString()
-                            val pofol = document["pofol"].toString()
-                            val sns = document["sns"].toString()
-                            val tel = document["tel"].toString()
+                        if (documents != null && documents.isNotEmpty()) {
+                            Log.d(ContentValues.TAG, "result.document is not null")
 
-                            Log.d(ContentValues.TAG, "cardData => $name($cardId)")
+                            for (document in documents) {
+                                val cardId = document["cardId"].toString()
+                                val name = document["name"].toString()
+                                val workplace = document["workplace"].toString()
+                                val introduction = document["introduction"].toString()
+                                val email = document["email"].toString()
+                                val position = document["position"].toString()
+                                val gender = document["gender"].toString()
+                                val imageName = document["imageName"].toString()
+                                val job = document["job"].toString()
+                                val pofol = document["pofol"].toString()
+                                val sns = document["sns"].toString()
+                                val tel = document["tel"].toString()
 
-                            // 뷰에 데이터 설정
-                            binding.tvName.text = name
-                            //binding.tvJob.text = "Job: " + it.job
-                            //binding.tvIntroduction.text = "Introduction: " + introduction
-                            //binding.tvWorkplace.text = "Workplace: " + it.workplace
-                            //binding.tvGender.text = "Gender: " + it.gender
-                            //binding.tvPosition.text = "Position: " + it.position
-                            binding.tvTel.text = tel
-                            //binding.tvEmail.text = "Email: " + it.email
-                            binding.tvSns.text = "SNS: " + sns
-                            binding.tvPortfolio.text = "Portfolio: " + pofol
+                                Log.d(ContentValues.TAG, "cardData => $name($cardId)")
 
-                            // 이미지 설정
-                            loadCardImage(imageName)
+                                // 뷰에 데이터 설정
+                                binding.tvName.text = name
+                                binding.tvTel.text = "Tel : " + tel
+                                binding.tvSns.text = "SNS : " + sns
+                                binding.tvPortfolio.text = "Portfolio : " + pofol
 
-                            // 뷰에 데이터 설정
-                            detailBinding.tvName.text = name
-                            detailBinding.tvJob.text = job
-                            detailBinding.tvIntroduction.text = introduction
-                            detailBinding.tvWorkplace.text = workplace
-                            detailBinding.tvGender.text = gender
-                            detailBinding.tvPosition.text = position
-                            //detailBinding.tvTel.text = "Tel : " + it.tel
-                            detailBinding.tvEmail.text = email
-//            detailBinding.tvSns.text = "SNS : " + it.sns
-//            detailBinding.tvPortfolio.text = "Portfolio : " + it.pofol
 
-                            // 이미지 설정
-                            loadCardImage(imageName)
+                                // 뷰에 데이터 설정
+                                detailBinding.tvName.text = name
+                                detailBinding.tvJob.text = job
+                                detailBinding.tvIntroduction.text = introduction
+                                detailBinding.tvWorkplace.text = workplace
+                                detailBinding.tvGender.text = gender
+                                detailBinding.tvPosition.text = position
+                                detailBinding.tvEmail.text = email
+
+
+                                // 이미지 설정
+                                loadCardImage(imageName)
+                            }
                         }
                     }
 
-                    // 명함 저장 버튼 클릭 리스너 설정
-                    binding.btnSaveCard.setOnClickListener {
-                        if (uid != null) {
-                            cardId?.let { it -> saveToMyCardList(uid, it) }
-                        }
-                    }
-
-                    // 갤러리 저장 버튼 클릭 리스너 설정
-                    binding.btnSaveCardImage.setOnClickListener {
-                        if (uid != null) {
-                            saveToGallery(binding.root.rootView)
-                        }
+                // 명함 저장 버튼 클릭 리스너 설정
+                binding.btnSaveCard.setOnClickListener {
+                    if (uid != null) {
+                        cardId?.let { it -> saveToMyCardList(uid, it) }
                     }
                 }
 
+                // 갤러리 저장 버튼 클릭 리스너 설정
+                binding.btnSaveCardImage.setOnClickListener {
+                    if (uid != null) {
+                        saveToGallery(binding.root.rootView)
+                    }
+                }
+            }
         }
+
     }
 
     private fun saveToGallery(view: View) {
@@ -226,6 +199,7 @@ class ShareCardDetail : AppCompatActivity() {
             .error(R.drawable.ic_profile_placeholder)
             .into(detailBinding.cardImage)
     }
+
 
     private fun saveToMyCardList(userId: String, cardId: String) {
         val checkRef = firestore.collection("my_card_list").document(userId)

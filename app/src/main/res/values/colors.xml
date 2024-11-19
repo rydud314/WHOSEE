@@ -5,4 +5,6 @@
     <color name="selected_color">#545F71</color> <!-- 선택됐을 때의 색상, 예: 빨간색 -->
     <color name="unselected_color">#9BA5B7</color> <!-- 선택되지 않았을 때의 색상, 예: 흰색 -->
     <color name="purple">#A389EC</color>
+    <color name="red">#FF3F5C</color>
+    <color name="blue">#225FEE</color>
 </resources>

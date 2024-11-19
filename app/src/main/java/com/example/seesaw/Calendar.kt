@@ -3,6 +3,8 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.service.controls.ControlsProviderService.TAG
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -134,7 +136,6 @@ class Calendar : AppCompatActivity() {
                 }
             }
         }
-
      }
 
     // Google Sign-In 결과 처리
